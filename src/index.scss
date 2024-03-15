@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  --main-bg: #2bbc99;
+  --item-hover: #2bbc99;
+  --tertiary-bg: #2bbc99;
+  --secondary-bg: #25a184;
+  --main-container-bg: #fff;
+  --container-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --text-color: #00071d;
+  --text-hover-color: #fff;
+  --place-holder-color: rgba(255, 255, 255, 0.582);
+  --input-hover: rgba(43, 188, 154, 0.318);
+  --error-toast: rgba(188, 43, 43, 0.318);
+  --success-toast: rgba(43, 188, 154, 0.7);
+  --word-bg: #fff;
+}
+
+body.dark {
+  --main-bg: #00071d;
+  --item-hover: #1c2339;
+  --secondary-bg: #36415e;
+  --tertiary-bg: #fff;
+  --main-container-bg: #131c31;
+  --text-color: #fff;
+  --text-hover-color: #fff;
+  --tooltip-bg: #251d33;
+  --container-shadow: rgba(#131c31, 0.2) 0px 7px 29px 0px;
+  --place-holder-color: grey;
+  --error-toast: rgba(188, 43, 43, 0.318);
+  --success-toast: rgba(54, 65, 94, 0.7);
+  --input-hover: #1c2339;
+  --word-bg: #36415e;
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: var(--main-bg);
+  transition: 0.3s ease-in-out;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.appBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
