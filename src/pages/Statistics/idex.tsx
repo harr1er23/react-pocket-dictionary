@@ -2,10 +2,10 @@ import React from 'react';
 
 import styles from "./Statistics.module.scss";
 
-const Statics = () => {
+const Statistics = () => {
   return (
     <div>Statics</div>
   )
 }
 
-export default Statics
+export default Statistics
