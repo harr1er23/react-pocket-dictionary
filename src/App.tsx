@@ -12,6 +12,7 @@ import Dictionary from "./pages/Dictionary";
 import Statistics from "./pages/Statistics";
 import { selectUser, setUser } from "./store/user/userSlice";
 import AppLayout from "./pages/AppLayout/idex";
+import AuthByVk from "./pages/AuthByVk";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,16 +56,26 @@ function App() {
             }
           ></Route>
           <Route
+            path="/authByVk"
+            element={
+              user !== null ? (
+                <Navigate replace to="/app/dictionary" />
+              ) : (
+                <AuthByVk />
+              )
+            }
+          ></Route>
+          <Route
             path="/app/*"
             element={
-              user !== null ? <AppLayout /> : <Navigate replace to="/auth" /> 
+              user !== null ? <AppLayout /> : <Navigate replace to="/auth" />
             }
           >
             <Route path="dictionary" element={<Dictionary />}></Route>
-          <Route path="exercises" element={<Exercises />}></Route>
-          <Route path="statistics" element={<Statistics />}></Route>
-          <Route path="settings" element={<Settings />}></Route>
-          <Route path="profile" element={<Profile />}></Route>
+            <Route path="exercises" element={<Exercises />}></Route>
+            <Route path="statistics" element={<Statistics />}></Route>
+            <Route path="settings" element={<Settings />}></Route>
+            <Route path="profile" element={<Profile />}></Route>
           </Route>
         </Routes>
       </div>

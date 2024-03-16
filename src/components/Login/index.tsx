@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import { useNavigate } from "react-router-dom";
-import VK, { Auth } from "react-vk";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import "./Login.scss";
@@ -162,18 +161,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         </header>
         <ul>
           <li>
-            {/* <a href="#" className="facebook">
+            <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
-            </a> */}
-            <VK apiId={51878430} className="custom-vk-button">
-              <Auth
-                options={{
-                  onAuth: (user: any) => {
-                    console.log(user);
-                  },
-                }}
-              />
-            </VK>
+            </Link>
           </li>
           <li>
             <a href="#" className="twitter">
