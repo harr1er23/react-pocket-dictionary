@@ -79,6 +79,10 @@ body {
     & > li {
       margin: 0.5em;
 
+      .custom-vk-button{
+        all: unset;
+      }
+
       & > a {
         width: 150px;
         padding: 10px;
@@ -215,14 +219,24 @@ form {
       &:hover {
         background-color: var(--main-bg);
       }
+
+      &:disabled {
+        background-color: var(--button-disabled);
+      }
     }
+  }
+
+  .errorBackground {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(207, 52, 52);
   }
 
   .registration {
     display: flex;
     justify-content: center;
     align-items: center;
-  
+
     span {
       width: 20px !important;
       height: 20px !important;
@@ -242,7 +256,7 @@ form {
         color: var(--main-bg);
         border-bottom: 1px solid var(--main-bg);
 
-        &:hover{
+        &:hover {
           color: var(--button-bg);
           border-bottom: 1px solid var(--button-bg);
         }
@@ -254,7 +268,7 @@ form {
       color: var(--main-bg);
       border-bottom: 1px solid var(--main-bg);
 
-      &:hover{
+      &:hover {
         color: var(--button-bg);
         border-bottom: 1px solid var(--button-bg);
       }
