@@ -6,9 +6,9 @@ import "./Sidebar.scss";
 
 import SidebarButton from "../SidebarButton";
 
-import { ReactComponent as DictionaryIco } from "../../assets/ico/day.svg";
-import { ReactComponent as ExercisesIco } from "../../assets/ico/day.svg";
-import { ReactComponent as StatisticsIco } from "../../assets/ico/day.svg";
+import { ReactComponent as DictionaryIco } from "../../assets/ico/dictionary.svg";
+import { ReactComponent as ExercisesIco } from "../../assets/ico/exercise.svg";
+import { ReactComponent as StatisticsIco } from "../../assets/ico/statistics.svg";
 
 import { ReactComponent as ShowArrowIco } from "../../assets/ico/showArrow.svg";
 import { ReactComponent as MobileMenuIco } from "../../assets/ico/mobileMenu.svg";
@@ -108,14 +108,14 @@ const Sidebar: React.FC = () => {
         </div>
         <ul className="sidebar-list">
           <SidebarButton
-            svg={<DictionaryIco className="fillIco"/>}
+            svg={<DictionaryIco className="noFillIco"/>}
             text={"Мой словарь"}
             link={"dictionary"}
             clickButton={clickButton}
             setClickButton={setClickButton}
           />
           <SidebarButton
-              svg={<ExercisesIco className="fillIco"/>}
+              svg={<ExercisesIco className="noFillIco"/>}
               text={"Упражнения"}
               link={"exercises"}
               clickButton={clickButton}
@@ -139,9 +139,9 @@ const Sidebar: React.FC = () => {
         {showExit && (
           <div className="exitBlock">
             <div className="sidebar-listItem">
-              <div>
+              <div onClick={() => onClickExit()}>
                 <span className="sidebar-listItemText">Выход</span>
-                <ExitIco onClick={() => onClickExit()} className="exitImg" />
+                <ExitIco className="exitImg" />
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ const Sidebar: React.FC = () => {
             height="40"
             alt="Monica Geller"
           />
-          <span>{user?.data.fullName}</span>
+          <span>{user?.data.name}</span>
         </div>
       </div>
     </div>

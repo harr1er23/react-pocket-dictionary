@@ -9,7 +9,7 @@ import App from "./App";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 
-document.body.classList.add("dark");
+// document.body.classList.add("dark");
 const rootElem = document.getElementById("root");
 
 if (rootElem) {

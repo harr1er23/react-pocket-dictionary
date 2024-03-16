@@ -5,10 +5,10 @@
 }
 
 body {
-  --main-bg: #2bbc99;
-  --item-hover: #2bbc99;
-  --tertiary-bg: #2bbc99;
-  --secondary-bg: #25a184;
+  --main-bg: #f4cbc6;
+  --item-hover: #f4afab;
+  --tertiary-bg: #f4cbc6;
+  --secondary-bg: #f4afab;
   --main-container-bg: #fff;
   --container-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --text-color: #00071d;
@@ -18,6 +18,9 @@ body {
   --error-toast: rgba(188, 43, 43, 0.318);
   --success-toast: rgba(43, 188, 154, 0.7);
   --word-bg: #fff;
+
+
+  --button-bg: #f4afab;
 }
 
 body.dark {
@@ -32,9 +35,11 @@ body.dark {
   --container-shadow: rgba(#131c31, 0.2) 0px 7px 29px 0px;
   --place-holder-color: grey;
   --error-toast: rgba(188, 43, 43, 0.318);
-  --success-toast: rgba(54, 65, 94, 0.7);
+  --success-toast: rgba(43, 188, 154, 0.7);
   --input-hover: #1c2339;
   --word-bg: #36415e;
+
+  --button-bg: #1c2339;
 }
 
 html,
