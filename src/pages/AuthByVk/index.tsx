@@ -13,9 +13,10 @@ const AuthByVk = () => {
       <Auth
         options={{
           onAuth: async(user: any) => {
+            console.log(user);
             const { data } = await axios.post(
                 "https://9854dac21e0f0eee.mokky.dev/users",
-                { id: user.uid, name: user.first_name, email: "", password: ""}
+                {name: user.first_name, email: "", password: ""}
               );
             console.log(data);
              // dispatch(setUser({
