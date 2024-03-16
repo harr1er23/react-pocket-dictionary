@@ -5,7 +5,7 @@ export type UserProps = {
   token: string,
   data: {
     id: number,
-    fullName: string,
+    name: string,
     email: string
   }
 }

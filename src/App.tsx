@@ -10,12 +10,20 @@ import Settings from "./pages/Settings";
 import Exercises from "./pages/Exercises";
 import Dictionary from "./pages/Dictionary";
 import Statistics from "./pages/Statistics";
-import { selectUser } from "./store/user/userSlice";
+import { selectUser, setUser } from "./store/user/userSlice";
 import AppLayout from "./pages/AppLayout/idex";
 
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
+
+  React.useEffect(() => {
+    const value = localStorage.getItem("user");
+    if (typeof value === "string") {
+      const user = JSON.parse(value);
+      dispatch(setUser(user));
+    }
+  }, [dispatch]);
 
   return (
     <>
@@ -39,7 +47,7 @@ function App() {
           <Route
             path="/auth"
             element={
-              user === null ? (
+              user !== null ? (
                 <Navigate replace to="/app/dictionary" />
               ) : (
                 <Auth />
@@ -49,14 +57,14 @@ function App() {
           <Route
             path="/app/*"
             element={
-              user === null ? <AppLayout /> : <Navigate replace to="/auth" /> 
+              user !== null ? <AppLayout /> : <Navigate replace to="/auth" /> 
             }
           >
-            <Route path="dictionary" element={user === null ? (<Dictionary />) : (<Navigate replace to="/auth" />)}></Route>
-          <Route path="exercises" element={user === null ? (<Exercises />) : (<Navigate replace to="/auth" />)}></Route>
-          <Route path="statistics" element={user === null ? (<Statistics />) : (<Navigate replace to="/auth" />)}></Route>
-          <Route path="settings" element={user === null ? (<Settings />) : (<Navigate replace to="/auth" />)}></Route>
-          <Route path="profile" element={user === null ? (<Profile />) : (<Navigate replace to="/auth" />)}></Route>
+            <Route path="dictionary" element={<Dictionary />}></Route>
+          <Route path="exercises" element={<Exercises />}></Route>
+          <Route path="statistics" element={<Statistics />}></Route>
+          <Route path="settings" element={<Settings />}></Route>
+          <Route path="profile" element={<Profile />}></Route>
           </Route>
         </Routes>
       </div>
