@@ -3,6 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import VK, { Auth } from "react-vk";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import "./Login.scss";
 
@@ -10,26 +12,57 @@ import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
 
 import { useAppDispatch } from "../../store/store";
 import { setUser } from "../../store/user/userSlice";
+import FormError from "../FormError";
 
 type LoginProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+// type VkUserProps = {
+//   payload: {
+//     auth: number;
+//     token: string;
+//     ttl: number;
+//     type: string;
+//     user: {
+//       id: number;
+//       first_name: string;
+//       last_name: string;
+//       avatar: string;
+//       phone: string;
+//     };
+//     uuid: string;
+//     oauthProvider?: string;
+//   };
+// };
+
+type LoginForm = {
+  email: string;
+  password: string;
 };
 
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    reset,
+  } = useForm<LoginForm>({
+    mode: "onBlur",
+  });
+
+  const [isAuthorized, setIsAuthorized] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const onClickLogin = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const submit: SubmitHandler<LoginForm> = async (values) => {
     try {
+      const email = values.email;
+      const password = values.password;
       setIsLoading(true);
-      event?.preventDefault();
       const { data } = await axios.post(
         "https://9854dac21e0f0eee.mokky.dev/auth",
         { email, password }
@@ -48,6 +81,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
       localStorage.setItem("user", JSON.stringify(data));
       setIsLoading(false);
       toast.success("Вы вошли в аккаунт!");
+      reset();
       navigate("/adminPanel/drafts");
     } catch (err: any) {
       console.log(err);
@@ -64,30 +98,44 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         <h2>Account Login</h2>
       </header>
 
-      <form>
+      <form onSubmit={handleSubmit(submit)}>
         <div className="form-row">
           <input
+            {...register("email", {
+              required: "Поле обязательно к заполнению!",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Не валидная почта!",
+              },
+            })}
             type="text"
-            required
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
           />
-          <span>Username or Email</span>
+          <span>Email</span>
         </div>
+        {errors?.email && (
+          <div className={"errorBackground"}>{errors?.email.message || "Error"}</div>
+        )}
         <div className="form-row">
           <input
+            {...register("password", {
+              required: "Поле обязательно к заполнению!",
+              minLength: {
+                value: 6,
+                message: "Пароль должен быть не менее 6 символов!",
+              },
+            })}
             type="password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
           />
           <span>Password</span>
         </div>
+        {errors?.password && (
+          <div className={"errorBackground"}>{errors?.password.message || "Error"}</div>
+        )}
         <div className="form-row"></div>
         <div className="form-row">
           <button
+            disabled={!isValid}
             className={"registration"}
-            onClick={(event) => onClickLogin(event)}
             type="submit"
           >
             {isLoading ? <ClipLoader color="white" /> : "Login!"}
@@ -114,14 +162,28 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         </header>
         <ul>
           <li>
-            <a href="#" className="facebook">
+            {/* <a href="#" className="facebook">
               <VkontacteIco /> Vkontakte
-            </a>
+            </a> */}
+            <VK apiId={51878430} className="custom-vk-button">
+              <Auth
+                options={{
+                  onAuth: (user: any) => {
+                    console.log(user);
+                  },
+                }}
+              />
+            </VK>
           </li>
           <li>
             <a href="#" className="twitter">
               <VkontacteIco /> Yandex
             </a>
+            {/* <YandexLogin
+              clientId="3aa6730c2b4a42df820a424be3f221c7"
+              onSuccess={responseHandler}
+              onFailure={responseHandler}
+            /> */}
           </li>
         </ul>
       </div>
