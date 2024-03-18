@@ -5,8 +5,6 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import VKAuthButton from 'react-vk-auth-window'
-
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
