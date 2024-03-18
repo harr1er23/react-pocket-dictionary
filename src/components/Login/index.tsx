@@ -5,6 +5,8 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import VKConnect from "@vkontakte/vk-connect";
+
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
@@ -91,9 +93,20 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
-  // const authBuyVk = async () => {
-  //   const resp = await axios.get(`https://api.vk.ru/method/users.get?<параметры>`);
-  // }
+  const handleLogin = async () => {
+    try {
+      const data = await VKConnect.send("VKWebAppGetAuthToken", {
+        app_id: 51878430,
+        scope: "email", // запрашиваем доступ к email
+      });
+      const userInfo = await VKConnect.send("VKWebAppGetUserInfo", {});
+      // Теперь у вас есть токен и информация о пользователе, которые вы можете отправить на ваш сервер для аутентификации
+      console.log(data);
+      console.log(userInfo);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="contact-wrapper">
@@ -164,13 +177,14 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <h2>Login with your Social Account</h2>{" "}
         </header>
         <ul>
-          <li>
+          <li onClick={handleLogin}>
+            <VkontacteIco /> Vkontakte
             {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
             </Link> */}
-            <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/auth&scope=4194304&display=page" className="facebook">
+            {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/auth&scope=4194304&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
-            </a>
+            </a> */}
           </li>
           <li>
             <a href="#" className="twitter">
