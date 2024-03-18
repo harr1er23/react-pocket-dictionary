@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import VKAuthButton from 'react-vk-auth-window'
+import {VKAuthButtonCustom} from 'react-vk-auth-window'
 
 import "./Login.scss";
 
@@ -170,7 +170,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
             </Link> */}
-            {<VKAuthButton vkId="51878430" callBack={authByVk} ><div><VkontacteIco /> Vkontakte</div></VKAuthButton>
+            {<VKAuthButtonCustom vkId="51878430" callBack={authByVk} ><div><VkontacteIco /> Vkontakte</div></VKAuthButtonCustom>
             }
             {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
