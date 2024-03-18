@@ -17,24 +17,6 @@ type LoginProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// type VkUserProps = {
-//   payload: {
-//     auth: number;
-//     token: string;
-//     ttl: number;
-//     type: string;
-//     user: {
-//       id: number;
-//       first_name: string;
-//       last_name: string;
-//       avatar: string;
-//       phone: string;
-//     };
-//     uuid: string;
-//     oauthProvider?: string;
-//   };
-// };
-
 type LoginForm = {
   email: string;
   password: string;
@@ -178,9 +160,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             </Link>
           </li>
           <li>
-            {/* <a href="#" className="twitter">
+            <a href="#" className="twitter">
               <YandexIco /> Yandex
-            </a> */}
+            </a>
           </li>
         </ul>
       </div>
