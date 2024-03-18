@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import VkLogin from "react-vkontakte-login";
+import VKAuthButton from 'react-vk-auth-window'
 
 import "./Login.scss";
 
@@ -93,9 +93,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
-  const responseVk = (resp: any) => {
-    console.log(resp);
-  };
+  const authByVk = (data: any) =>{
+    console.log(data)
+}
 
   return (
     <div className="contact-wrapper">
@@ -170,15 +170,8 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
             </Link> */}
-            <VkLogin
-              apiId="51878430"
-              callback={responseVk}
-              render={(renderProps: any) => (
-                <div onClick={renderProps.onClick}>
-                   <VkontacteIco /> Vkontakte
-                </div>
-              )}
-            />
+            {<VKAuthButton vkId="51878430" callBack={authByVk} ><div><VkontacteIco /> Vkontakte</div></VKAuthButton>
+            }
             {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
             </a> */}
