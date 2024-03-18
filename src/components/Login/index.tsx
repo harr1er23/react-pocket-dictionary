@@ -177,7 +177,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <h2>Login with your Social Account</h2>{" "}
         </header>
         <ul>
-          <li onClick={handleLogin}>
+          <li onClick={() => handleLogin()}>
             <a href="#" className="facebook">
               <VkontacteIco /> Vkontakte
             </a>
