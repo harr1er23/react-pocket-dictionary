@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import {VKAuthButtonCustom} from 'react-vk-auth-window'
+import { YandexLogin } from "react-yandex-login";
 
 import "./Login.scss";
 
@@ -43,8 +43,16 @@ type LoginForm = {
 };
 
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
+  const clientID = "3aa6730c2b4a42df820a424be3f221c7";
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [userData, setUserData] = React.useState(undefined);
+
+  const loginSuccess = (userData: any) => {
+    console.log("User Data: ", userData);
+    setUserData(userData);
+  };
 
   const {
     register,
@@ -93,9 +101,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
-  const authByVk = (data: any) =>{
-    console.log(data)
-}
+  const responseVk = (resp: any) => {
+    console.log(resp);
+  };
 
   return (
     <div className="contact-wrapper">
@@ -166,18 +174,20 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <h2>Login with your Social Account</h2>{" "}
         </header>
         <ul>
-            {/* <Link to="/authByVk" className="facebook">
-              <VkontacteIco /> Vkontakte
-            </Link> */}
-            {<VKAuthButtonCustom vkId="51878430" callBack={authByVk} ><li><a href="#" className="facebook"><VkontacteIco /> Vkontakte</a></li></VKAuthButtonCustom>
-            }
-            {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page" className="facebook">
-              <VkontacteIco /> Vkontakte
-            </a> */}
           <li>
-            <a href="#" className="twitter">
+            <Link to="/authByVk" className="facebook">
+              <VkontacteIco /> Vkontakte
+            </Link>
+          </li>
+          <li>
+            {/* <a href="#" className="twitter">
               <YandexIco /> Yandex
-            </a>
+            </a> */}
+            {!userData && (
+              <YandexLogin clientID={clientID} onSuccess={loginSuccess}>
+                <button>Yandex Login</button>
+              </YandexLogin>
+            )}
             {/* <YandexLogin
               clientId="3aa6730c2b4a42df820a424be3f221c7"
               onSuccess={responseHandler}

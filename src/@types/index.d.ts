@@ -4,4 +4,4 @@ declare module "*module.scss";
 declare module "*.scss";
 declare module "lodash.debounce";
 declare module "react-vk";
-declare module "react-vk-auth-window";
+declare module "react-yandex-login";
