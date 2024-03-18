@@ -16,33 +16,34 @@ const AuthByVk = () => {
         options={{
           onAuth: async (user: any) => {
             try {
-              const { data } = await axios.post(
-                "https://9854dac21e0f0eee.mokky.dev/auth",
-                { name: user.first_name, email: "", password: "" }
-              );
-              dispatch(
-                setUser({
-                  token: data.token,
-                  data: {
-                    id: data.data.id,
-                    name: data.data.name,
-                    email: data.data.email,
-                  },
-                })
-              );
-              localStorage.clear();
-              localStorage.setItem(
-                "user",
-                JSON.stringify({
-                  token: data.token,
-                  data: {
-                    id: data.data.id,
-                    name: data.data.name,
-                    email: data.data.email,
-                  },
-                })
-              );
-              navigate("/app/dictionary");
+              console.log(user)
+              // const { data } = await axios.post(
+              //   "https://9854dac21e0f0eee.mokky.dev/register",
+              //   { name: user.first_name, email: "", password: "" }
+              // );
+              // dispatch(
+              //   setUser({
+              //     token: data.token,
+              //     data: {
+              //       id: data.data.id,
+              //       name: data.data.name,
+              //       email: data.data.email,
+              //     },
+              //   })
+              // );
+              // localStorage.clear();
+              // localStorage.setItem(
+              //   "user",
+              //   JSON.stringify({
+              //     token: data.token,
+              //     data: {
+              //       id: data.data.id,
+              //       name: data.data.name,
+              //       email: data.data.email,
+              //     },
+              //   })
+              // );
+              // navigate("/app/dictionary");
             } catch (err: any) {
               console.log(err);
               if (err.responce.status === 401) {
