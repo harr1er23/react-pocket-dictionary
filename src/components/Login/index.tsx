@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { jwtDecode } from "jwt-decode";
 
 import VKAuthButton from 'react-vk-auth-window'
 
@@ -40,6 +41,13 @@ type LoginProps = {
 type LoginForm = {
   email: string;
   password: string;
+};
+
+export type JwtProps = {
+  exp: string;
+  nickname: string;
+  roles: string[];
+  sub: string;
 };
 
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
@@ -95,6 +103,8 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
 
   const authByVk = (data: any) =>{
     console.log(data)
+    const decoded = jwtDecode(data.access_token);
+    console.log(decoded);
 }
 
   return (
