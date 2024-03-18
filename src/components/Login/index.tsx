@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import "./Login.scss";
@@ -43,6 +43,7 @@ type LoginForm = {
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   React.useEffect(() => {
     const getCodeFromURL = () => {
