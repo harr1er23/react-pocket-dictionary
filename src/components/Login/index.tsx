@@ -5,8 +5,6 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { YandexLogin } from "react-yandex-login";
-
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
@@ -183,16 +181,6 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             {/* <a href="#" className="twitter">
               <YandexIco /> Yandex
             </a> */}
-            {!userData && (
-              <YandexLogin clientID={clientID} onSuccess={loginSuccess}>
-                <button>Yandex Login</button>
-              </YandexLogin>
-            )}
-            {/* <YandexLogin
-              clientId="3aa6730c2b4a42df820a424be3f221c7"
-              onSuccess={responseHandler}
-              onFailure={responseHandler}
-            /> */}
           </li>
         </ul>
       </div>
