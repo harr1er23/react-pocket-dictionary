@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { jwtDecode } from "jwt-decode";
 
 import VKAuthButton from 'react-vk-auth-window'
 
@@ -41,13 +40,6 @@ type LoginProps = {
 type LoginForm = {
   email: string;
   password: string;
-};
-
-export type JwtProps = {
-  exp: string;
-  nickname: string;
-  roles: string[];
-  sub: string;
 };
 
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
@@ -101,11 +93,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
-  const authByVk = (data: any) =>{
-    console.log(data)
-    const decoded = jwtDecode(data.access_token);
-    console.log(decoded);
-}
+  // const authBuyVk = async () => {
+  //   const resp = await axios.get(`https://api.vk.ru/method/users.get?<параметры>`);
+  // }
 
   return (
     <div className="contact-wrapper">
@@ -180,11 +170,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
             </Link> */}
-            {<VKAuthButton vkId="51878430" callBack={authByVk} ><div><VkontacteIco /> Vkontakte</div></VKAuthButton>
-            }
-            {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page" className="facebook">
+            <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=4194304&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
-            </a> */}
+            </a>
           </li>
           <li>
             <a href="#" className="twitter">
