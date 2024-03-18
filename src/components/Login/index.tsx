@@ -49,7 +49,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
       const searchParams = new URLSearchParams(location.search);
       const code = searchParams.get("code");
       if (code) {
-        // Если есть код в URL, обработаем его
+        console.log(code)
         handleCodeExchange(code);
       }
     };
