@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+
+import VKConnect from "@vkontakte/vk-connect";
 
 import "./Login.scss";
 
@@ -43,46 +45,6 @@ type LoginForm = {
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  React.useEffect(() => {
-    const getCodeFromURL = () => {
-      const searchParams = new URLSearchParams(location.search);
-      const code = searchParams.get("code");
-      if (code) {
-        console.log(code)
-        handleCodeExchange(code);
-      }
-    };
-    getCodeFromURL();
-  }, [location.search]);
-
-  const handleCodeExchange = async (code: string) => {
-    try {
-      const response = await axios.get(`https://oauth.vk.com/access_token`, {
-            params: {
-                client_id: 51878430,
-                client_secret: "Gr4hUuu8L5Mz6Fwd9B8n",
-                redirect_uri: "https://react-pocket-dictionary.vercel.app/auth",
-                code: code
-            }
-        });
-
-        const accessToken = response.data.access_token;
-
-        const userInfoResponse = await axios.get(`https://api.vk.com/method/users.get`, {
-            params: {
-                access_token: accessToken,
-                fields: "first_name,photo_200_orig",
-                email: 1
-            }
-        });
-
-        console.log(userInfoResponse);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const {
     register,
@@ -128,6 +90,21 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         toast.error("Пароль или логин не верны!");
       }
       setIsLoading(false);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const data = await VKConnect.send("VKWebAppGetAuthToken", {
+        app_id: 51878430,
+        scope: "email", // запрашиваем доступ к email
+      });
+      const userInfo = await VKConnect.send("VKWebAppGetUserInfo", {});
+      // Теперь у вас есть токен и информация о пользователе, которые вы можете отправить на ваш сервер для аутентификации
+      console.log(data);
+      console.log(userInfo);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -200,10 +177,16 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <h2>Login with your Social Account</h2>{" "}
         </header>
         <ul>
-          <li>
-            <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/auth&scope=4194304&display=page" className="facebook">
+          <li onClick={() => handleLogin}>
+            <a href="#" className="facebook">
               <VkontacteIco /> Vkontakte
             </a>
+            {/* <Link to="/authByVk" className="facebook">
+              <VkontacteIco /> Vkontakte
+            </Link> */}
+            {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/auth&scope=4194304&display=page" className="facebook">
+              <VkontacteIco /> Vkontakte
+            </a> */}
           </li>
           <li>
             <a href="#" className="twitter">
