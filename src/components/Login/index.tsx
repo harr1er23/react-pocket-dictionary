@@ -91,11 +91,6 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
-  const onClickAuthByVk = async () => {
-    const resp = await axios.get('https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page');
-    console.log(resp);
-  }
-
   return (
     <div className="contact-wrapper">
       <header className="login-cta">
@@ -165,11 +160,11 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <h2>Login with your Social Account</h2>{" "}
         </header>
         <ul>
-          <li onClick={() => onClickAuthByVk()}>
+          <li>
             {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
             </Link> */}
-             <a href="" className="facebook">
+             <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://oauth.vk.com/blank.html&scope=22&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
             </a>
           </li>
