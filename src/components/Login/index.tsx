@@ -168,7 +168,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
             </Link> */}
-            <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=4194304&display=page" className="facebook">
+            <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/auth&scope=4194304&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
             </a>
           </li>
