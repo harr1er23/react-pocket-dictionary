@@ -66,6 +66,16 @@ function App() {
             }
           ></Route>
           <Route
+            path="/registrationByVk"
+            element={
+              user !== null ? (
+                <Navigate replace to="/app/dictionary" />
+              ) : (
+                <AuthByVk />
+              )
+            }
+          ></Route>
+          <Route
             path="/app/*"
             element={
               user !== null ? <AppLayout /> : <Navigate replace to="/auth" />

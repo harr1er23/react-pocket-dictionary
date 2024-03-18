@@ -8,10 +8,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
+import { ReactComponent as YandexIco } from "../../assets/ico/yandex.svg";
 
 import { useAppDispatch } from "../../store/store";
 import { setUser } from "../../store/user/userSlice";
-import FormError from "../FormError";
 
 type LoginProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -91,6 +91,10 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
+  const onClickAuthByVk = async () => {
+    navigate("https://oauth.vk.com/authorize?client_id=Gr4hUuu8L5Mz6Fwd9B8n&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&display=page");
+  }
+
   return (
     <div className="contact-wrapper">
       <header className="login-cta">
@@ -160,14 +164,17 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <h2>Login with your Social Account</h2>{" "}
         </header>
         <ul>
-          <li>
-            <Link to="/authByVk" className="facebook">
+          <li onClick={() => onClickAuthByVk()}>
+            {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
-            </Link>
+            </Link> */}
+             <a href="/" className="facebook">
+              <VkontacteIco /> Vkontakte
+            </a>
           </li>
           <li>
             <a href="#" className="twitter">
-              <VkontacteIco /> Yandex
+              <YandexIco /> Yandex
             </a>
             {/* <YandexLogin
               clientId="3aa6730c2b4a42df820a424be3f221c7"

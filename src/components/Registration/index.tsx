@@ -5,6 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
+import { Link } from "react-router-dom";
 
 type RegisterProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +18,6 @@ type RegisterForm = {
 };
 
 const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
-
   const {
     register,
     formState: { errors, isValid },
@@ -130,23 +130,23 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         </div>
       </form>
 
-      {/* <div className="socials-wrapper">
+      <div className="socials-wrapper">
         <header>
           <h2>Register with your Social Account</h2>{" "}
         </header>
         <ul>
-        <li>
-            <a href="#" className="facebook">
-            <VkontacteIco/> Vkontakte
-            </a>
+          <li>
+            <Link to="/registrationByVk" className="facebook">
+              <VkontacteIco /> Vkontakte
+            </Link>
           </li>
           <li>
             <a href="#" className="twitter">
-            <VkontacteIco/> Yandex
+              <VkontacteIco /> Yandex
             </a>
           </li>
         </ul>
-      </div> */}
+      </div>
     </div>
   );
 };
