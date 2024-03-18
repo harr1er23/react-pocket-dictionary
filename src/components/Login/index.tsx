@@ -5,6 +5,8 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import VkLogin from "react-vkontakte-login";
+
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
@@ -91,6 +93,10 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
     }
   };
 
+  const responseVk = (resp: any) => {
+    console.log(resp);
+  };
+
   return (
     <div className="contact-wrapper">
       <header className="login-cta">
@@ -112,7 +118,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <span>Email</span>
         </div>
         {errors?.email && (
-          <div className={"errorBackground"}>{errors?.email.message || "Error"}</div>
+          <div className={"errorBackground"}>
+            {errors?.email.message || "Error"}
+          </div>
         )}
         <div className="form-row">
           <input
@@ -128,15 +136,13 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <span>Password</span>
         </div>
         {errors?.password && (
-          <div className={"errorBackground"}>{errors?.password.message || "Error"}</div>
+          <div className={"errorBackground"}>
+            {errors?.password.message || "Error"}
+          </div>
         )}
         <div className="form-row"></div>
         <div className="form-row">
-          <button
-            disabled={!isValid}
-            className={"registration"}
-            type="submit"
-          >
+          <button disabled={!isValid} className={"registration"} type="submit">
             {isLoading ? <ClipLoader color="white" /> : "Login!"}
           </button>
         </div>
@@ -161,10 +167,19 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         </header>
         <ul>
           <li>
-            <Link to="/authByVk" className="facebook">
+            {/* <Link to="/authByVk" className="facebook">
               <VkontacteIco /> Vkontakte
-            </Link>
-             {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page" className="facebook">
+            </Link> */}
+            <VkLogin
+              apiId="51878430"
+              callback={responseVk}
+              render={(renderProps: any) => (
+                <div onClick={renderProps.onClick}>
+                   <VkontacteIco /> Vkontakte
+                </div>
+              )}
+            />
+            {/* <a href="https://oauth.vk.com/authorize?client_id=51878430&redirect_uri=https://react-pocket-dictionary.vercel.app/app/dictionary&scope=22&display=page" className="facebook">
               <VkontacteIco /> Vkontakte
             </a> */}
           </li>
