@@ -44,6 +44,45 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    const getCodeFromURL = () => {
+      const searchParams = new URLSearchParams(location.search);
+      const code = searchParams.get("code");
+      if (code) {
+        // Если есть код в URL, обработаем его
+        handleCodeExchange(code);
+      }
+    };
+    getCodeFromURL();
+  }, [location.search]);
+
+  const handleCodeExchange = async (code: string) => {
+    try {
+      const response = await axios.get(`https://oauth.vk.com/access_token`, {
+            params: {
+                client_id: 51878430,
+                client_secret: "Gr4hUuu8L5Mz6Fwd9B8n",
+                redirect_uri: "https://react-pocket-dictionary.vercel.app/auth",
+                code: code
+            }
+        });
+
+        const accessToken = response.data.access_token;
+
+        const userInfoResponse = await axios.get(`https://api.vk.com/method/users.get`, {
+            params: {
+                access_token: accessToken,
+                fields: "first_name,photo_200_orig",
+                email: 1
+            }
+        });
+
+        console.log(userInfoResponse);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const {
     register,
     formState: { errors, isValid },
