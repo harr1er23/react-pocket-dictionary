@@ -11,10 +11,8 @@ $colorDark: #3e3f5e;
 }
 
 body {
-  align-items: center;
   display: flex;
   font-family: $font, sans-serif;
-  justify-content: center;
 }
 
 .contact-wrapper {
@@ -23,6 +21,11 @@ body {
   border-radius: 0.75em;
   padding: 2em;
   width: 25em;
+
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform : translate(-50%, -50%);
 
   @media (max-width: 700px) {
     width: 22em;

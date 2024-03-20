@@ -11,7 +11,7 @@ type RegisterProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type RegisterForm = {
+export type RegisterForm = {
   email: string;
   name: string;
   password: string;
