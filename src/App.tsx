@@ -3,6 +3,8 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 
+import styles from "./index.scss";
+
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
@@ -38,7 +40,7 @@ function App() {
           },
         }}
       />
-      <div className="background">
+      <div className={styles.appBackground}>
         <Routes>
           <Route path="*" element={<NotFound />}></Route>
           <Route
