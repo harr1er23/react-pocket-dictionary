@@ -189,7 +189,7 @@ form {
       }
 
       &:focus {
-        border-color: #7b5dfa;
+        border-color: var(--main-bg);
         outline: none;
         &:invalid {
           box-shadow: none;

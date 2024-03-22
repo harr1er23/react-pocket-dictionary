@@ -19,7 +19,6 @@ body {
   --success-toast: rgba(43, 188, 154, 0.7);
   --word-bg: #fff;
 
-
   --button-bg: #88b5a1;
   // --button-disabled: #05d563a2;
 }
@@ -65,9 +64,15 @@ a {
 .appBackground {
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
 
-  @media(max-width: 700px){
+  @media (max-width: 700px) {
     margin-left: 10px;
+  }
+
+  .loader {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
   }
 }
