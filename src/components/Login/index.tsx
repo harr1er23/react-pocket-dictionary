@@ -169,7 +169,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <li>
             <a href="#" className="twitter">
               <LoginButton
-                botUsername={"@pocketDictionary_bot"}
+                botUsername={"pocketDictionary_bot"}
                 authCallbackUrl="https://react-pocket-dictionary.vercel.app"
                 buttonSize="medium"
                 cornerRadius={20} // 0 - 20
