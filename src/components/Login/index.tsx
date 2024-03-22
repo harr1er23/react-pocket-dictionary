@@ -170,7 +170,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
             <a href="#" className="twitter">
               <LoginButton
                 botUsername={"pocketDictionary_bot"}
-                authCallbackUrl="https://react-pocket-dictionary.vercel.app"
+                authCallbackUrl="https://react-pocket-dictionary.vercel.app/auth"
                 buttonSize="medium"
                 cornerRadius={20} // 0 - 20
                 showAvatar={true} // true | false
