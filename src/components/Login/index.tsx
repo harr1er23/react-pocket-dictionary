@@ -5,8 +5,6 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { LoginButton } from '@telegram-auth/react';
-
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
@@ -164,20 +162,6 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
           <li>
             <a href="#" className="twitter">
               <YandexIco /> Yandex
-            </a>
-          </li>
-          <li>
-            <a href="#" className="twitter">
-              <LoginButton
-                botUsername={"pocketDictionary_bot"}
-                buttonSize="medium"
-                cornerRadius={20} // 0 - 20
-                showAvatar={true} // true | false
-                lang="en"
-                onAuthCallback={(data) => {
-                  console.log(data);
-              }}
-              />
             </a>
           </li>
         </ul>
