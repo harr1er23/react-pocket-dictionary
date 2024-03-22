@@ -1,0 +1,93 @@
+.backgroundWord {
+  display: flex;
+  flex-wrap: wrap;
+  width: 20%;
+  margin: 5px 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--word-bg);
+  background-color: var(--word-bg);
+  color: var(--tertiary-bg);
+  border-radius: 10px;
+
+  @media(max-width: 1300px){
+    width: 30%;
+  }
+
+  @media(max-width: 955px){
+    width: 40%;
+  }
+
+  @media (max-width: 768px) {
+    width: 45%;
+  }
+
+  @media(max-width: 520px){
+    width: 70%;
+    margin-left: 50px;
+  }
+
+  @media(max-width: 320px){
+    width: 90%;
+  }
+
+  .wordContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .wordHeader {
+      display: flex;
+      justify-content: space-between;
+
+      .wordHeaderLeft {
+        display: flex;
+        align-items: center;
+        .editImg {
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+        }
+        .soundImg {
+          width: 20px;
+          height: 20px;
+          margin: 0 5px;
+          cursor: pointer;
+        }
+      }
+
+      .wordHeaderRight {
+        .deleteImg {
+          margin-left: auto;
+          width: 25px;
+          height: 25px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .translateBlock {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: 10px;
+      width: 80%;
+    }
+
+    .tagBlock {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+
+      .tags {
+        font-size: 12px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .percentCircle {
+        width: 30px;
+        height: 30px;
+
+      }
+    }
+  }
+}

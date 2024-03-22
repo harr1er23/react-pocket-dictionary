@@ -1,0 +1,16 @@
+.tagBackground{
+    display: flex;
+    background-color: var(--main-container-bg);
+    border: 1px solid var(--secondary-bg);
+    border-radius: 20px;
+    padding: 5px;
+    margin: 5px 5px;
+    cursor: pointer;
+    color: var(--tertiary-bg);
+
+    &:hover{
+        border: 1px solid var(--secondary-bg);
+        background-color: var(--secondary-bg);
+        color: var(--text-hover-color);
+    }
+}

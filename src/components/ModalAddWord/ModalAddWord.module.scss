@@ -1,0 +1,97 @@
+.modalContent {
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+  .modalHeader {
+    border-bottom: 0;
+  }
+
+  .tagsBlock {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    @media (max-width: 900px) {
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
+
+    .existingTagBackground {
+      border: 1px solid var(--secondary-bg);
+      background-color: var(--secondary-bg);
+      color: var(--text-hover-color);
+      border-radius: 20px;
+      padding: 5px;
+      margin: 5px 5px 0 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--main-container-bg);
+        border: 1px solid var(--secondary-bg);
+        color: var(--tertiary-bg);
+      }
+    }
+
+    .tagBackground {
+      background-color: var(--main-container-bg);
+      border: 1px solid var(--secondary-bg);
+      border-radius: 20px;
+      padding: 5px;
+      margin: 0 5px;
+      cursor: pointer;
+      color: var(--tertiary-bg);
+
+      &:hover {
+        border: 1px solid var(--secondary-bg);
+        background-color: var(--secondary-bg);
+        color: var(--text-hover-color);
+      }
+    }
+  }
+
+  .examplesBlock {
+    display: flex;
+    flex-direction: column;
+
+    .example {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: var(--secondary-bg);
+      border: 1px solid var(--secondary-bg);
+      border-radius: 10px;
+      padding: 5px;
+      margin: 2px 0;
+      color: var(--place-holder-color);
+
+      .editImg {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 85%;
+        cursor: pointer;
+
+        @media (max-width: 400px) {
+          left: 80%;
+        }
+      }
+
+      .removeImg {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        left: 90%;
+        cursor: pointer;
+
+        @media (max-width: 400px) {
+          left: 87%;
+        }
+      }
+    }
+  }
+
+  .modalFooter {
+    display: flex;
+    justify-content: space-between;
+    border-top: 0;
+  }
+}
