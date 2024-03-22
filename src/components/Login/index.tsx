@@ -175,6 +175,9 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
                 cornerRadius={20} // 0 - 20
                 showAvatar={true} // true | false
                 lang="en"
+                onAuthCallback={(data) => {
+                  console.log(data);
+              }}
               />
             </a>
           </li>
