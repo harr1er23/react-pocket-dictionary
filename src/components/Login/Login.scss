@@ -10,17 +10,14 @@ $colorDark: #3e3f5e;
   box-sizing: border-box;
 }
 
-body {
-  display: flex;
-  font-family: $font, sans-serif;
-}
-
 .contact-wrapper {
   background: #fff;
   box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.15);
   border-radius: 0.75em;
   padding: 2em;
   width: 25em;
+
+  font-family: $font, sans-serif;
 
   left: 50%;
   top: 50%;

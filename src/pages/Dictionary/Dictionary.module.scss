@@ -1,0 +1,98 @@
+.background{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0 0 90px;
+    margin-left: 30px;
+    color: var(--text-hover-color);
+
+    .backgroundWords{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .modalContent{
+        background-color: var(--main-container-bg);
+        .modalHeader{
+            border-bottom: 0;
+        }
+        .tagsBlock{
+            display: flex;
+            overflow-y: hidden;
+            overflow-x: auto;
+
+            &::-webkit-scrollbar {
+                width: 0;
+              }
+          
+
+
+            .tagBackground{
+                background-color: var(--main-container-bg);
+                border: 1px solid var(--secondary-bg);
+                border-radius: 20px;
+                padding: 5px;
+                margin: 5px 5px;
+                cursor: pointer;
+                color: var(--tertiary-bg);
+
+                &:hover{
+                    border: 1px solid var(--secondary-bg);
+                    background-color: var(--secondary-bg);
+                    color: var(--text-hover-color);
+                }
+            }
+        }
+
+        .modalFooter{
+            border-top: 0;
+        }
+    }
+
+    .soundImg{
+        width: 30px;
+        position: absolute;
+        left: 85%;
+        top: 10%;
+        cursor: pointer;
+    }
+
+    p{
+        color: var(--secondary-bg);
+    }
+
+    .addWordButton{
+        position: fixed;
+        left: 90%;
+        bottom: 8%;
+        width: 70px;
+        height: 70px;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--secondary-bg);
+        cursor: pointer;
+
+        div{
+            font-size: 30px;
+            color: var(--main-bg)
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .background{
+        padding: 15px 0 0 0px;
+        margin-left: 0px;
+
+        h2{
+            margin-left: 50px;
+        }
+
+        .addWordButton{
+            left: 75%;
+            bottom: 5%;
+        }
+    }
+}

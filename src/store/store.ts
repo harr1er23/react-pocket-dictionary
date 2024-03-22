@@ -3,11 +3,15 @@ import { useDispatch } from "react-redux";
 
 import userSlice from './user/userSlice';
 import themeSlice from './theme/themeSlice';
+import tagsSlice from "./tags/tagsSlice";
+import dictionaryWordsSlice from "./dictionaryWords/dictionaryWordsSlice"
 
 export const store = configureStore({
   reducer: {
     userSlice,
-    themeSlice
+    themeSlice,
+    tagsSlice,
+    dictionaryWordsSlice,
   },
 })
 
