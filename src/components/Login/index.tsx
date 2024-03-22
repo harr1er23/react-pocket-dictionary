@@ -23,16 +23,8 @@ type LoginForm = {
 };
 
 const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
-  const clientID = "3aa6730c2b4a42df820a424be3f221c7";
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const [userData, setUserData] = React.useState(undefined);
-
-  const loginSuccess = (userData: any) => {
-    console.log("User Data: ", userData);
-    setUserData(userData);
-  };
 
   const {
     register,
@@ -42,8 +34,6 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
   } = useForm<LoginForm>({
     mode: "onBlur",
   });
-
-  const [isAuthorized, setIsAuthorized] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -79,10 +69,6 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
       }
       setIsLoading(false);
     }
-  };
-
-  const responseVk = (resp: any) => {
-    console.log(resp);
   };
 
   return (
