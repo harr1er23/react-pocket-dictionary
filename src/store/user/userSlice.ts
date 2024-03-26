@@ -6,7 +6,9 @@ export type UserProps = {
   data: {
     id: number,
     name: string,
-    email: string
+    email: string,
+    level: number,
+    experience: number,
   }
 }
 

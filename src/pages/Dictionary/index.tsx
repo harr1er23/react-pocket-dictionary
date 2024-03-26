@@ -1,11 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-// import Button from "react-bootstrap/Button";
-// import Modal from "react-bootstrap/Modal";
-
-// import ModalAddWord from "../../components/ModalAddWord";
 // import ModalWithScroll from "../../components/ModalWithScroll";
 
 import styles from "./Dictionary.module.scss";
@@ -15,13 +10,11 @@ import WordBlock from "../../components/WordBlock";
 import { fetchDictionaryWords, selectDictionaryWords } from "../../store/dictionaryWords/dictionaryWordsSlice";
 
 import { selectUser, setUser } from "../../store/user/userSlice";
-import { fetchTags } from "../../store/tags/tagsSlice";
 import { useAppDispatch } from "../../store/store";
 import ModalAddWord from "../../components/ModalAddWord";
 
 const Dictionary = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { user } = useSelector(selectUser);
 

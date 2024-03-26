@@ -2,32 +2,335 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px 0 0 90px;
+  padding: 20px 25px 0 90px;
   margin-left: 30px;
-  width: 100%;
+  color: var(--text-color);
 
-  .profileHeader {
+  @media (max-width: 700px) {
+    padding: 20px 25px 0 0px;
+  }
+
+  .experience {
     display: flex;
+    justify-content: space-between;
     background-color: var(--word-bg);
     padding: 20px 50px;
     border-radius: 10px;
+    margin-bottom: 30px;
 
-    .profilePhoto {
-      width: 50px;
-      height: 50px;
-      border-radius: 100%;
+    @media (max-width: 600px) {
+      padding: 5px 10px;
     }
 
-    .profileInfo {
+    .leftBar {
       display: flex;
-      flex-direction: column;
+
+      .experienceLevel {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        color: var(--text-color);
+
+        .medalIco {
+          svg {
+            width: 50px;
+            height: 50px;
+          }
+        }
+
+        .levelValue {
+          font-size: 24px;
+        }
+      }
+
+      .experienceBar {
+        display: flex;
+        flex-direction: column;
+        color: var(--text-color);
+      }
+    }
+
+    .rightBar {
+      display: flex;
+
+      .hints {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 5px 10px;
+        border-radius: 10px;
+        background-color: var(--main-bg);
+        margin-right: 10px;
+        cursor: pointer;
+        color: white;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        @media (max-width: 600px) {
+          font-size: 12px;
+        }
+
+        svg {
+          width: 30px;
+          height: 30px;
+
+          @media (max-width: 600px) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .money {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 5px 10px;
+        border-radius: 10px;
+        background-color: var(--main-bg);
+        margin-right: 10px;
+        cursor: pointer;
+        color: white;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        @media (max-width: 600px) {
+          font-size: 12px;
+        }
+
+        svg {
+          width: 30px;
+          height: 30px;
+
+          @media (max-width: 600px) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .shopButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 10px;
+        border-radius: 10px;
+        background-color: var(--main-bg);
+        cursor: pointer;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        @media (max-width: 600px) {
+          font-size: 12px;
+        }
+
+        svg {
+          width: 30px;
+          height: 30px;
+
+          @media (max-width: 600px) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        &:hover {
+          svg {
+            path {
+              fill: var(--secondary-bg);
+              stroke: var(--secondary-bg);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .profileHeader {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    .profileContent {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+
+      .profilePhoto {
+        margin-right: 50px;
+        position: relative;
+
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          position: relative;
+        }
+
+        .addPhotoButton {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: 100px;
+          height: 100px;
+          display: none;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          font-size: 24px;
+          color: var(--text-color);
+          cursor: pointer;
+          background-color: rgba(255, 255, 255, 0.381);
+        }
+
+        &:hover {
+          .addPhotoButton {
+            display: flex;
+          }
+        }
+      }
+
+      .profileInfo {
+        display: flex;
+        flex-direction: column;
+
+        .formRow {
+          .formInput {
+            position: relative;
+            .editImg {
+              margin: 6px 0;
+              position: absolute;
+              left: 85%;
+              cursor: pointer;
+              width: 25px;
+              height: 25px;
+
+              @media (max-width: 400px) {
+                left: 80%;
+              }
+            }
+          }
+        }
+
+        .saveInfoButton {
+          background-color: var(--button-bg);
+          border: 1px solid var(--button-bg);
+          color: #fff;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 16px;
+          transition: all 300ms ease;
+          border-radius: 0.5em;
+          font-family: inherit;
+          padding: 0.5em 0.5em;
+
+          &:focus {
+            border: 0.1em solid var(--main-bg);
+            outline: none;
+          }
+
+          &:hover {
+            color: var(--main-bg);
+            background-color: var(--word-bg);
+            border: 1px solid var(--main-bg);
+          }
+
+          &:disabled {
+            background-color: var(--button-disabled);
+          }
+        }
+      }
     }
   }
 
   .profileAchivement {
     display: flex;
+    flex-direction: column;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
 
-    .achivementBlock {
+    .achivementsList {
+      display: flex;
+      padding-bottom: 5px;
+      &::-webkit-scrollbar {
+        height: 7px;
+        background-color: var(--item-hover);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: var(--tertiary-bg);
+      }
+
+      overflow-x: auto;
+      white-space: nowrap;
+
+      .achivementBlock {
+        border: 1px solid var(--main-bg);
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        margin-right: 10px;
+
+        .achivementsIco {
+          margin-right: 10px;
+          img {
+            width: 50px;
+            height: 50px;
+          }
+        }
+
+        .achivementsInfo {
+          display: flex;
+          flex-direction: column;
+
+          h5 {
+          }
+
+          .achivementText {
+            color: rgba(0, 0, 0, 0.714);
+            margin-bottom: 5px;
+          }
+
+          .achivementValue {
+          }
+
+          .achivementButton {
+            border-radius: 5px;
+            background-color: green;
+            border: 1px solid green;
+
+            color: white;
+
+            &:hover {
+              background-color: rgba(0, 108, 0, 0.58);
+              border: 1px solid rgba(0, 108, 0, 0.58);
+            }
+
+            &:disabled {
+              background-color: rgba(0, 73, 0, 0.58);
+            }
+
+            svg{
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -9,7 +9,7 @@ import debounce from "lodash.debounce";
 import styles from "./ModalAddWord.module.scss";
 
 //assets
-import sound from "../../assets/ico/sound.png";
+import { ReactComponent as SoundIco} from "../../assets/ico/sound.svg";
 
 //components
 import Input from "../Input";
@@ -31,7 +31,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
   //контроллер состояния инпута ввода примеров
   const [example, setExample] = React.useState("");
   //контроллер состояния инпута ввода транскрипции
-  const [transcription, setTranscription] = React.useState('');
+  const [transcription, setTranscription] = React.useState("");
 
   // const updateWordInputValue = React.useCallback(
   //   debounce((str) => {
@@ -254,109 +254,37 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
             ></button>
           </div>
           <div className="modal-body">
-            <Input
-              value={word}
-              onChangeFunction={setWord}
-              textPlaceholder={"Слово*"}
-              type={"text"}
-              svgSrc={
-                <svg
-                  // onClick={() =>
-                  //   word.length !== 0
-                  //     ? speak({ text: word, voice })
-                  //     : toast.error("Вы не ввели слово")
-                  // }
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    {" "}
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M10.4 1.8C11.5532 0.262376 14 1.07799 14 3.00001V21.1214C14 23.0539 11.5313 23.8627 10.3878 22.3049L6.49356 17H4C2.34315 17 1 15.6569 1 14V10C1 8.34315 2.34315 7 4 7H6.5L10.4 1.8ZM12 3L8.1 8.2C7.72229 8.70361 7.12951 9 6.5 9H4C3.44772 9 3 9.44772 3 10V14C3 14.5523 3.44772 15 4 15H6.49356C7.13031 15 7.72901 15.3032 8.10581 15.8165L12 21.1214V3Z"
-                      fill="#fff"
-                    ></path>{" "}
-                    <path
-                      d="M16.2137 4.17445C16.1094 3.56451 16.5773 3 17.1961 3C17.6635 3 18.0648 3.328 18.1464 3.78824C18.4242 5.35347 19 8.96465 19 12C19 15.0353 18.4242 18.6465 18.1464 20.2118C18.0648 20.672 17.6635 21 17.1961 21C16.5773 21 16.1094 20.4355 16.2137 19.8256C16.5074 18.1073 17 14.8074 17 12C17 9.19264 16.5074 5.8927 16.2137 4.17445Z"
-                      fill="#fff"
-                    ></path>{" "}
-                    <path
-                      d="M21.41 5C20.7346 5 20.2402 5.69397 20.3966 6.35098C20.6758 7.52413 21 9.4379 21 12C21 14.5621 20.6758 16.4759 20.3966 17.649C20.2402 18.306 20.7346 19 21.41 19C21.7716 19 22.0974 18.7944 22.2101 18.4509C22.5034 17.5569 23 15.5233 23 12C23 8.47672 22.5034 6.44306 22.2101 5.54913C22.0974 5.20556 21.7716 5 21.41 5Z"
-                      fill="#fff"
-                    ></path>{" "}
-                  </g>
-                </svg>
-              }
-            />
-            <Input
-              value={transcription}
-              onChangeFunction={setTranscription}
-              textPlaceholder={"Транскрипция"}
-              type={"text"}
-            />
-            <Input
-              value={translateValue}
-              onChangeFunction={setTranslateValue}
-              textPlaceholder={"Переводы*"}
-              type={"text"}
-              // onKeyDownFunction={(event) =>
-              //   onPressEnter(
-              //     event,
-              //     setTranslatesWord,
-              //     translateValue,
-              //     setTranslateValue,
-              //     translatesWord
-              //   )
-              // }
-              svgSrc={
-                <svg
-                  // onClick={() =>
-                  //   addVariableToArr(
-                  //     setTranslatesWord,
-                  //     translateValue,
-                  //     setTranslateValue,
-                  //     translatesWord
-                  //   )
-                  // }
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    {" "}
-                    <path
-                      d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    ></path>{" "}
-                    <path
-                      d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    ></path>{" "}
-                  </g>
-                </svg>
-              }
-            />
+            <form>
+              <Input
+                value={word}
+                onChangeFunction={setWord}
+                textPlaceholder={"Слово*"}
+                type={"text"}
+              />
+              <Input
+                value={transcription}
+                onChangeFunction={setTranscription}
+                textPlaceholder={"Транскрипция"}
+                type={"text"}
+              />
+              <Input
+                value={translateValue}
+                onChangeFunction={setTranslateValue}
+                textPlaceholder={"Переводы*"}
+                type={"text"}
+                // onKeyDownFunction={(event) =>
+                //   onPressEnter(
+                //     event,
+                //     setTranslatesWord,
+                //     translateValue,
+                //     setTranslateValue,
+                //     translatesWord
+                //   )
+                // }
+              />
 
-            {/* переводы */}
-            {/* <div className={styles.tagsBlock}>
+              {/* переводы */}
+              {/* <div className={styles.tagsBlock}>
               {translatesWord.map((obj) => (
                 <div
                   key={obj}
@@ -368,8 +296,8 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
               ))}
             </div> */}
 
-            {/* готовые теги */}
-            {/* <div className={styles.tagsBlock}>
+              {/* готовые теги */}
+              {/* <div className={styles.tagsBlock}>
               {userTags.map((obj) => (
                 <div
                   // onClick={() =>
@@ -387,70 +315,29 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                 </div>
               ))}
             </div> */}
-            <Input
-              value={tagInputValue}
-              onChangeFunction={setTagInputValue}
-              textPlaceholder={"Теги"}
-              // onKeyDownFunction={(event) =>
-              //   addTagInBdOnEnter(
-              //     event,
-              //     setSelectTagArr,
-              //     {
-              //       user_id: id,
-              //       id: tags.length + selectTagArr.length + 1,
-              //       value: tagInputValue,
-              //     },
-              //     setTagInputValue,
-              //     selectTagArr
-              //   )
-              // }
-              type={"text"}
-              svgSrc={
-                <svg
-                  // onClick={() =>
-                  //   addTagInBd(
-                  //     setSelectTagArr,
-                  //     {
-                  //       user_id: id,
-                  //       id: tags.length + selectTagArr.length + 1,
-                  //       value: tagInputValue,
-                  //     },
-                  //     setTagInputValue,
-                  //     selectTagArr
-                  //   )
-                  // }
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    {" "}
-                    <path
-                      d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    ></path>{" "}
-                    <path
-                      d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    ></path>{" "}
-                  </g>
-                </svg>
-              }
-            />
+              <Input
+                value={tagInputValue}
+                onChangeFunction={setTagInputValue}
+                textPlaceholder={"Теги"}
+                // onKeyDownFunction={(event) =>
+                //   addTagInBdOnEnter(
+                //     event,
+                //     setSelectTagArr,
+                //     {
+                //       user_id: id,
+                //       id: tags.length + selectTagArr.length + 1,
+                //       value: tagInputValue,
+                //     },
+                //     setTagInputValue,
+                //     selectTagArr
+                //   )
+                // }
+                type={"text"}
+              />
 
-            {/* выбранные/добавленные теги */}
-            <div className={styles.tagsBlock}>
-              {/* {selectTagArr.map((obj) => (
+              {/* выбранные/добавленные теги */}
+              <div className={styles.tagsBlock}>
+                {/* {selectTagArr.map((obj) => (
                 <div
                   // onClick={() =>
                   //   replaceVariableInArr(setTags, obj, tags, setSelectTagArr)
@@ -461,52 +348,20 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                   {obj.value}
                 </div>
               ))} */}
-            </div>
+              </div>
 
-            <Input
-              value={example}
-              onChangeFunction={setExample}
-              textPlaceholder={"Примеры"}
-              // onKeyDownFunction={(event) =>
-              //   onPressEnter(event, setExamples, example, setExample, examples)
-              // }
-              type={"text"}
-              svgSrc={
-                <svg
-                  // onClick={() =>
-                  //   addVariableToArr(setExamples, example, setExample, examples)
-                  // }
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    {" "}
-                    <path
-                      d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    ></path>{" "}
-                    <path
-                      d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    ></path>{" "}
-                  </g>
-                </svg>
-              }
-            />
+              <Input
+                value={example}
+                onChangeFunction={setExample}
+                textPlaceholder={"Примеры"}
+                // onKeyDownFunction={(event) =>
+                //   onPressEnter(event, setExamples, example, setExample, examples)
+                // }
+                type={"text"}
+              />
 
-            <div className={styles.examplesBlock}>
-              {/* {examples.map((obj) => (
+              <div className={styles.examplesBlock}>
+                {/* {examples.map((obj) => (
                 <div key={obj} className={styles.example}>
                   {obj}
                   <div
@@ -578,7 +433,8 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                   </div>
                 </div>
               ))} */}
-            </div>
+              </div>
+            </form>
           </div>
           <div className={`modal-footer${" " + styles.modalFooter}`}>
             <Button

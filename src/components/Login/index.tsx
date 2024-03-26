@@ -42,16 +42,20 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
       const email = values.email;
       const password = values.password;
       setIsLoading(true);
+
       const { data } = await axios.post(
         "https://9854dac21e0f0eee.mokky.dev/auth",
         { email, password }
       );
+      
       dispatch(
         setUser({
           data: {
             email: data.data.email,
             name: data.data.name,
             id: data.data.id,
+            level: data.data.level,
+            experience: data.data.experience,
           },
           token: data.token,
         })
