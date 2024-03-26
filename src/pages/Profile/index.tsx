@@ -273,7 +273,7 @@ const Profile: React.FC = () => {
             </div>
             <div className={styles.experienceBar}>
               <div>
-                <Line percent={10} strokeWidth={4} strokeColor={strokeColor} />
+                <Line percent={experience} strokeWidth={4} strokeColor={strokeColor} />
               </div>
               <div>{100 - experience} exp. points left</div>
             </div>
