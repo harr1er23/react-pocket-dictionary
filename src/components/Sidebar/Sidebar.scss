@@ -6,7 +6,7 @@
 
     .exitBlock {
       position: absolute;
-      bottom: 10%;
+      bottom: 80px;
       display: flex;
       flex-direction: column;
       padding: 10px 0px;
@@ -283,12 +283,8 @@
   }
 
   &-profileSection {
-    width: 170px;
     position: fixed;
     bottom: 20px;
-    display: flex;
-    align-items: center;
-
     border: 1px solid var(--item-hover);
     padding: 8px 10px;
     border-radius: 28px;
@@ -310,7 +306,6 @@
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 8px;
       flex-shrink: 0;
     }
 
