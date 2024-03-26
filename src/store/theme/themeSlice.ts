@@ -3,7 +3,7 @@ import { RootState } from '../store';
 
 const initialState = {
     isShrinkView: true,
-    isDarkMode: true,
+    isDarkMode: false,
   }
   
   export const themeSlice = createSlice({
