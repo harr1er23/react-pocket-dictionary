@@ -5,7 +5,8 @@
       .input {
         display: block;
         width: 100%;
-        padding: 0.375rem 0.75rem;
+        padding-right: 30px;
+        padding: 0.375rem 3rem 0.375rem 0.75rem;
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
@@ -29,6 +30,13 @@
           border: 2px solid var(--input-hover);
         }
       }
+
+      // svg{
+      //   width: 20px;
+      //   height: 20px;
+      //   position: absolute;
+      //   left: 90%;
+      // }
 
       .soundImg {
         width: 20px;

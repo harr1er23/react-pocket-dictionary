@@ -35,7 +35,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
       setIsLoading(true);
       const { data } = await axios.post(
         "https://9854dac21e0f0eee.mokky.dev/register",
-        { name, email, password }
+        { name, email, password, level: 0, experience: 0 }
       );
       console.log(data);
       toast.success("Вы зарегистрировались!");

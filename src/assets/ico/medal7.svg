@@ -1,0 +1,15 @@
+<svg viewBox="0 0 120 120" id="Layer_1" version="1.1" xml:space="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+    <g id="SVGRepo_iconCarrier">
+        <style type="text/css"> .st0{fill:#FFC54D;} .st1{fill:#285FFF;} .st3{fill:#E8B14D;} </style>
+        <g>
+            <polygon class="st0" points="65.6,62.7 54.4,62.7 44.7,68.3 39,78.1 39,89.3 44.7,99 54.4,104.7 65.6,104.7 75.3,99 81,89.3 81,78.1 75.3,68.3 "></polygon>
+            <polygon class="st1" points="93.7,15.3 77.9,15.3 60,45 42.1,15.3 26.3,15.3 54.8,62.7 60,60.5 65.2,62.7 "></polygon>
+            
+            <circle class="st3" cx="60" cy="83.7" r="15.3"></circle>
+        </g>
+    </g>
+</svg>

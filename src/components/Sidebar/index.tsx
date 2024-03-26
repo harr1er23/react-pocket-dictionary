@@ -47,6 +47,11 @@ const Sidebar: React.FC = () => {
     document.body.classList.toggle("dark");
   };
 
+  const onClickProfile = () => {
+    dispatch(setIsShrinkView(true));
+    setClickButton("profile");
+  };
+
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -144,7 +149,7 @@ const Sidebar: React.FC = () => {
                 <span className="sidebar-listItemText">Exit</span>
               </Link>
             </div>
-            <div className="sidebar-listItem">
+            <div className="sidebar-listItem" onClick={() => onClickProfile()}>
               <Link to="/app/profile">
                 <ProfileIco className="exitImg" />
                 <span className="sidebar-listItemText">Profile</span>

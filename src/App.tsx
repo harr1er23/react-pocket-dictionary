@@ -17,6 +17,7 @@ import { selectUser, setUser } from "./store/user/userSlice";
 import AppLayout from "./pages/AppLayout/idex";
 import AuthByVk from "./pages/AuthByVk";
 import axios from "axios";
+import Shop from "./pages/Shop";
 
 function App() {
   const dispatch = useDispatch();
@@ -76,7 +77,8 @@ function App() {
           </div>
         ) : (
           <Routes>
-            <Route path="*" element={<NotFound />}></Route>
+            <Route path="*" element={<Navigate replace to="/notFound" />}></Route>
+            <Route path="/notFound" element={<NotFound />}></Route>
             <Route
               path="/"
               element={<Navigate replace to="/app/dictionary" />}
@@ -117,11 +119,13 @@ function App() {
                 user !== null ? <AppLayout /> : <Navigate replace to="/auth" />
               }
             >
+              <Route path="*" element={<Navigate replace to="/notFound" />}></Route>
               <Route path="dictionary" element={<Dictionary />}></Route>
               <Route path="exercises" element={<Exercises />}></Route>
               <Route path="statistics" element={<Statistics />}></Route>
               <Route path="settings" element={<Settings />}></Route>
               <Route path="profile" element={<Profile />}></Route>
+              <Route path="shop" element={<Shop/>}></Route>
             </Route>
           </Routes>
         )}

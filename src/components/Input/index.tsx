@@ -3,38 +3,54 @@ import React from "react";
 import styles from "./Input.module.scss";
 
 type InputProps = {
-  value: string;
-  onChangeFunction: (value: string) => void;
-  textPlaceholder: string;
+  value?: string;
+  onChangeFunction?: (value: string) => void;
+  textPlaceholder?: string;
   type: string;
+  ico?: any;
+  readOnly?: boolean;
   onKeyDownFunction?: () => void;
-  svgSrc?: any;
   onClickFunction?: () => void;
   disabled?: boolean;
-}
+  inputName?: string;
+  autofocus?: boolean;
+  defaultValue?: string;
+  content?: any;
+};
 
 const Input: React.FC<InputProps> = ({
   value,
+  inputName,
+  ico,
   onChangeFunction,
   textPlaceholder,
   type,
+  readOnly,
   onKeyDownFunction,
-  svgSrc,
   onClickFunction,
-  disabled=false
+  disabled = false,
+  autofocus,
+  defaultValue,
+  content
 }) => {
   return (
+
     <div className={styles.inputBlock}>
       <input
+        autoFocus={autofocus}
         value={value}
-        onChange={(e) => onChangeFunction(e.target.value)}
+        onChange={(e) => onChangeFunction && onChangeFunction(e.target.value)}
         type={type}
         onKeyDown={onKeyDownFunction}
         className={styles.input}
         placeholder={textPlaceholder}
-        style={{pointerEvents: disabled ? 'none' : 'auto'}}
+        style={{ pointerEvents: disabled ? "none" : "auto" }}
+        name={inputName}
+        readOnly={readOnly}
+        defaultValue={defaultValue}
+        {...content}
       />
-      {svgSrc ? <div className={styles.soundImg}>{svgSrc}</div> : ''}
+      {ico && ico}
     </div>
   );
 };
