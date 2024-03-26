@@ -283,6 +283,10 @@
     border-radius: 10px;
     margin-bottom: 30px;
 
+    @media(max-width: 1000px){
+      padding: 10px 15px;
+    }
+
     .achivementsList {
       display: flex;
       padding-bottom: 5px;
