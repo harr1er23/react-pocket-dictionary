@@ -15,10 +15,6 @@
       color: var(--text-hover-color);
       background-color: var(--main-bg);
 
-      @media (max-width: 700px) {
-        margin-bottom: 25px;
-      }
-
       .exitImg {
         width: 25px;
         height: 25px;
@@ -298,10 +294,6 @@
     flex-shrink: 0;
     transition: background 0.3s ease-in-out;
     cursor: pointer;
-
-    @media (max-width: 700px) {
-      margin-bottom: 25px;
-    }
 
     &:hover {
       background-color: var(--item-hover);
