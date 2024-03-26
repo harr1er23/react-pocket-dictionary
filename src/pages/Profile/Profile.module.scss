@@ -7,7 +7,8 @@
   color: var(--text-color);
 
   @media (max-width: 700px) {
-    padding: 20px 25px 0 0px;
+    margin-left: 10px;
+    padding: 20px 10px 0 0px;
   }
 
   .experience {
@@ -24,7 +25,10 @@
 
     .leftBar {
       display: flex;
-      flex-wrap: wrap;
+
+      @media (max-width: 700px) {
+        font-size: 14px;
+      }
 
       .experienceLevel {
         display: flex;
@@ -32,15 +36,28 @@
         margin-right: 20px;
         color: var(--text-color);
 
+        @media (max-width: 700px) {
+          margin-right: 0px;
+        }
+
         .medalIco {
           svg {
             width: 50px;
             height: 50px;
+
+            @media (max-width: 700px) {
+                width: 30px;
+                height: 30px;
+            }
           }
         }
 
         .levelValue {
           font-size: 24px;
+
+          @media(max-width: 700px){
+            font-size: 20px;
+          }
         }
       }
 
@@ -71,6 +88,7 @@
 
         @media (max-width: 600px) {
           font-size: 12px;
+          padding: 5px;
         }
 
         svg {
@@ -101,6 +119,7 @@
 
         @media (max-width: 600px) {
           font-size: 12px;
+          padding: 5px;
         }
 
         svg {
@@ -129,6 +148,7 @@
 
         @media (max-width: 600px) {
           font-size: 12px;
+          padding: 5px;
         }
 
         svg {
@@ -325,7 +345,7 @@
               background-color: rgba(0, 73, 0, 0.58);
             }
 
-            svg{
+            svg {
               width: 20px;
               height: 20px;
             }
