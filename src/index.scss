@@ -9,38 +9,39 @@ body {
   --item-hover: #dcddcf;
   --tertiary-bg: #88b5a1;
   --secondary-bg: #dcddcf;
-  --main-container-bg: #fff;
-  --container-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  --text-color: #00071d;
-  --text-hover-color: #fff;
+  --third-bg: #88b5a1;
   --place-holder-color: rgba(255, 255, 255, 0.582);
   --input-hover: rgba(43, 188, 154, 0.318);
   --error-toast: rgba(188, 43, 43, 0.318);
   --success-toast: rgba(43, 188, 154, 0.7);
   --word-bg: #fff;
-
   --button-bg: #88b5a1;
   --button-disabled: #546f63;
+  --text-color: #00071d;
+  --text-hover-color: #fff;
+
+  --main-container-bg: #fff;
+  --container-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 body.dark {
   --main-bg: #00071d;
   --item-hover: #1c2339;
-  --secondary-bg: #36415e;
   --tertiary-bg: #fff;
-  --main-container-bg: #131c31;
-  --text-color: #fff;
-  --text-hover-color: #fff;
-  --tooltip-bg: #251d33;
-  --container-shadow: rgba(#131c31, 0.2) 0px 7px 29px 0px;
+  --secondary-bg: #36415e;
+  --third-bg: #36415e;
   --place-holder-color: grey;
+  --input-hover: #1c2339;
   --error-toast: rgba(188, 43, 43, 0.318);
   --success-toast: rgba(43, 188, 154, 0.7);
-  --input-hover: #1c2339;
   --word-bg: #36415e;
-
   --button-bg: #1c2339;
   --button-disabled: #36415e;
+  --text-color: #fff;
+  --text-hover-color: #fff;
+
+  --main-container-bg: #131c31;
+  --container-shadow: rgba(#131c31, 0.2) 0px 7px 29px 0px;
 }
 
 html,

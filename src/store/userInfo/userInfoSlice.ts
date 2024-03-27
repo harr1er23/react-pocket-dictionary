@@ -30,6 +30,20 @@ type UserAchivementsProps = {
   rewardType: "coins" | "hints";
 };
 
+type MultipliersProps = {
+  name: string;
+  percent: number;
+  type: number;
+  cost: number;
+}
+
+type HintsProps = {
+  hintName: string;
+  value: number;
+  type: number;
+  cost: number;
+}
+
 type UserInfoPorops = {
   id: number,
   user_id: number;
@@ -39,6 +53,8 @@ type UserInfoPorops = {
   money: number;
   hintsMoney: number;
   learnedWords: number;
+  hints: HintsProps[];
+  multipliers: MultipliersProps[];
 };
 
 interface DictonaryWordsSliceState {
@@ -55,21 +71,42 @@ export const userInfoSlice = createSlice({
   name: "userInfo",
   initialState,
   reducers: {
-    updateUserCoins: (state, action) => {
+    addUserCoins: (state, action) => {
       if (state.userInfo === null) {
         return;
       }
 
       state.userInfo[0].money = state.userInfo[0].money + action.payload;
     },
-    updateUserHintsMoney: (state, action) => {
+    reduceUserCoins: (state, action) => {
+      if (state.userInfo === null) {
+        return;
+      }
+
+      state.userInfo[0].money = state.userInfo[0].money - action.payload;
+    },
+    addUserLevel: (state, action) => {
+      if (state.userInfo === null) {
+        return;
+      }
+
+      state.userInfo[0].level = state.userInfo[0].level + action.payload;
+    },
+    addUserHintsCoins: (state, action) => {
       if (state.userInfo === null) {
         return;
       }
 
       state.userInfo[0].hintsMoney = state.userInfo[0].hintsMoney + action.payload;
     },
-    updateUserAchivements: (state, action) => {
+    reduceUserHintsCoins: (state, action) => {
+      if (state.userInfo === null) {
+        return;
+      }
+
+      state.userInfo[0].hintsMoney = state.userInfo[0].hintsMoney - action.payload;
+    },
+    addUserAchivements: (state, action) => {
       if(state.userInfo === null){
         return;
       }
@@ -86,6 +123,20 @@ export const userInfoSlice = createSlice({
       });
 
       state.userInfo[0].achivements = newAchivements;
+    },
+    updateMultipliers: (state, action) => {
+      if (state.userInfo === null) {
+        return;
+      }
+
+      state.userInfo[0].multipliers = action.payload;
+    },
+    updateHints: (state, action) => {
+      if (state.userInfo === null) {
+        return;
+      }
+
+      state.userInfo[0].hints = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -106,6 +157,6 @@ export const userInfoSlice = createSlice({
 
 export const selectUserInfo = (state: RootState) => state.userInfoSlice;
 
-export const { updateUserCoins, updateUserHintsMoney, updateUserAchivements } = userInfoSlice.actions;
+export const { addUserCoins, reduceUserCoins, addUserLevel, addUserHintsCoins, reduceUserHintsCoins, addUserAchivements, updateMultipliers, updateHints } = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;

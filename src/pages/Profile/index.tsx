@@ -33,9 +33,9 @@ import { useAppDispatch } from "../../store/store";
 import {
   fetchUserInfo,
   selectUserInfo,
-  updateUserAchivements,
-  updateUserCoins,
-  updateUserHintsMoney,
+  addUserAchivements,
+  addUserCoins,
+  addUserHintsCoins,
 } from "../../store/userInfo/userInfoSlice";
 import {
   fetchAchivements,
@@ -219,18 +219,19 @@ const Profile: React.FC = () => {
     });
 
     if (rewardType === "coins") {
-      dispatch(updateUserCoins(revardValue));
+      dispatch(addUserCoins(revardValue));
     } else {
-      dispatch(updateUserHintsMoney(revardValue));
+      dispatch(addUserHintsCoins(revardValue));
     }
 
-    dispatch(updateUserAchivements(achId));
+    dispatch(addUserAchivements(achId));
 
     await axios.patch(
       `https://9854dac21e0f0eee.mokky.dev/userInfo/${userInfo[0].id}`,
       {
         money: rewardType === "coins" ? money + revardValue : money,
-        hintsMoney: rewardType === "hints" ? hintsMoney + revardValue : hintsMoney,
+        hintsMoney:
+          rewardType === "hints" ? hintsMoney + revardValue : hintsMoney,
         achivements: newAchivements,
       }
     );
@@ -273,7 +274,11 @@ const Profile: React.FC = () => {
             </div>
             <div className={styles.experienceBar}>
               <div>
-                <Line percent={experience} strokeWidth={4} strokeColor={strokeColor} />
+                <Line
+                  percent={experience}
+                  strokeWidth={4}
+                  strokeColor={strokeColor}
+                />
               </div>
               <div>{100 - experience} exp. points left</div>
             </div>
@@ -504,7 +509,8 @@ const Profile: React.FC = () => {
                     <h5>{obj.name}</h5>
                     <div className={styles.achivementText}>{obj.text}</div>
                     <div className={styles.achivementValue}>
-                      {learnedWords <= obj.value ? learnedWords : obj.value } / {obj.value}
+                      {learnedWords <= obj.value ? learnedWords : obj.value} /{" "}
+                      {obj.value}
                     </div>
                     {userAchievement && (
                       <button
