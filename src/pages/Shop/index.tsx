@@ -234,12 +234,14 @@ const Shop: React.FC<ShopProps> = ({}) => {
               <div className={styles.statsText}>
                 <h6>{obj.name}</h6>
                 <p>Increase by 5%</p>
-                <button
-                  onClick={() => onClickBuyMultiplier(obj.type, obj.cost)}
-                  disabled={checkMoneyAmount(money, obj.cost)}
-                >
-                  Buy for {obj.cost} <MoneyIco />
-                </button>
+                {obj.percent !== 100 && (
+                  <button
+                    onClick={() => onClickBuyMultiplier(obj.type, obj.cost)}
+                    disabled={checkMoneyAmount(money, obj.cost)}
+                  >
+                    Buy for {obj.cost} <MoneyIco />
+                  </button>
+                )}
               </div>
             </div>
           ))}
