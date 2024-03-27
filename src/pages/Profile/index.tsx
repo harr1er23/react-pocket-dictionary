@@ -188,17 +188,6 @@ const Profile: React.FC = () => {
       console.log(err);
       toast.error("Error uploading data!");
     }
-
-    // const name = values.name;
-    // setIsLoading(true);
-    // const { data } = await axios.post(
-    //   "https://9854dac21e0f0eee.mokky.dev/register",
-    //   { name, email, password }
-    // );
-    // console.log(data);
-    // toast.success("Вы зарегистрировались!");
-    // setIsLoading(false);
-    // reset();
   };
 
   const clickGetReward = async (
