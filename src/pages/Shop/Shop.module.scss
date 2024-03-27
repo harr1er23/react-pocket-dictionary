@@ -1,0 +1,358 @@
+.shopBackground {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 25px 0 90px;
+  margin-left: 30px;
+  color: var(--text-color);
+
+  @media (max-width: 700px) {
+    margin-left: 10px;
+    padding: 20px 10px 0 0px;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 5px;
+    background-color: green;
+    border: 1px solid green;
+
+    color: white;
+
+    &:hover {
+      background-color: rgba(0, 108, 0, 0.58);
+      border: 1px solid rgba(0, 108, 0, 0.58);
+    }
+
+    &:disabled {
+      background-color: rgba(0, 73, 0, 0.58);
+      border: 1px solid rgba(0, 73, 0, 0.58);
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .shopHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    @media (max-width: 700px) {
+      padding: 5px 10px;
+
+      h3 {
+        font-size: 16px;
+      }
+    }
+
+    .backButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      padding: 5px 10px;
+      background-color: var(--button-bg);
+      border: 0.1em solid var(--button-bg);
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 300ms ease;
+
+      @media (max-width: 700px) {
+        padding: 5px;
+        font-size: 14px;
+      }
+
+      &:hover {
+        border: 0.1em solid var(--button-bg);
+        background-color: var(--secondary-bg);
+      }
+    }
+
+    h3 {
+    }
+
+    .shopValues {
+      display: flex;
+
+      .hintsValue {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 5px 10px;
+        border-radius: 10px;
+        background-color: var(--main-bg);
+        margin-right: 10px;
+        cursor: pointer;
+        color: white;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        @media (max-width: 600px) {
+          font-size: 12px;
+          padding: 5px;
+        }
+
+        svg {
+          width: 30px;
+          height: 30px;
+
+          @media (max-width: 600px) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .moneyValue {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 5px 10px;
+        border-radius: 10px;
+        background-color: var(--main-bg);
+        margin-right: 10px;
+        cursor: pointer;
+        color: white;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        @media (max-width: 600px) {
+          font-size: 12px;
+          padding: 5px;
+        }
+
+        svg {
+          width: 30px;
+          height: 30px;
+
+          @media (max-width: 600px) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .statsBlock {
+    display: flex;
+    justify-content: center;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    @media (max-width: 600px) {
+      padding: 5px 10px;
+    }
+
+    .statsCards {
+      display: flex;
+      padding-bottom: 5px;
+      &::-webkit-scrollbar {
+        height: 7px;
+        background-color: var(--item-hover);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: var(--tertiary-bg);
+      }
+
+      overflow-x: auto;
+      white-space: nowrap;
+
+      .statsCard {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 200px;
+
+        @media (max-width: 700px) {
+          width: 130px;
+        }
+
+        margin-right: 10px;
+        border-radius: 10px;
+        border: 1px solid var(--item-hover);
+        background-color: var(--item-hover);
+        padding: 10px;
+
+        .cardIco {
+          display: flex;
+          justify-content: space-between;
+
+          .percentValue {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--third-bg);
+            color: white;
+            align-self: flex-start;
+
+            border-radius: 10px;
+            border: 1px solid var(--third-bg);
+            padding: 5px;
+          }
+
+          svg {
+            width: 60px;
+            height: 60px;
+
+            @media (max-width: 700px) {
+              width: 40px;
+              height: 40px;
+            }
+          }
+        }
+
+        .statsText {
+          display: flex;
+          flex-direction: column;
+
+          h6 {
+          }
+
+          p {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .hintContent {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    @media (max-width: 600px) {
+      padding: 5px 10px;
+    }
+
+    .hintBlock {
+      display: flex;
+      justify-content: center;
+
+      .hintCards {
+        display: flex;
+
+        &::-webkit-scrollbar {
+          height: 7px;
+          background-color: var(--item-hover);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 5px;
+          background: var(--tertiary-bg);
+        }
+
+        padding-bottom: 5px;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        .hintCard {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 200px;
+
+          @media (max-width: 700px) {
+            width: 130px;
+          }
+
+          margin-right: 10px;
+          border-radius: 10px;
+          border: 1px solid var(--item-hover);
+          background-color: var(--item-hover);
+          padding: 10px;
+
+          .topBlock {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+            .hintsCounter {
+              position: absolute;
+              top: 50px;
+              bottom: 0;
+              left: 50px;
+              right: 0;
+              color: #fff;
+
+              @media (max-width: 700px) {
+                left: 30px;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+              }
+
+              font-size: 14px;
+
+              width: 25px;
+              height: 25px;
+
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              border: 1px solid rgb(188, 41, 41);
+              border-radius: 100%;
+
+              background-color: rgb(188, 41, 41);
+            }
+
+            .hintsIco {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              width: 80px;
+              height: 80px;
+
+              svg {
+                width: 64px;
+                height: 64px;
+
+                @media (max-width: 700px) {
+                  width: 40px;
+                  height: 40px;
+                }
+              }
+            }
+          }
+
+          .bottomBlock {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            .hintCardText {
+              white-space: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+}
