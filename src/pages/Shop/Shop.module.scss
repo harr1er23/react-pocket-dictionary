@@ -165,6 +165,7 @@
     .statsCards {
       display: flex;
       padding-bottom: 5px;
+
       &::-webkit-scrollbar {
         height: 7px;
         background-color: var(--item-hover);
@@ -185,7 +186,7 @@
         width: 200px;
 
         @media (max-width: 700px) {
-          width: 130px;
+          width: 170px;
         }
 
         margin-right: 10px;
@@ -227,6 +228,8 @@
           flex-direction: column;
 
           h6 {
+            margin-bottom: auto;
+            white-space: normal;
           }
 
           p {

@@ -7,8 +7,7 @@ export type UserProps = {
     id: number,
     name: string,
     email: string,
-    level: number,
-    experience: number,
+    imageUrl: string;
   }
 }
 

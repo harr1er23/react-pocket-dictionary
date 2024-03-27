@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -73,9 +73,9 @@ const Profile: React.FC = () => {
   const [isEditEmail, setIsEditEmail] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = React.useState(false);
 
-  console.log(userInfo);
-
+  const userPhoto = user!.data.imageUrl!;
   const experience = userInfo !== null ? userInfo[0].experience : 0;
   const level = userInfo !== null ? userInfo[0].level : 0;
   const learnedWords = userInfo !== null ? userInfo[0].learnedWords : 0;
@@ -113,6 +113,8 @@ const Profile: React.FC = () => {
       toast.error("Passwords don't match");
       return;
     }
+
+    setIsLoading(true);
 
     if (lastPassword) {
       try {
@@ -181,6 +183,7 @@ const Profile: React.FC = () => {
       setIsEditName(false);
       setIsEditPassword(false);
       setIsEditEmail(false);
+      setIsLoading(false);
     } catch (err: any) {
       console.log(err);
       toast.error("Error uploading data!");
@@ -235,6 +238,63 @@ const Profile: React.FC = () => {
         achivements: newAchivements,
       }
     );
+  };
+
+  const onClickUploadPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+
+    if (files === null) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", files[0]);
+
+    try {
+      setIsUploadingPhoto(true);
+      const { data } = await axios.post(
+        "https://9854dac21e0f0eee.mokky.dev/uploads",
+        formData
+      );
+
+      const { data: userData } = await axios.patch(
+        `https://9854dac21e0f0eee.mokky.dev/users/${user?.data.id}`,
+        {
+          imageUrl: data.url,
+        }
+      );
+
+      console.log(userData);
+
+      dispatch(
+        setUser({
+          token: user?.token,
+          data: {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            imageUrl: userData.imageUrl,
+          },
+        })
+      );
+      localStorage.clear();
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          token: user?.token,
+          data: {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            imageUrl: userData.imageUrl,
+          },
+        })
+      );
+      setIsUploadingPhoto(false);
+    } catch (err: any) {
+      console.log(err);
+      toast.error("Error during the uploading photo!");
+    }
   };
 
   return (
@@ -301,11 +361,21 @@ const Profile: React.FC = () => {
         <h2>Profile Info</h2>
         <div className={styles.profileContent}>
           <div className={styles.profilePhoto}>
-            <img
-              src="https://assets.codepen.io/3306515/i-know.jpg"
-              alt="Profile Photo"
-            />
-            <div className={styles.addPhotoButton}>+</div>
+            {isUploadingPhoto ? (
+              <ClipLoader color="var(--third-bg)" />
+            ) : (
+              <>
+                <img src={userPhoto} alt="Profile Photo" />
+                <label htmlFor="fileInput" className={styles.addPhotoButton}>
+                  +
+                </label>
+                <input
+                  onChange={(event) => onClickUploadPhoto(event)}
+                  type="file"
+                  id="fileInput"
+                />
+              </>
+            )}
           </div>
 
           <form className={styles.profileInfo} onSubmit={handleSubmit(submit)}>

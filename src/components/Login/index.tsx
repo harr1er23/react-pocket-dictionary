@@ -47,15 +47,14 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         "https://9854dac21e0f0eee.mokky.dev/auth",
         { email, password }
       );
-      
+
       dispatch(
         setUser({
           data: {
             email: data.data.email,
             name: data.data.name,
             id: data.data.id,
-            level: data.data.level,
-            experience: data.data.experience,
+            imageUrl: data.data.imageUrl,
           },
           token: data.token,
         })

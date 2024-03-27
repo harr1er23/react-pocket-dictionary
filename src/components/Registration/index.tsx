@@ -35,9 +35,75 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
       setIsLoading(true);
       const { data } = await axios.post(
         "https://9854dac21e0f0eee.mokky.dev/register",
-        { name, email, password, level: 0, experience: 0 }
+        { name, email, password, imageUrl: "https://assets.codepen.io/3306515/i-know.jpg" }
       );
-      console.log(data);
+
+      await axios.post("https://9854dac21e0f0eee.mokky.dev/userInfo", {
+        user_id: data.data.id,
+        experience: 0,
+        achivements: [],
+        level: 0,
+        money: 0,
+        hintsMoney: 0,
+        learnedWords: 0,
+        hints: [
+          {
+            hintName: "Removes one wrong answer",
+            value: 0,
+            type: 1,
+            cost: 2,
+          },
+          {
+            hintName: "Removes a half of the wrong answer",
+            value: 0,
+            type: 2,
+            cost: 4,
+          },
+          {
+            hintName: "Gives one more try if the answer is wrong",
+            value: 0,
+            type: 3,
+            cost: 8,
+          },
+          {
+            hintName: "Show tyhe correct answer",
+            value: 0,
+            type: 4,
+            cost: 16,
+          },
+        ],
+        multipliers: [
+          {
+            name: "Money multiplier",
+            percent: 0,
+            type: 1,
+            cost: 100,
+          },
+          {
+            name: "Experience multiplier",
+            percent: 0,
+            type: 2,
+            cost: 100,
+          },
+          {
+            name: "Hints multiplier",
+            percent: 0,
+            type: 3,
+            cost: 100,
+          },
+        ],
+      });
+
+      await axios.post("https://9854dac21e0f0eee.mokky.dev/settings", {
+        id_user: data.data.id,
+        options: [
+          {
+            theme: "light",
+            wordQuantity: 5
+          },
+        ],
+      });
+
       toast.success("Вы зарегистрировались!");
       setIsLoading(false);
       reset();

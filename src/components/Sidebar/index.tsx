@@ -32,6 +32,8 @@ const Sidebar: React.FC = () => {
   const { isDarkMode, isShrinkView } = useSelector(selectTheme);
   const [showExit, setShowExit] = React.useState(false);
 
+  const userPhoto = user?.data.imageUrl;
+
   const [clickButton, setClickButton] = React.useState(
     window.location.pathname.split("/")[2]
   );
@@ -162,7 +164,7 @@ const Sidebar: React.FC = () => {
           className="sidebar-profileSection"
         >
           <img
-            src="https://assets.codepen.io/3306515/i-know.jpg"
+            src={userPhoto}
             width="40"
             height="40"
             alt="Monica Geller"

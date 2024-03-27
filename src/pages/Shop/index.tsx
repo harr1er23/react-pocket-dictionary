@@ -249,6 +249,7 @@ const Shop: React.FC<ShopProps> = ({}) => {
             </div>
             <div className={styles.statsText}>
               <h6>Level Up</h6>
+              <p>Increase by 1 lvl</p>
               <button
                 onClick={() => onClickBuyLevel(levelUpCost)}
                 disabled={checkMoneyAmount(money, levelUpCost)}
@@ -263,6 +264,7 @@ const Shop: React.FC<ShopProps> = ({}) => {
             </div>
             <div className={styles.statsText}>
               <h6>Buy 10 hint coins</h6>
+              <p>Increase by 10 coins</p>
               <button
                 onClick={() => onClickBuyHintsCoins()}
                 disabled={checkMoneyAmount(money, byHintsCoins)}

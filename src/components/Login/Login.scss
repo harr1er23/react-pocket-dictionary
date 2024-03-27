@@ -245,6 +245,7 @@ form {
   .titles {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 
     .registration-button-title {
       display: flex;
