@@ -9,7 +9,7 @@ import debounce from "lodash.debounce";
 import styles from "./ModalAddWord.module.scss";
 
 //assets
-import { ReactComponent as SoundIco} from "../../assets/ico/sound.svg";
+import { ReactComponent as SoundIco } from "../../assets/ico/sound.svg";
 
 //components
 import Input from "../Input";
@@ -23,7 +23,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
   const dispatch = useDispatch();
 
   //контроллер состояния инпута ввода слова
-  const [word, setWord] = React.useState("");
+  const [wordValue, setWordValue] = React.useState("");
   //контроллер состояния инпута ввода перевода
   const [translateValue, setTranslateValue] = React.useState("");
   //контроллер состояния инпута ввода нового тега
@@ -33,13 +33,27 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
   //контроллер состояния инпута ввода транскрипции
   const [transcription, setTranscription] = React.useState("");
 
-  // const updateWordInputValue = React.useCallback(
-  //   debounce((str) => {
-  //     dispatch(setWordValue(str));
-  //     //обращение к апи переводчика
-  //   }, 700),
-  //   []
-  // );
+  const updateWordInputValue = React.useCallback(
+    debounce(async (str: string) => {
+      try {
+        //обращение к апи переводчика
+        const resp = await axios.get(
+          `https://ftapi.pythonanywhere.com/translate?sl=ru&dl=en&text=${str}`
+        );
+        console.log(resp);
+      } catch (err: any) {
+        console.log(err);
+        toast.error("Error when searching for a word!");
+      }
+      // dispatch(setWordValue(str));
+    }, 700),
+    []
+  );
+
+  const onChangeWordValue = (value: string) => {
+    updateWordInputValue();
+    setWordValue(value);
+  };
 
   // const onChangeWordInput = (event) => {
   //   updateWordInputValue(event.target.value);
@@ -254,14 +268,14 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
             ></button>
           </div>
           <div className="modal-body">
-            <form>
+            <div>
               <Input
-                value={word}
-                onChangeFunction={setWord}
+                value={wordValue}
+                onChangeFunction={onChangeWordValue}
                 textPlaceholder={"Слово*"}
                 type={"text"}
               />
-              <Input
+              {/* <Input
                 value={transcription}
                 onChangeFunction={setTranscription}
                 textPlaceholder={"Транскрипция"}
@@ -315,7 +329,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                 </div>
               ))}
             </div> */}
-              <Input
+              {/* <Input
                 value={tagInputValue}
                 onChangeFunction={setTagInputValue}
                 textPlaceholder={"Теги"}
@@ -333,11 +347,11 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                 //   )
                 // }
                 type={"text"}
-              />
+              /> */}
 
               {/* выбранные/добавленные теги */}
-              <div className={styles.tagsBlock}>
-                {/* {selectTagArr.map((obj) => (
+              {/* <div className={styles.tagsBlock}> */}
+              {/* {selectTagArr.map((obj) => (
                 <div
                   // onClick={() =>
                   //   replaceVariableInArr(setTags, obj, tags, setSelectTagArr)
@@ -348,9 +362,9 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                   {obj.value}
                 </div>
               ))} */}
-              </div>
+              {/* </div> */}
 
-              <Input
+              {/* <Input
                 value={example}
                 onChangeFunction={setExample}
                 textPlaceholder={"Примеры"}
@@ -358,10 +372,10 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                 //   onPressEnter(event, setExamples, example, setExample, examples)
                 // }
                 type={"text"}
-              />
+              /> */}
 
-              <div className={styles.examplesBlock}>
-                {/* {examples.map((obj) => (
+              {/* <div className={styles.examplesBlock}> */}
+              {/* {examples.map((obj) => (
                 <div key={obj} className={styles.example}>
                   {obj}
                   <div
@@ -433,8 +447,8 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
                   </div>
                 </div>
               ))} */}
-              </div>
-            </form>
+              {/* </div> */}
+            </div>
           </div>
           <div className={`modal-footer${" " + styles.modalFooter}`}>
             <Button
