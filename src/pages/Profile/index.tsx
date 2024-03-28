@@ -155,6 +155,7 @@ const Profile: React.FC = () => {
             id: newUser.data.id,
             level: newUser.data.level,
             experience: newUser.data.experience,
+            imageUrl: newUser.data.imageUrl
           },
           token: newUser.token,
         })
@@ -173,6 +174,7 @@ const Profile: React.FC = () => {
               id: userLocal.data.id,
               level: userLocal.data.level,
               experience: userLocal.data.experience,
+              imageUrl: newUser.data.imageUrl
             },
             token: newUser.token,
           })
