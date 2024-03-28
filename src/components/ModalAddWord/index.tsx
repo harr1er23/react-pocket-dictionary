@@ -38,7 +38,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
       try {
         //обращение к апи переводчика
         const resp = await axios.get(
-          `https://ftapi.pythonanywhere.com/translate?sl=ru&dl=en&text=${str}`
+          `https://ftapi.pythonanywhere.com/translate?sl=ru&dl=en&text=word`
         );
         console.log(resp);
       } catch (err: any) {
