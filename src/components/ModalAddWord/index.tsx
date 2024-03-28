@@ -5,6 +5,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
 
+import translate from 'google-translate-api';
+
 //styles
 import styles from "./ModalAddWord.module.scss";
 
@@ -37,10 +39,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({}) => {
     debounce(async (str: string) => {
       try {
         //обращение к апи переводчика
-        const resp = await axios.get(
-          `https://ftapi.pythonanywhere.com/translate?sl=ru&dl=en&text=word`
-        );
-        console.log(resp);
+        translate(str, {from: 'en', to: 'ru' }).then((res: any) => console.log(res))
       } catch (err: any) {
         console.log(err);
         toast.error("Error when searching for a word!");
