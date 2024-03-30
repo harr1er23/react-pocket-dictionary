@@ -3,34 +3,28 @@ import axios from "axios";
 import { RootState } from "../store";
 
 type ParamsProps = {
-    token: string;
-    userId: number;
-}
+  userId: number;
+  tag: string;
+};
 
 export const fetchTags = createAsyncThunk<TagProps[], ParamsProps>(
   "tags/fetchTags",
   async (params) => {
-    const {
-      token,
-      userId
-    } = params;
+    const { userId, tag } = params;
     const { data } = await axios.get<TagProps[]>(
-      `https://9854dac21e0f0eee.mokky.dev/tags?${userId ? `user_id${userId}` : ""}`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
+      `https://9854dac21e0f0eee.mokky.dev/tags?user_id=${userId}${
+        tag ? `&value=*${tag}*` : ""
+      }`
     );
     return data;
   }
 );
 
 export type TagProps = {
-    user_id: number;
-    id: number;
-    value: string;
-}
+  user_id: number;
+  id: number;
+  value: string;
+};
 
 interface DictonaryWordsSliceState {
   tags: TagProps[] | [];
@@ -39,16 +33,39 @@ interface DictonaryWordsSliceState {
 
 const initialState: DictonaryWordsSliceState = {
   tags: [],
-  status: "loading",
+  status: "success",
 };
 
 export const tagsSlice = createSlice({
   name: "tags",
   initialState,
   reducers: {
-    addNewTag: (state, action) => {
+    addNewUserTag: (state, action) => {
+      const findTag = state.tags.find((obj) => obj.id === action.payload.id);
 
-    }
+      if(findTag){
+        return;
+      }
+
+      state.tags = [
+        ...state.tags,
+        {
+          id: action.payload.id,
+          user_id: action.payload.user_id,
+          value: action.payload.value,
+        }
+      ];
+    },
+    removeUserTag: (state, action) => {
+      const newUserTagsArr = state.tags.filter(
+        (obj) => obj.id !== action.payload
+      );
+      if (!newUserTagsArr) {
+        return;
+      }
+
+      state.tags = newUserTagsArr;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTags.pending, (state) => {
@@ -66,8 +83,8 @@ export const tagsSlice = createSlice({
   },
 });
 
-export const selectAllDrafts = (state: RootState) => state.tagsSlice;
+export const selectTags = (state: RootState) => state.tagsSlice;
 
-export const { addNewTag } = tagsSlice.actions;
+export const { addNewUserTag, removeUserTag } = tagsSlice.actions;
 
 export default tagsSlice.reducer;

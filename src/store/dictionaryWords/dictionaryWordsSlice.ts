@@ -8,13 +8,13 @@ type ParamsProps = {
   userId: number;
 };
 
-type DictionaryWordsProps = {
+export type DictionaryWordsProps = {
   id: number;
   user_id: number;
   word: string;
   transcription: string;
-  translate: string[];
-  selectTagArr: TagProps[];
+  translates: string[];
+  tags: TagProps[];
   learnPercent: number;
   examples: string[];
 };
@@ -55,7 +55,26 @@ export const dictionaryWordsSlice = createSlice({
   name: "dictionaryWords",
   initialState,
   reducers: {
-    addNewWord: (state, action) => {},
+    addNewWord: (state, action) => {
+      state.dictionaryWords = [
+        ...state.dictionaryWords,
+        {
+          id: action.payload.id,
+          user_id: action.payload.user_id,
+          word: action.payload.word,
+          transcription: action.payload.transcription,
+          translates: action.payload.translates,
+          tags: action.payload.tags,
+          learnPercent: action.payload.learnPercent,
+          examples: action.payload.examples,
+        },
+      ];
+    },
+    deleteWord: (state, action) => {
+      const findWord = state.dictionaryWords.filter((obj) => obj.id !== action.payload)
+
+      state.dictionaryWords = findWord;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDictionaryWords.pending, (state) => {
@@ -73,8 +92,9 @@ export const dictionaryWordsSlice = createSlice({
   },
 });
 
-export const selectDictionaryWords = (state: RootState) => state.dictionaryWordsSlice;
+export const selectDictionaryWords = (state: RootState) =>
+  state.dictionaryWordsSlice;
 
-export const { addNewWord } = dictionaryWordsSlice.actions;
+export const { addNewWord, deleteWord } = dictionaryWordsSlice.actions;
 
 export default dictionaryWordsSlice.reducer;

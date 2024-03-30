@@ -9,8 +9,7 @@ type InputProps = {
   type: string;
   ico?: any;
   readOnly?: boolean;
-  onKeyDownFunction?: () => void;
-  onClickFunction?: () => void;
+  onKeyDownFunction?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   inputName?: string;
   autofocus?: boolean;
@@ -27,7 +26,6 @@ const Input: React.FC<InputProps> = ({
   type,
   readOnly,
   onKeyDownFunction,
-  onClickFunction,
   disabled = false,
   autofocus,
   defaultValue,

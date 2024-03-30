@@ -53,6 +53,8 @@ type UserInfoPorops = {
   money: number;
   hintsMoney: number;
   learnedWords: number;
+  tagsAdded: number;
+  wordsAdded: number;
   hints: HintsProps[];
   multipliers: MultipliersProps[];
 };

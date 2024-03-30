@@ -16,6 +16,8 @@ import ModalAddWord from "../../components/ModalAddWord";
 const Dictionary = () => {
   const dispatch = useAppDispatch();
 
+  const [isAddWordOpen, setIsAddWordOpen] = React.useState(false);
+
   const { user } = useSelector(selectUser);
 
   const { dictionaryWords, status } = useSelector(selectDictionaryWords);
@@ -102,7 +104,7 @@ const Dictionary = () => {
           <div>Loading...</div>
         ) : status === "success" ? (
           dictionaryWords.length !== 0 ? (
-            dictionaryWords.map((obj) => <WordBlock key={obj.id} word={obj.word} transcription={obj.transcription} translate={obj.translate} selectTagArr={obj.selectTagArr} learnPercent={obj.learnPercent} examples={obj.examples}/>)
+            dictionaryWords.map((obj) => <WordBlock setIsAddWordOpen={setIsAddWordOpen} key={obj.id} id={obj.id} word={obj.word} transcription={obj.transcription} translates={obj.translates} tags={obj.tags} learnPercent={obj.learnPercent} examples={obj.examples}/>)
           ) : (
             <div>
               <div>Вы еще не добавляли слов</div>
@@ -115,7 +117,7 @@ const Dictionary = () => {
       </div>
 
       {/* модальное окно добавления нового слова в словарь */}
-      <ModalAddWord />
+      <ModalAddWord isAddWordOpen={isAddWordOpen} setIsAddWordOpen={setIsAddWordOpen} dictionaryWords={dictionaryWords}/>
 
       {/* модальное окно выбора пресетов */}
       {/* <ModalWithScroll
@@ -125,8 +127,7 @@ const Dictionary = () => {
 
       <div
         className={styles.addWordButton}
-        data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
+        onClick={() => setIsAddWordOpen(true)}
       >
         <div>+</div>
       </div>

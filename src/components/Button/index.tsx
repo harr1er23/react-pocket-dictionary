@@ -3,8 +3,9 @@ import styles from "./Button.module.scss";
 
 type ButtonProps = {
   text: string;
+  dismiss?: string;
   onClickFunction?: () => void;
-  toggle: string;
+  toggle?: string;
   target?: string;
 };
 

@@ -7,25 +7,64 @@ import styles from "./WordBlock.module.scss";
 
 import SmallTag from "../SmallTag";
 import { TagProps } from "../../store/tags/tagsSlice";
+import axios from "axios";
+import { deleteWord } from "../../store/dictionaryWords/dictionaryWordsSlice";
+import { useAppDispatch } from "../../store/store";
+import { setEditInformation } from "../../store/editWord/editWordSlice";
 
 type WordBlockProps = {
+  id: number;
   word: string;
   transcription: string;
-  translate: string[];
-  selectTagArr: TagProps[];
+  translates: string[];
+  tags: TagProps[];
   learnPercent: number;
   examples: string[];
+  setIsAddWordOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const WordBlock: React.FC<WordBlockProps> = ({
+  id,
   word,
   transcription,
-  translate,
-  selectTagArr,
+  translates,
+  tags,
   learnPercent,
+  setIsAddWordOpen
 }) => {
+  const dispatch = useAppDispatch();
   //   const { speak, voices } = useSpeechSynthesis();
   //   let voice = voices[104];
+
+  // console.log(word, transcription, translates, tags);
+
+  const onClickDelete = async () => {
+    try {
+      const { data } = await axios.delete(
+        `https://9854dac21e0f0eee.mokky.dev/dictionary/${id}`
+      );
+
+      dispatch(deleteWord(id));
+    } catch (err: any) {
+      console.log(err);
+      toast.error("Error when deleting a word!");
+    }
+  };
+
+  const onClickEdit = () => {
+    dispatch(
+      setEditInformation({
+        id,
+        word,
+        transcription,
+        translates,
+        tags,
+        learnPercent,
+      })
+    );
+
+    setIsAddWordOpen(true);
+  };
 
   return (
     <div className={styles.backgroundWord}>
@@ -69,8 +108,11 @@ const WordBlock: React.FC<WordBlockProps> = ({
               </svg>
             </div>
             <div>{word}</div>
-            <div>{transcription}</div>
-            <div className={styles.editImg}>
+            <div>{"[" + transcription + "]"}</div>
+            <div
+              onClick={() => onClickEdit()}
+              className={styles.editImg}
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -102,7 +144,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
             </div>
           </div>
           <div className={styles.wordHeaderRight}>
-            <div className={styles.deleteImg}>
+            <div onClick={() => onClickDelete()} className={styles.deleteImg}>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -133,8 +175,8 @@ const WordBlock: React.FC<WordBlockProps> = ({
           </div>
         </div>
         <div className={styles.translateBlock}>
-          {translate.map((obj, index) =>
-            index === translate.length - 1 ? (
+          {translates.map((obj, index) =>
+            index === translates.length - 1 ? (
               <div key={index}>{obj}</div>
             ) : (
               <div key={index}>{obj},&nbsp;</div>
@@ -143,7 +185,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
         </div>
         <div className={styles.tagBlock}>
           <div className={styles.tags}>
-            {selectTagArr.map((obj) => (
+            {tags.map((obj) => (
               <SmallTag key={obj.id} tagName={`#${obj.value}`} />
             ))}
           </div>

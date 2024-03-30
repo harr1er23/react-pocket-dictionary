@@ -1,6 +1,7 @@
 .inputBlock{
       display: flex;
       padding: 5px;
+      position: relative;
 
       .input {
         display: block;
@@ -14,9 +15,9 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background-color: var(--main-bg);
+        background-color: var(--third-bg);
         background-clip: padding-box;
-        border: var(--bs-border-width) solid var(--main-bg);
+        border: var(--bs-border-width) solid var(--third-bg);
         border-radius: var(--bs-border-radius);
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
       
@@ -31,12 +32,21 @@
         }
       }
 
-      // svg{
-      //   width: 20px;
-      //   height: 20px;
-      //   position: absolute;
-      //   left: 90%;
-      // }
+      svg{
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        top: 12px;
+        left: 430px;
+
+        @media(max-width: 520px){
+          left: 90%;
+        }
+
+        @media(max-width: 350px){
+          left: 85%;
+        }
+      }
 
       .soundImg {
         width: 20px;

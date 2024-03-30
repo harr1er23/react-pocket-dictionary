@@ -1,12 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-import userSlice from './user/userSlice';
-import themeSlice from './theme/themeSlice';
+import userSlice from "./user/userSlice";
+import themeSlice from "./theme/themeSlice";
 import tagsSlice from "./tags/tagsSlice";
-import dictionaryWordsSlice from "./dictionaryWords/dictionaryWordsSlice"
+import dictionaryWordsSlice from "./dictionaryWords/dictionaryWordsSlice";
 import userInfoSlice from "./userInfo/userInfoSlice";
 import achivementsSlice from "./achivements/achivementsSlice";
+import editWordSlice from "./editWord/editWordSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,9 +16,10 @@ export const store = configureStore({
     tagsSlice,
     dictionaryWordsSlice,
     userInfoSlice,
-    achivementsSlice
+    achivementsSlice,
+    editWordSlice,
   },
-})
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 
