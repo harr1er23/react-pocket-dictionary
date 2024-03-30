@@ -295,7 +295,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             translates: translatesWord,
             tags: selectedTagValues,
             examples: [],
-            learPercent: learnPercent,
+            learnPercent: learnPercent,
           }
         );
 
@@ -324,7 +324,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             tags: selectedTagValues,
             selectTagArr: selectedTagValues,
             examples: [],
-            learPercent: 1,
+            learnPercent: 1,
           }
         );
 
