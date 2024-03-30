@@ -354,16 +354,6 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
   };
 
   const onClickClose = () => {
-    setEditInformation({
-      id: null,
-      user_id: null,
-      word: "",
-      transcription: "",
-      tags: [],
-      translates: [],
-      examples: [],
-      learnPercent: 0,
-    });
     setIsAddWordOpen(false);
   };
 
