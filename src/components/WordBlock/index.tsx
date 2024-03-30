@@ -1,9 +1,10 @@
 import React from "react";
-// import { useSpeechSynthesis } from "react-speech-kit";
 import toast from "react-hot-toast";
 import { Circle } from "rc-progress";
 
 import styles from "./WordBlock.module.scss";
+
+import { ReactComponent as SoundIco } from "../../assets/ico/sound.svg";
 
 import SmallTag from "../SmallTag";
 import { TagProps } from "../../store/tags/tagsSlice";
@@ -30,13 +31,11 @@ const WordBlock: React.FC<WordBlockProps> = ({
   translates,
   tags,
   learnPercent,
-  setIsAddWordOpen
+  setIsAddWordOpen,
 }) => {
   const dispatch = useAppDispatch();
-  //   const { speak, voices } = useSpeechSynthesis();
-  //   let voice = voices[104];
 
-  // console.log(word, transcription, translates, tags);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   const onClickDelete = async () => {
     try {
@@ -66,13 +65,20 @@ const WordBlock: React.FC<WordBlockProps> = ({
     setIsAddWordOpen(true);
   };
 
+  const speakText = () => {
+      const synthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = "en-US";
+      synthesis.speak(utterance);
+  };
+
   return (
     <div className={styles.backgroundWord}>
       <div className={styles.wordContent}>
         <div className={styles.wordHeader}>
           <div className={styles.wordHeaderLeft}>
             <div className={styles.soundImg}>
-              <svg
+              {/* <svg
                 // onClick={() =>
                 //   word.length !== 0
                 //     ? speak({ text: word, voice })
@@ -105,14 +111,12 @@ const WordBlock: React.FC<WordBlockProps> = ({
                     fill="var(--tertiary-bg)"
                   ></path>{" "}
                 </g>
-              </svg>
+              </svg> */}
+              <SoundIco onClick={() => speakText()}/>
             </div>
             <div>{word}</div>
             <div>{"[" + transcription + "]"}</div>
-            <div
-              onClick={() => onClickEdit()}
-              className={styles.editImg}
-            >
+            <div onClick={() => onClickEdit()} className={styles.editImg}>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"

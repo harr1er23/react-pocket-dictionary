@@ -52,6 +52,12 @@
           height: 20px;
           margin: 0 5px;
           cursor: pointer;
+
+          svg{
+            g{
+              fill: var(--tertiary-bg);
+            }
+          }
         }
       }
 
