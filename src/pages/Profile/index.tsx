@@ -42,6 +42,7 @@ import {
   fetchAchivements,
   selectAchivements,
 } from "../../store/achivements/achivementsSlice";
+import Loader from "../../components/Loader";
 
 type ProfileForm = {
   email: string;
@@ -289,65 +290,63 @@ const Profile: React.FC = () => {
     }
   };
 
-  return (
+  return userInfoStatus === "loading" ? (
+    <Loader />
+  ) : userInfoStatus === "success" ? (
     <div className={styles.profileBackground}>
-      {userInfoStatus === "loading" ? (
-        <div>Loading...</div>
-      ) : (
-        <div className={styles.experience}>
-          <div className={styles.leftBar}>
-            <div className={styles.experienceLevel}>
-              <div className={styles.levelValue}>{level}</div>
-              <div className={styles.medalIco}>
-                {level > 0 && level <= 10 ? (
-                  <MedalOne />
-                ) : level > 10 && level <= 20 ? (
-                  <MedalTwo />
-                ) : level > 20 && level <= 30 ? (
-                  <MedalThree />
-                ) : level > 30 && level <= 40 ? (
-                  <MedalFour />
-                ) : level > 40 && level <= 50 ? (
-                  <MedalFive />
-                ) : level > 50 && level <= 60 ? (
-                  <MedalSix />
-                ) : level > 60 && level <= 70 ? (
-                  <MedalSeven />
-                ) : level > 70 && level <= 80 ? (
-                  <MedalEight />
-                ) : level > 80 && level <= 90 ? (
-                  <MedalNine />
-                ) : level > 90 && level <= 100 ? (
-                  <MedalTen />
-                ) : (
-                  level > 100 && <MedalEleven />
-                )}
-              </div>
-            </div>
-            <div className={styles.experienceBar}>
-              <div>
-                <Line
-                  percent={experience}
-                  strokeWidth={4}
-                  strokeColor={strokeColor}
-                />
-              </div>
-              <div>{100 - experience} exp. points left</div>
+      <div className={styles.experience}>
+        <div className={styles.leftBar}>
+          <div className={styles.experienceLevel}>
+            <div className={styles.levelValue}>{level}</div>
+            <div className={styles.medalIco}>
+              {level > 0 && level <= 10 ? (
+                <MedalOne />
+              ) : level > 10 && level <= 20 ? (
+                <MedalTwo />
+              ) : level > 20 && level <= 30 ? (
+                <MedalThree />
+              ) : level > 30 && level <= 40 ? (
+                <MedalFour />
+              ) : level > 40 && level <= 50 ? (
+                <MedalFive />
+              ) : level > 50 && level <= 60 ? (
+                <MedalSix />
+              ) : level > 60 && level <= 70 ? (
+                <MedalSeven />
+              ) : level > 70 && level <= 80 ? (
+                <MedalEight />
+              ) : level > 80 && level <= 90 ? (
+                <MedalNine />
+              ) : level > 90 && level <= 100 ? (
+                <MedalTen />
+              ) : (
+                level > 100 && <MedalEleven />
+              )}
             </div>
           </div>
-          <div className={styles.rightBar}>
-            <div className={styles.hints}>
-              {hintsMoney} <LightIco />
+          <div className={styles.experienceBar}>
+            <div>
+              <Line
+                percent={experience}
+                strokeWidth={4}
+                strokeColor={strokeColor}
+              />
             </div>
-            <div className={styles.money}>
-              {money} <MoneyIco />
-            </div>
-            <Link to="/app/shop" className={styles.shopButton}>
-              <ShopIco />
-            </Link>
+            <div>{100 - experience} exp. points left</div>
           </div>
         </div>
-      )}
+        <div className={styles.rightBar}>
+          <div className={styles.hints}>
+            {hintsMoney} <LightIco />
+          </div>
+          <div className={styles.money}>
+            {money} <MoneyIco />
+          </div>
+          <Link to="/app/shop" className={styles.shopButton}>
+            <ShopIco />
+          </Link>
+        </div>
+      </div>
 
       <div className={styles.profileHeader}>
         <h2>Profile Info</h2>
@@ -604,6 +603,8 @@ const Profile: React.FC = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <>Erorr...</>
   );
 };
 

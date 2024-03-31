@@ -14,6 +14,8 @@ import {
 } from "../../store/dictionaryWords/dictionaryWordsSlice";
 import { selectUser, setUser } from "../../store/user/userSlice";
 import { useAppDispatch } from "../../store/store";
+import WordsLoading from "../../components/WordsLoading";
+import { setEditInformation } from "../../store/editWord/editWordSlice";
 
 const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +24,15 @@ const Dictionary: React.FC = () => {
 
   const { user } = useSelector(selectUser);
 
+  const [headerText, setHeaderText] = React.useState("");
+
   const { dictionaryWords, status } = useSelector(selectDictionaryWords);
+
+  const pagination = 1;
 
   React.useEffect(() => {
     dispatch(
-      fetchDictionaryWords({ token: user!.token!, userId: user!.data.id! })
+      fetchDictionaryWords({ token: user!.token!, userId: user!.data.id!, pagination })
     );
   }, [user]);
 
@@ -99,13 +105,31 @@ const Dictionary: React.FC = () => {
   //   },
   // ]);
 
+  const onClickAdd = () => {
+    dispatch(
+      setEditInformation({
+        id: null,
+        user_id: null,
+        word: "",
+        transcription: "",
+        translates: [],
+        tags: [],
+        examples: [],
+        learnPercent: null,
+      })
+    );
+    
+    setHeaderText("Add Word");
+    setIsAddWordOpen(true);
+  };
+
   return (
     <div className={styles.background}>
       <h2>Dictionary</h2>
 
       <div className={styles.backgroundWords}>
         {status === "loading" ? (
-          <div>Loading...</div>
+          <WordsLoading length={25} />
         ) : status === "success" ? (
           dictionaryWords.length !== 0 ? (
             dictionaryWords.map((obj) => (
@@ -119,6 +143,7 @@ const Dictionary: React.FC = () => {
                 tags={obj.tags}
                 learnPercent={obj.learnPercent}
                 examples={obj.examples}
+                setHeaderText={setHeaderText}
               />
             ))
           ) : (
@@ -137,6 +162,7 @@ const Dictionary: React.FC = () => {
         isAddWordOpen={isAddWordOpen}
         setIsAddWordOpen={setIsAddWordOpen}
         dictionaryWords={dictionaryWords}
+        headerText={headerText}
       />
 
       {/* модальное окно выбора пресетов */}
@@ -145,10 +171,7 @@ const Dictionary: React.FC = () => {
         headerText={"Загрузить пресет"}
       /> */}
 
-      <div
-        className={styles.addWordButton}
-        onClick={() => setIsAddWordOpen(true)}
-      >
+      <div className={styles.addWordButton} onClick={() => onClickAdd()}>
         <div>+</div>
       </div>
     </div>

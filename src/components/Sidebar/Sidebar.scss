@@ -358,10 +358,10 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 770px) {
   .sidebar {
     &-container {
-      @media (max-width: 700px) {
+      @media (max-width: 770px) {
         &.shrink {
           left: -93px;
         }

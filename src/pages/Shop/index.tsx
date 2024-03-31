@@ -32,6 +32,7 @@ import {
   updateHints,
   updateMultipliers,
 } from "../../store/userInfo/userInfoSlice";
+import Loader from "../../components/Loader";
 
 type ShopProps = {};
 
@@ -201,7 +202,9 @@ const Shop: React.FC<ShopProps> = ({}) => {
     }
   };
 
-  return (
+  return userInfoStatus === "loading" ? (
+    <Loader />
+  ) : userInfoStatus === "success" ? (
     <div className={styles.shopBackground}>
       <div className={styles.shopHeader}>
         <Link to="/app/profile" className={styles.backButton}>
@@ -313,6 +316,8 @@ const Shop: React.FC<ShopProps> = ({}) => {
         </div>
       </div>
     </div>
+  ) : (
+    <>Error!</>
   );
 };
 

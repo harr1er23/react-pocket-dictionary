@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { WordProps } from "../editWord/editWordSlice";
 import { RootState } from "../store";
 import { TagProps } from "../tags/tagsSlice";
 
 type ParamsProps = {
   token: string;
   userId: number;
+  pagination: number;
 };
 
-export type DictionaryWordsProps = {
+export type DictionaryWordProps = {
   id: number;
   user_id: number;
   word: string;
@@ -17,6 +19,17 @@ export type DictionaryWordsProps = {
   tags: TagProps[];
   learnPercent: number;
   examples: string[];
+}
+
+export type DictionaryWordsProps = {
+  meta: {
+    total_items: 5,
+    total_pages: 3,
+    current_page: 1,
+    per_page: 2,
+    remaining_count: 3
+  };
+  items: DictionaryWordProps[];
 };
 
 // type DictonaryWordsDataProps = {
@@ -24,14 +37,14 @@ export type DictionaryWordsProps = {
 // };
 
 export const fetchDictionaryWords = createAsyncThunk<
-  DictionaryWordsProps[],
+  DictionaryWordsProps,
   ParamsProps
 >("dictionaryWords/fetchDictionaryWords", async (params) => {
-  const { token, userId } = params;
-  const { data } = await axios.get<DictionaryWordsProps[]>(
+  const { token, userId, pagination } = params;
+  const { data } = await axios.get<DictionaryWordsProps>(
     `https://9854dac21e0f0eee.mokky.dev/dictionary?${
       userId ? `user_id=${userId}` : ""
-    }`,
+    }${pagination ? `&page=${pagination}&limit=20` : ""}`,
     {
       headers: {
         Authorization: "Bearer " + token,
@@ -42,12 +55,18 @@ export const fetchDictionaryWords = createAsyncThunk<
 });
 
 interface DictonaryWordsSliceState {
-  dictionaryWords: DictionaryWordsProps[] | [];
+  dictionaryWords: DictionaryWordProps[] | [];
+  total_items: number,
+  total_pages: number,
+  current_page: number,
   status: "loading" | "success" | "error";
 }
 
 const initialState: DictonaryWordsSliceState = {
   dictionaryWords: [],
+  total_items: 1,
+  total_pages: 1,
+  current_page: 1,
   status: "loading",
 };
 
@@ -102,7 +121,10 @@ export const dictionaryWordsSlice = createSlice({
     });
     builder.addCase(fetchDictionaryWords.fulfilled, (state, action) => {
       state.status = "success";
-      state.dictionaryWords = action.payload;
+      state.dictionaryWords = action.payload.items;
+      state.current_page = action.payload.meta.current_page;
+      state.total_items = action.payload.meta.total_items;
+      state.total_pages = action.payload.meta.total_pages;
     });
     builder.addCase(fetchDictionaryWords.rejected, (state, action) => {
       state.status = "error";
