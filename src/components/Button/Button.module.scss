@@ -4,10 +4,17 @@
     background-color: var(--third-bg);
     border: 2px solid var(--third-bg);
     color: var(--text-hover-color);
+    cursor: pointer;
 
     &:hover{
         background-color: var(--main-container-bg);
         border: 2px solid var(--secondary-bg);
         color: var(--tertiary-bg);
+    }
+
+    &:disabled {
+        background-color: var(--button-disabled);
+        border: 2px solid var(--button-disabled);
+        color: var(--text-hover-color);
     }
 }

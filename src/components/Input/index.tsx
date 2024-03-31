@@ -1,4 +1,5 @@
 import React from "react";
+import { ClipLoader } from "react-spinners";
 
 import styles from "./Input.module.scss";
 
@@ -15,6 +16,7 @@ type InputProps = {
   autofocus?: boolean;
   defaultValue?: string;
   content?: any;
+  loading?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -29,10 +31,11 @@ const Input: React.FC<InputProps> = ({
   disabled = false,
   autofocus,
   defaultValue,
-  content
+  content,
+  loading,
 }) => {
+  console.log(loading);
   return (
-
     <div className={styles.inputBlock}>
       <input
         autoFocus={autofocus}
@@ -48,7 +51,8 @@ const Input: React.FC<InputProps> = ({
         defaultValue={defaultValue}
         {...content}
       />
-      {ico && ico}
+      {loading && loading === true && <ClipLoader color="#fff" />}
+      {ico && loading !== true && ico}
     </div>
   );
 };

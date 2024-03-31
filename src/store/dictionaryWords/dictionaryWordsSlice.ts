@@ -74,6 +74,25 @@ export const dictionaryWordsSlice = createSlice({
       const findWord = state.dictionaryWords.filter((obj) => obj.id !== action.payload)
 
       state.dictionaryWords = findWord;
+    },
+    updateWord: (state, action) => {
+      const { id, word, transcription, translates, tags, learnPercent } = action.payload;
+
+      state.dictionaryWords = state.dictionaryWords.map(wordObj => {
+
+        if (wordObj.id !== id) {
+          return wordObj;
+        }
+    
+        return {
+          ...wordObj,
+          word,
+          transcription,
+          translates,
+          tags,
+          learnPercent,
+        };
+      });
     }
   },
   extraReducers: (builder) => {
@@ -95,6 +114,6 @@ export const dictionaryWordsSlice = createSlice({
 export const selectDictionaryWords = (state: RootState) =>
   state.dictionaryWordsSlice;
 
-export const { addNewWord, deleteWord } = dictionaryWordsSlice.actions;
+export const { addNewWord, deleteWord, updateWord } = dictionaryWordsSlice.actions;
 
 export default dictionaryWordsSlice.reducer;

@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -30,8 +32,6 @@ import {
   updateHints,
   updateMultipliers,
 } from "../../store/userInfo/userInfoSlice";
-import axios from "axios";
-import toast from "react-hot-toast";
 
 type ShopProps = {};
 

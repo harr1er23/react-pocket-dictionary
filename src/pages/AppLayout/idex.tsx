@@ -4,15 +4,14 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 
 const AppLayout: React.FC = () => {
-
-    return (
+  return (
+    <div>
+      <Sidebar />
       <div>
-        <Sidebar />
-        <div>
-          <Outlet/>
-        </div>
+        <Outlet />
       </div>
-    );
+    </div>
+  );
 };
 
 export default AppLayout;

@@ -16,6 +16,7 @@
   white-space: nowrap;
 
   .existingTagBackground {
+    display: flex;
     border: 1px solid var(--secondary-bg);
     background-color: var(--secondary-bg);
     color: var(--text-hover-color);
@@ -24,10 +25,19 @@
     margin: 5px 5px 0 5px;
     cursor: pointer;
 
-    &:hover {
-      background-color: var(--main-container-bg);
-      border: 1px solid var(--secondary-bg);
-      color: var(--tertiary-bg);
+    // &:hover {
+    //   background-color: var(--main-container-bg);
+    //   border: 1px solid var(--secondary-bg);
+    //   color: var(--tertiary-bg);
+    // }
+
+    .deleteButton{
+      margin-left: 10px;
+      color: var(--);
+
+      &:hover{
+        color: rgba(195, 2, 2, 0.792);
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import React from "react";
+
 import styles from "./Button.module.scss";
 
 type ButtonProps = {
@@ -7,6 +8,7 @@ type ButtonProps = {
   onClickFunction?: () => void;
   toggle?: string;
   target?: string;
+  disabled?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,6 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   onClickFunction,
   toggle,
   target,
+  disabled,
 }) => {
   return (
     <button
@@ -21,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
       data-bs-toggle={toggle}
       data-bs-target={target}
       className={styles.button}
+      disabled={disabled}
     >
       {text}
     </button>

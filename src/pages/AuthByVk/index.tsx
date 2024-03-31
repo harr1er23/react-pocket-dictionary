@@ -5,7 +5,7 @@ import VK, { Auth } from "react-vk";
 
 import { useAppDispatch } from "../../store/store";
 
-const AuthByVk = () => {
+const AuthByVk: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -16,7 +16,6 @@ const AuthByVk = () => {
           onAuth: async (user: any) => {
             try {
               console.log(user);
-              
             } catch (err: any) {
               console.log(err);
               if (err.responce.status === 401) {

@@ -3,9 +3,9 @@ import React from "react";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
-import { Link } from "react-router-dom";
 
 type RegisterProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,7 +35,12 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
       setIsLoading(true);
       const { data } = await axios.post(
         "https://9854dac21e0f0eee.mokky.dev/register",
-        { name, email, password, imageUrl: "https://assets.codepen.io/3306515/i-know.jpg" }
+        {
+          name,
+          email,
+          password,
+          imageUrl: "https://assets.codepen.io/3306515/i-know.jpg",
+        }
       );
 
       await axios.post("https://9854dac21e0f0eee.mokky.dev/userInfo", {
@@ -99,7 +104,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         options: [
           {
             theme: "light",
-            wordQuantity: 5
+            wordQuantity: 5,
           },
         ],
       });

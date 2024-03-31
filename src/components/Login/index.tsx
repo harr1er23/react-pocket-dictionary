@@ -5,11 +5,13 @@ import { ClipLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+//styles
 import "./Login.scss";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
 import { ReactComponent as YandexIco } from "../../assets/ico/yandex.svg";
 
+//slices
 import { useAppDispatch } from "../../store/store";
 import { setUser } from "../../store/user/userSlice";
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//slices
 import { useAppDispatch } from "../../store/store";
 import { setIsShrinkView } from "../../store/theme/themeSlice";
 

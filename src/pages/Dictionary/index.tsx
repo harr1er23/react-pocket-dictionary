@@ -6,14 +6,16 @@ import { useSelector } from "react-redux";
 import styles from "./Dictionary.module.scss";
 
 import WordBlock from "../../components/WordBlock";
-
-import { fetchDictionaryWords, selectDictionaryWords } from "../../store/dictionaryWords/dictionaryWordsSlice";
-
-import { selectUser, setUser } from "../../store/user/userSlice";
-import { useAppDispatch } from "../../store/store";
 import ModalAddWord from "../../components/ModalAddWord";
 
-const Dictionary = () => {
+import {
+  fetchDictionaryWords,
+  selectDictionaryWords,
+} from "../../store/dictionaryWords/dictionaryWordsSlice";
+import { selectUser, setUser } from "../../store/user/userSlice";
+import { useAppDispatch } from "../../store/store";
+
+const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [isAddWordOpen, setIsAddWordOpen] = React.useState(false);
@@ -23,7 +25,9 @@ const Dictionary = () => {
   const { dictionaryWords, status } = useSelector(selectDictionaryWords);
 
   React.useEffect(() => {
-    dispatch(fetchDictionaryWords({token: user!.token!, userId: user!.data.id!}));
+    dispatch(
+      fetchDictionaryWords({ token: user!.token!, userId: user!.data.id! })
+    );
   }, [user]);
 
   // const [wordPresets, setWordPresets] = React.useState([
@@ -104,7 +108,19 @@ const Dictionary = () => {
           <div>Loading...</div>
         ) : status === "success" ? (
           dictionaryWords.length !== 0 ? (
-            dictionaryWords.map((obj) => <WordBlock setIsAddWordOpen={setIsAddWordOpen} key={obj.id} id={obj.id} word={obj.word} transcription={obj.transcription} translates={obj.translates} tags={obj.tags} learnPercent={obj.learnPercent} examples={obj.examples}/>)
+            dictionaryWords.map((obj) => (
+              <WordBlock
+                setIsAddWordOpen={setIsAddWordOpen}
+                key={obj.id}
+                id={obj.id}
+                word={obj.word}
+                transcription={obj.transcription}
+                translates={obj.translates}
+                tags={obj.tags}
+                learnPercent={obj.learnPercent}
+                examples={obj.examples}
+              />
+            ))
           ) : (
             <div>
               <div>Вы еще не добавляли слов</div>
@@ -117,7 +133,11 @@ const Dictionary = () => {
       </div>
 
       {/* модальное окно добавления нового слова в словарь */}
-      <ModalAddWord isAddWordOpen={isAddWordOpen} setIsAddWordOpen={setIsAddWordOpen} dictionaryWords={dictionaryWords}/>
+      <ModalAddWord
+        isAddWordOpen={isAddWordOpen}
+        setIsAddWordOpen={setIsAddWordOpen}
+        dictionaryWords={dictionaryWords}
+      />
 
       {/* модальное окно выбора пресетов */}
       {/* <ModalWithScroll

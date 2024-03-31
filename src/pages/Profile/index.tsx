@@ -5,8 +5,11 @@ import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Line } from "rc-progress";
+import { Link } from "react-router-dom";
 
 import styles from "./Profile.module.scss";
+
+import Input from "../../components/Input";
 
 import { ReactComponent as LightIco } from "../../assets/ico/light.svg";
 import { ReactComponent as ShopIco } from "../../assets/ico/shop.svg";
@@ -27,8 +30,6 @@ import { ReactComponent as MedalTen } from "../../assets/ico/medal10.svg";
 import { ReactComponent as MedalEleven } from "../../assets/ico/medal11.svg";
 
 import { selectUser, setUser } from "../../store/user/userSlice";
-import { Link } from "react-router-dom";
-import Input from "../../components/Input";
 import { useAppDispatch } from "../../store/store";
 import {
   fetchUserInfo,
@@ -155,7 +156,7 @@ const Profile: React.FC = () => {
             id: newUser.data.id,
             level: newUser.data.level,
             experience: newUser.data.experience,
-            imageUrl: newUser.data.imageUrl
+            imageUrl: newUser.data.imageUrl,
           },
           token: newUser.token,
         })
@@ -174,7 +175,7 @@ const Profile: React.FC = () => {
               id: userLocal.data.id,
               level: userLocal.data.level,
               experience: userLocal.data.experience,
-              imageUrl: newUser.data.imageUrl
+              imageUrl: newUser.data.imageUrl,
             },
             token: newUser.token,
           })

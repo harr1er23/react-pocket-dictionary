@@ -2,8 +2,10 @@ import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+//styles
 import "./Sidebar.scss";
 
+//components
 import SidebarButton from "../SidebarButton";
 
 import { ReactComponent as DictionaryIco } from "../../assets/ico/dictionary.svg";
@@ -15,8 +17,9 @@ import { ReactComponent as SettingsIco } from "../../assets/ico/settings.svg";
 import { ReactComponent as ExitIco } from "../../assets/ico/exit.svg";
 import { ReactComponent as NightIco } from "../../assets/ico/night.svg";
 import { ReactComponent as DayIco } from "../../assets/ico/day.svg";
-import { ReactComponent as ProfileIco } from "../../assets/ico/profile.svg"
+import { ReactComponent as ProfileIco } from "../../assets/ico/profile.svg";
 
+//slices
 import {
   setIsShrinkView,
   setIsDarkMode,
@@ -115,28 +118,28 @@ const Sidebar: React.FC = () => {
         </div>
         <ul className="sidebar-list">
           <SidebarButton
-            svg={<DictionaryIco className="noFillIco"/>}
+            svg={<DictionaryIco className="noFillIco" />}
             text={"My dictionary"}
             link={"dictionary"}
             clickButton={clickButton}
             setClickButton={setClickButton}
           />
           <SidebarButton
-              svg={<ExercisesIco className="noFillIco"/>}
-              text={"Exercises"}
-              link={"exercises"}
-              clickButton={clickButton}
-              setClickButton={setClickButton}
-            />
+            svg={<ExercisesIco className="noFillIco" />}
+            text={"Exercises"}
+            link={"exercises"}
+            clickButton={clickButton}
+            setClickButton={setClickButton}
+          />
           <SidebarButton
-            svg={<StatisticsIco className="noFillIco"/>}
+            svg={<StatisticsIco className="noFillIco" />}
             text={"Statistics"}
             link={"statistics"}
             clickButton={clickButton}
             setClickButton={setClickButton}
           />
           <SidebarButton
-            svg={<SettingsIco className="noFillIco"/>}
+            svg={<SettingsIco className="noFillIco" />}
             text={"Settings"}
             link={"settings"}
             clickButton={clickButton}
@@ -146,7 +149,7 @@ const Sidebar: React.FC = () => {
         {showExit && (
           <div className="exitBlock">
             <div className="sidebar-listItem">
-              <Link to='#' onClick={() => onClickExit()}>
+              <Link to="#" onClick={() => onClickExit()}>
                 <ExitIco className="exitImg" />
                 <span className="sidebar-listItemText">Exit</span>
               </Link>
@@ -163,12 +166,7 @@ const Sidebar: React.FC = () => {
           onClick={() => setShowExit(!showExit)}
           className="sidebar-profileSection"
         >
-          <img
-            src={userPhoto}
-            width="40"
-            height="40"
-            alt="Monica Geller"
-          />
+          <img src={userPhoto} width="40" height="40" alt="Monica Geller" />
           <span>{user?.data.name}</span>
         </div>
       </div>

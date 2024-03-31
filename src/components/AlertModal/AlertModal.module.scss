@@ -1,0 +1,24 @@
+.modalHeader {
+    border-bottom: 0;
+  
+    background-color: var(--main-container-bg);
+    color: var(--tertiary-bg);
+  
+    button{
+      background-color: var(--third-bg);
+    }
+  }
+  
+  .modalFooter {
+    display: flex;
+    justify-content: space-between;
+    border-top: 0;
+  
+    background-color: var(--main-container-bg);
+    color: var(--tertiary-bg);
+  }
+  
+  .modalBody {
+    background-color: var(--main-container-bg);
+    color: var(--tertiary-bg);
+  }
