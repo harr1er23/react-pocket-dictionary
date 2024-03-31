@@ -30,6 +30,7 @@ type WordBlockProps = {
   learnPercent: number;
   examples: string[];
   setIsAddWordOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setHeaderText: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const WordBlock: React.FC<WordBlockProps> = ({
@@ -40,6 +41,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
   tags,
   learnPercent,
   setIsAddWordOpen,
+  setHeaderText
 }) => {
   const dispatch = useAppDispatch();
 
@@ -72,6 +74,8 @@ const WordBlock: React.FC<WordBlockProps> = ({
         learnPercent,
       })
     );
+
+    setHeaderText("Edit Word");
 
     setIsAddWordOpen(true);
   };
@@ -151,6 +155,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
                     : "#2bbc99"
                 }
               />
+              <div className={styles.learnPercent}>{learnPercent}%</div>
             </div>
           </div>
         </div>

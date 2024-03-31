@@ -32,20 +32,22 @@ import {
 import { useAppDispatch } from "../../store/store";
 import {
   addNewWord,
-  DictionaryWordsProps,
+  DictionaryWordProps,
   updateWord,
 } from "../../store/dictionaryWords/dictionaryWordsSlice";
 
 type ModalAddWordProps = {
-  dictionaryWords: [] | DictionaryWordsProps[];
+  dictionaryWords: [] | DictionaryWordProps[];
   isAddWordOpen: boolean;
   setIsAddWordOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  headerText?: string;
 };
 
 const ModalAddWord: React.FC<ModalAddWordProps> = ({
   dictionaryWords,
   isAddWordOpen,
   setIsAddWordOpen,
+  headerText
 }) => {
   const dispatch = useAppDispatch();
 
@@ -278,7 +280,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
     try {
       //проверка на наличие слова в словаре
       const findWord = dictionaryWords.find(
-        (word) => word.word.toLowerCase() === wordInputValue.toLowerCase()
+        (obj) => obj.word.toLowerCase() === wordInputValue.toLowerCase()
       );
 
       if (findWord) {
@@ -410,7 +412,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
         centered
       >
         <Modal.Header className={styles.modalHeader} closeButton>
-          <Modal.Title>Add Word</Modal.Title>
+          <Modal.Title>{headerText}</Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modalBody}>
           <div>

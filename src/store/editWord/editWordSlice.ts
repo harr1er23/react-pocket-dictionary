@@ -10,7 +10,7 @@ export type WordProps = {
   tags: TagProps[] | [];
   translates: string[] | [];
   examples: [];
-  learnPercent: number;
+  learnPercent: null | number;
 };
 
 export type EditTagProps = {
