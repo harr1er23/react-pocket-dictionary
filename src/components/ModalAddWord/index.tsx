@@ -33,6 +33,7 @@ import { useAppDispatch } from "../../store/store";
 import {
   addNewWord,
   DictionaryWordProps,
+  fetchDictionaryWords,
   updateWord,
 } from "../../store/dictionaryWords/dictionaryWordsSlice";
 
@@ -47,7 +48,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
   dictionaryWords,
   isAddWordOpen,
   setIsAddWordOpen,
-  headerText
+  headerText,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -325,16 +326,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
         );
 
         dispatch(
-          addNewWord({
-            id: data.id,
-            user_id: user!.data.id!,
-            word: wordInputValue,
-            transcription: transcriptionInputValue,
-            translates: translatesWord,
-            tags: selectedTagValues,
-            learnPercent: 1,
-            examples: [],
-          })
+          fetchDictionaryWords({ token: user!.token!, userId: user!.data.id!, pagination: 1 })
         );
       }
 
