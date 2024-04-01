@@ -20,6 +20,11 @@ export type DictionaryWordProps = {
   tags: TagProps[];
   learnPercent: number;
   examples: string[];
+  currentData: number;
+  hearing: number;
+  correctSpelling: number;
+  correctRecognition: number;
+  rememberPercent: number;
 };
 
 export type DictionaryWordsProps = {
@@ -77,21 +82,6 @@ export const dictionaryWordsSlice = createSlice({
   name: "dictionaryWords",
   initialState,
   reducers: {
-    addNewWord: (state, action) => {
-      state.dictionaryWords = [
-        ...state.dictionaryWords,
-        {
-          id: action.payload.id,
-          user_id: action.payload.user_id,
-          word: action.payload.word,
-          transcription: action.payload.transcription,
-          translates: action.payload.translates,
-          tags: action.payload.tags,
-          learnPercent: action.payload.learnPercent,
-          examples: action.payload.examples,
-        },
-      ];
-    },
     deleteWord: (state, action) => {
       const findWord = state.dictionaryWords.filter(
         (obj) => obj.id !== action.payload
@@ -141,7 +131,7 @@ export const dictionaryWordsSlice = createSlice({
 export const selectDictionaryWords = (state: RootState) =>
   state.dictionaryWordsSlice;
 
-export const { addNewWord, deleteWord, updateWord } =
+export const { deleteWord, updateWord } =
   dictionaryWordsSlice.actions;
 
 export default dictionaryWordsSlice.reducer;
