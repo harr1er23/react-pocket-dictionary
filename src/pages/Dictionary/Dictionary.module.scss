@@ -8,6 +8,22 @@
 
     position: relative;
 
+    .dictionaryHeader{
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0 10px 0 ;
+        h2{
+          margin-left: 20px;
+          margin-right: auto;
+          color: white;
+        }
+
+        input{
+            border: 1px solid var(--secondary-bg);
+            background-color: var(--secondary-bg);
+        }
+      }
+
     .backgroundWords{
         display: flex;
         flex-wrap: wrap;

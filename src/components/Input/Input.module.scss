@@ -18,8 +18,8 @@
         appearance: none;
         background-color: var(--third-bg);
         background-clip: padding-box;
-        border: var(--bs-border-width) solid var(--third-bg);
-        border-radius: var(--bs-border-radius);
+        border: 1px solid var(--third-bg);
+        border-radius: 5px;
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
       
         &::placeholder {
@@ -50,7 +50,7 @@
         height: 22px;
         position: absolute;
         top: 12px;
-        left: 430px;
+        left: 90%;
 
         @media(max-width: 520px){
           left: 90%;

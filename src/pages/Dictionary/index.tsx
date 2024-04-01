@@ -1,9 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import debounce from "lodash.debounce";
 
 // import ModalWithScroll from "../../components/ModalWithScroll";
 
 import styles from "./Dictionary.module.scss";
+
+import { ReactComponent as ClearIco } from "../../assets/ico/close.svg";
 
 import WordBlock from "../../components/WordBlock";
 import ModalAddWord from "../../components/ModalAddWord";
@@ -21,6 +24,8 @@ import {
   selectPagination,
   setPagination,
 } from "../../store/pagination/paginationSlice";
+import { selectSearch, setSearch } from "../../store/search/searchSlice";
+import Input from "../../components/Input";
 
 const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,10 +35,11 @@ const Dictionary: React.FC = () => {
   const { user } = useSelector(selectUser);
 
   const { paginationValue } = useSelector(selectPagination);
+  const { searchValue } = useSelector(selectSearch);
 
   const [headerText, setHeaderText] = React.useState("");
 
-  const [searchValue, setSearchValue] = React.useState("");
+  const [inputSearchValue, setInputSearchValue] = React.useState("");
 
   const { dictionaryWords, total_pages, status } = useSelector(
     selectDictionaryWords
@@ -45,9 +51,10 @@ const Dictionary: React.FC = () => {
         token: user!.token!,
         userId: user!.data.id!,
         pagination: paginationValue,
+        search: searchValue,
       })
     );
-  }, [user, paginationValue]);
+  }, [user, paginationValue, searchValue]);
 
   // const [wordPresets, setWordPresets] = React.useState([
   //   {
@@ -136,9 +143,41 @@ const Dictionary: React.FC = () => {
     setIsAddWordOpen(true);
   };
 
+  const updateSearchValue = React.useCallback(
+    debounce((str: string) => {
+      dispatch(setSearch(str));
+      dispatch(setPagination(1));
+    }, 700),
+    [dispatch]
+  );
+
+  const onChangeInput = (value: string) => {
+    setInputSearchValue(value);
+    updateSearchValue(value);
+  };
+
+  const onClickClear = () => {
+    setInputSearchValue("");
+    dispatch(setSearch(""));
+    dispatch(setPagination(1));
+  };
+
   return (
     <div className={styles.background}>
-      <h2>Dictionary</h2>
+      <div className={styles.dictionaryHeader}>
+        <h2>Dictionary</h2>
+        <Input
+          value={inputSearchValue}
+          textPlaceholder={"Search..."}
+          type={"text"}
+          onChangeFunction={onChangeInput}
+          ico={
+            inputSearchValue.length > 0 && (
+              <ClearIco onClick={() => onClickClear()} />
+            )
+          }
+        />
+      </div>
 
       <div className={styles.backgroundWords}>
         {status === "loading" ? (
@@ -159,10 +198,15 @@ const Dictionary: React.FC = () => {
                 setHeaderText={setHeaderText}
               />
             ))
+          ) : searchValue.length !== 0 ? (
+            <div>
+              <div>Oops!</div>
+              <p>there're no words according to these filters</p>
+            </div>
           ) : (
             <div>
-              <div>Вы еще не добавляли слов</div>
-              <p>чтобы добавить слово нажмите кнопку в низу экрана</p>
+              <div>You haven't added the words yet!</div>
+              <p>To add a word, click on the button at the bottom of the screen</p>
             </div>
           )
         ) : (
@@ -192,9 +236,9 @@ const Dictionary: React.FC = () => {
         " "
       ) : (
         <Pagination
-          pageIndex={paginationValue-1}
+          pageIndex={paginationValue - 1}
           pageCount={total_pages}
-          onChange={(index) => dispatch(setPagination(index+1))}
+          onChange={(index) => dispatch(setPagination(index + 1))}
         />
       )}
     </div>
