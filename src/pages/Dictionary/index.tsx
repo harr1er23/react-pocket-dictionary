@@ -16,6 +16,11 @@ import { selectUser, setUser } from "../../store/user/userSlice";
 import { useAppDispatch } from "../../store/store";
 import WordsLoading from "../../components/WordsLoading";
 import { setEditInformation } from "../../store/editWord/editWordSlice";
+import Pagination from "../../components/Pagination";
+import {
+  selectPagination,
+  setPagination,
+} from "../../store/pagination/paginationSlice";
 
 const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,17 +29,25 @@ const Dictionary: React.FC = () => {
 
   const { user } = useSelector(selectUser);
 
+  const { paginationValue } = useSelector(selectPagination);
+
   const [headerText, setHeaderText] = React.useState("");
 
-  const { dictionaryWords, status } = useSelector(selectDictionaryWords);
+  const [searchValue, setSearchValue] = React.useState("");
 
-  const pagination = 1;
+  const { dictionaryWords, total_pages, status } = useSelector(
+    selectDictionaryWords
+  );
 
   React.useEffect(() => {
     dispatch(
-      fetchDictionaryWords({ token: user!.token!, userId: user!.data.id!, pagination })
+      fetchDictionaryWords({
+        token: user!.token!,
+        userId: user!.data.id!,
+        pagination: paginationValue,
+      })
     );
-  }, [user]);
+  }, [user, paginationValue]);
 
   // const [wordPresets, setWordPresets] = React.useState([
   //   {
@@ -118,7 +131,7 @@ const Dictionary: React.FC = () => {
         learnPercent: null,
       })
     );
-    
+
     setHeaderText("Add Word");
     setIsAddWordOpen(true);
   };
@@ -174,6 +187,16 @@ const Dictionary: React.FC = () => {
       <div className={styles.addWordButton} onClick={() => onClickAdd()}>
         <div>+</div>
       </div>
+
+      {total_pages <= 1 ? (
+        " "
+      ) : (
+        <Pagination
+          pageIndex={paginationValue-1}
+          pageCount={total_pages}
+          onChange={(index) => dispatch(setPagination(index+1))}
+        />
+      )}
     </div>
   );
 };

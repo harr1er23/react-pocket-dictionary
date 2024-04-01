@@ -1,0 +1,40 @@
+.pagination {
+    padding: 10px 0 20px 0;
+    font-size: 10px;
+
+    top: 100%;
+    left: 130px;
+    position: absolute;
+
+    @media(max-width: 770px){
+        left: 20px;
+    }
+
+
+    button {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        justify-content: center;
+        min-width: 20px;
+        height: 20px;
+        margin-inline-end: 8px;
+        background-color: transparent;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--secondary-bg);
+            color: var(--tertiary-bg);
+          }
+
+          &.active {
+            color: var(--text-hover-color);
+            border: 1px solid var(--text-hover-color);
+            font-weight: 600;
+          }
+      }
+  }
+  

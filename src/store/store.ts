@@ -8,6 +8,7 @@ import dictionaryWordsSlice from "./dictionaryWords/dictionaryWordsSlice";
 import userInfoSlice from "./userInfo/userInfoSlice";
 import achivementsSlice from "./achivements/achivementsSlice";
 import editWordSlice from "./editWord/editWordSlice";
+import paginationSlice from "./pagination/paginationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     userInfoSlice,
     achivementsSlice,
     editWordSlice,
+    paginationSlice
   },
 });
 
