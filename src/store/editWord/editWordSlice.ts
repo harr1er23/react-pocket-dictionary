@@ -3,14 +3,19 @@ import { RootState } from "../store";
 import { TagProps } from "../tags/tagsSlice";
 
 export type WordProps = {
-  id: number | null,
-  user_id: number | null,
+  id: number | null;
+  user_id: number | null;
   word: string;
   transcription: string;
   tags: TagProps[] | [];
   translates: string[] | [];
   examples: [];
   learnPercent: null | number;
+  currentData: number | null;
+  hearing: number;
+  correctSpelling: number;
+  correctRecognition: number;
+  rememberPercent: number;
 };
 
 export type EditTagProps = {
@@ -23,10 +28,15 @@ const initialState: WordProps = {
   user_id: null,
   word: "",
   transcription: "",
-  tags: [] ,
+  tags: [],
   translates: [],
   examples: [],
   learnPercent: 1,
+  currentData: null,
+  hearing: 1,
+  correctSpelling: 1,
+  correctRecognition: 1,
+  rememberPercent: 1
 };
 
 export const editWordSlice = createSlice({
@@ -42,6 +52,7 @@ export const editWordSlice = createSlice({
       state.translates = action.payload.translates;
       state.examples = action.payload.examples;
       state.learnPercent = action.payload.learnPercent;
+      state.currentData = action.payload.currentData;
     },
     setEditId: (state, action) => {
       state.id = action.payload;
@@ -73,7 +84,7 @@ export const {
   setEditTranslates,
   setEditExamples,
   setEditId,
-  setEditInformation
+  setEditInformation,
 } = editWordSlice.actions;
 
 export default editWordSlice.reducer;

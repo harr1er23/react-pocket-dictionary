@@ -111,7 +111,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
                 <SoundIco onClick={() => speakText()} />
               </div>
               <div>{word}</div>
-              <div>{"[" + transcription + "]"}</div>
+              <div>{transcription && "[" + transcription + "]"}</div>
               <div onClick={() => onClickEdit()} className={styles.editImg}>
                 <EditIco />
               </div>

@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import debounce from "lodash.debounce";
+import { format, parse, getTime } from "date-fns";
 
 //styles
 import styles from "./ModalAddWord.module.scss";
@@ -27,6 +28,7 @@ import {
   fetchTags,
   removeUserTag,
   selectTags,
+  setTags,
   TagProps,
 } from "../../store/tags/tagsSlice";
 import { useAppDispatch } from "../../store/store";
@@ -36,6 +38,15 @@ import {
   fetchDictionaryWords,
   updateWord,
 } from "../../store/dictionaryWords/dictionaryWordsSlice";
+import {
+  AchivementsProps,
+  fetchAchivements,
+  selectAchivements,
+} from "../../store/achivements/achivementsSlice";
+import {
+  fetchUserInfo,
+  selectUserInfo,
+} from "../../store/userInfo/userInfoSlice";
 
 type ModalAddWordProps = {
   dictionaryWords: [] | DictionaryWordProps[];
@@ -53,9 +64,27 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
   const dispatch = useAppDispatch();
 
   const { user } = useSelector(selectUser);
-  const { user_id, word, transcription, tags, translates, learnPercent } =
-    useSelector(selectEditWord);
+  const {
+    user_id,
+    word,
+    transcription,
+    tags,
+    translates,
+    learnPercent,
+    currentData,
+    hearing,
+    correctSpelling,
+    correctRecognition,
+    rememberPercent,
+  } = useSelector(selectEditWord);
   const { tags: userTags, status } = useSelector(selectTags);
+  const { achivements, status: achivementsStatus } = useSelector(selectAchivements);
+  const { userInfo, status: userInfoStatus } = useSelector(selectUserInfo);
+
+  const userInfoId = userInfo !== null ? userInfo[0].id : 0;
+  const userAchivemets = userInfo !== null ? userInfo[0].achivements : [];
+  const tagsAdded = userInfo !== null ? userInfo[0].tagsAdded : 0;
+  const wordsAdded = userInfo !== null ? userInfo[0].wordsAdded : 0;
 
   const [isWordLoading, setIsWordLoading] = React.useState(false);
   const [isTagLoading, setTagLoading] = React.useState(false);
@@ -91,7 +120,19 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
     setTranscriptionInputValue(transcription);
     setTranslatesWord(translates);
     setSelectedTagValues(tags);
+
+    dispatch(setTags([]));
   }, [word, transcription, tags, translates]);
+
+  React.useEffect(() => {
+    dispatch(fetchUserInfo({ id: user!.data.id!, token: user!.token! }));
+  }, [user]);
+
+  React.useEffect(() => {
+    if (userInfoStatus === "success") {
+      dispatch(fetchAchivements({ token: user!.token! }));
+    }
+  }, [userInfoStatus, user]);
 
   const clearAllData = () => {
     setWordInputValue("");
@@ -237,39 +278,76 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
           .id!}&value=${tagInputValue}`
       );
 
-      if (findTag.length === 0) {
-        const { data } = await axios.post(
-          `https://9854dac21e0f0eee.mokky.dev/tags`,
-          {
-            user_id: user!.data.id!,
-            value: tagInputValue,
-          }
-        );
-
-        setSelectedTagValues((prev) => [
-          ...prev,
-          { id: data.id, user_id: data.user_id, value: data.value },
-        ]);
-        setTagInputValue("");
-      } else {
+      if (findTag.length !== 0) {
         toast.error("You already have such a tag!");
         return;
       }
+
+      const { data } = await axios.post(
+        `https://9854dac21e0f0eee.mokky.dev/tags`,
+        {
+          user_id: user!.data.id!,
+          value: tagInputValue,
+        }
+      );
+
+      const { data: allUserTags } = await axios.get(`https://9854dac21e0f0eee.mokky.dev/tags?user_id=${user!.data.id!}`);
+
+      await axios.patch(
+        `https://9854dac21e0f0eee.mokky.dev/userInfo/${userInfoId}`,
+        {
+          tagsAdded: allUserTags.length
+        }
+      );
+
+      setSelectedTagValues((prev) => [
+        ...prev,
+        { id: data.id, user_id: data.user_id, value: data.value },
+      ]);
+      setTagInputValue("");
+
+      const findAchivement = achivements.find(
+        (obj) =>
+          obj.type === "addTag" && obj.value === allUserTags.length
+      );
+
+      if (findAchivement) {
+        updateUserAchivements(findAchivement);
+      }
     } catch (err: any) {
       console.log(err);
-      toast.error("");
+      toast.error("Error during tag creation!");
     }
   };
+
+  const updateUserAchivements = async (findAchivement: AchivementsProps | undefined) => {
+    try{
+      const newAchivements = [
+        ...userAchivemets,
+        {
+          achivement_id: findAchivement?.achivement_id,
+          cost: findAchivement?.cost,
+          accepted: false,
+          rewardType: findAchivement?.rewardType,
+        },
+      ];
+  
+      await axios.patch(
+        `https://9854dac21e0f0eee.mokky.dev/userInfo/${userInfoId}`,
+        {
+          achivements: newAchivements
+        }
+      );
+    }catch(err: any){
+      console.log(err);
+    }
+  }
 
   const onEnterNewTag = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       addNewTag();
     }
   };
-
-  //функции для функционала word speech
-  // const { speak, voices } = useSpeechSynthesis();
-  // let voice = voices[104];
 
   //функция добавления слова в словарь
   const addWordToDictionary = async () => {
@@ -293,25 +371,19 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             transcription: transcriptionInputValue,
             translates: translatesWord,
             tags: selectedTagValues,
+            currentData,
             examples: [],
-            learnPercent: learnPercent,
+            learnPercent,
+            hearing,
+            correctSpelling,
+            correctRecognition,
+            rememberPercent,
           }
         );
-
-        dispatch(
-          updateWord({
-            id: findWord.id,
-            user_id: user!.data.id!,
-            word: wordInputValue,
-            transcription: transcriptionInputValue,
-            translates: translatesWord,
-            tags: selectedTagValues,
-            learnPercent: learnPercent,
-            examples: [],
-          })
-        );
       } else {
-        const { data } = await axios.post(
+        const currentData = getDataToStamp();
+
+        await axios.post(
           "https://9854dac21e0f0eee.mokky.dev/dictionary",
           {
             user_id: user!.data.id!,
@@ -319,16 +391,40 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             transcription: transcriptionInputValue,
             translates: translatesWord,
             tags: selectedTagValues,
-            selectTagArr: selectedTagValues,
+            currentData: currentData,
             examples: [],
             learnPercent: 1,
+            hearing: 1,
+            correctSpelling: 1,
+            correctRecognition: 1,
+            rememberPercent: 1,
           }
         );
 
-        dispatch(
-          fetchDictionaryWords({ token: user!.token!, userId: user!.data.id!, pagination: 1 })
+        await axios.patch(
+          `https://9854dac21e0f0eee.mokky.dev/userInfo/${userInfoId}`,
+          {
+            wordsAdded: dictionaryWords.length + 1
+          }
         );
       }
+
+      const findAchivement = achivements.find(
+        (obj) =>
+          obj.type === "addWord" && obj.value === dictionaryWords.length + 1
+      );
+
+      if (findAchivement) {
+        updateUserAchivements(findAchivement);
+      }
+
+      dispatch(
+        fetchDictionaryWords({
+          token: user!.token!,
+          userId: user!.data.id!,
+          pagination: 1
+        })
+      );
 
       clearAllData();
       setIsAddWordOpen(false);
@@ -378,6 +474,12 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
       toast.error("Error deleting an existing tag!");
       setShowAlertDeletingTag(false);
     }
+  };
+
+  const getDataToStamp = () => {
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Установка времени на полночь
+    return currentDate.getTime();
   };
 
   return (
