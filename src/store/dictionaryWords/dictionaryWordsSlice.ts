@@ -8,6 +8,7 @@ type ParamsProps = {
   token: string;
   userId: number;
   pagination: number;
+  search?: string;
 };
 
 export type DictionaryWordProps = {
@@ -19,15 +20,15 @@ export type DictionaryWordProps = {
   tags: TagProps[];
   learnPercent: number;
   examples: string[];
-}
+};
 
 export type DictionaryWordsProps = {
   meta: {
-    total_items: 5,
-    total_pages: 3,
-    current_page: 1,
-    per_page: 2,
-    remaining_count: 3
+    total_items: 5;
+    total_pages: 3;
+    current_page: 1;
+    per_page: 2;
+    remaining_count: 3;
   };
   items: DictionaryWordProps[];
 };
@@ -40,11 +41,13 @@ export const fetchDictionaryWords = createAsyncThunk<
   DictionaryWordsProps,
   ParamsProps
 >("dictionaryWords/fetchDictionaryWords", async (params) => {
-  const { token, userId, pagination } = params;
+  const { token, userId, pagination, search } = params;
   const { data } = await axios.get<DictionaryWordsProps>(
     `https://9854dac21e0f0eee.mokky.dev/dictionary?${
       userId ? `user_id=${userId}` : ""
-    }${pagination ? `&page=${pagination}&limit=20` : ""}`,
+    }${pagination ? `&page=${pagination}&limit=20` : ""}${
+      search ? `&word=*${search}*` : ""
+    }`,
     {
       headers: {
         Authorization: "Bearer " + token,
@@ -56,9 +59,9 @@ export const fetchDictionaryWords = createAsyncThunk<
 
 interface DictonaryWordsSliceState {
   dictionaryWords: DictionaryWordProps[] | [];
-  total_items: number,
-  total_pages: number,
-  current_page: number,
+  total_items: number;
+  total_pages: number;
+  current_page: number;
   status: "loading" | "success" | "error";
 }
 
@@ -90,19 +93,21 @@ export const dictionaryWordsSlice = createSlice({
       ];
     },
     deleteWord: (state, action) => {
-      const findWord = state.dictionaryWords.filter((obj) => obj.id !== action.payload)
+      const findWord = state.dictionaryWords.filter(
+        (obj) => obj.id !== action.payload
+      );
 
       state.dictionaryWords = findWord;
     },
     updateWord: (state, action) => {
-      const { id, word, transcription, translates, tags, learnPercent } = action.payload;
+      const { id, word, transcription, translates, tags, learnPercent } =
+        action.payload;
 
-      state.dictionaryWords = state.dictionaryWords.map(wordObj => {
-
+      state.dictionaryWords = state.dictionaryWords.map((wordObj) => {
         if (wordObj.id !== id) {
           return wordObj;
         }
-    
+
         return {
           ...wordObj,
           word,
@@ -112,7 +117,7 @@ export const dictionaryWordsSlice = createSlice({
           learnPercent,
         };
       });
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDictionaryWords.pending, (state) => {
@@ -136,6 +141,7 @@ export const dictionaryWordsSlice = createSlice({
 export const selectDictionaryWords = (state: RootState) =>
   state.dictionaryWordsSlice;
 
-export const { addNewWord, deleteWord, updateWord } = dictionaryWordsSlice.actions;
+export const { addNewWord, deleteWord, updateWord } =
+  dictionaryWordsSlice.actions;
 
 export default dictionaryWordsSlice.reducer;
