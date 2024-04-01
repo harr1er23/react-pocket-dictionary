@@ -66,6 +66,9 @@ export const tagsSlice = createSlice({
 
       state.tags = newUserTagsArr;
     },
+    setTags: (state, action) => {
+      state.tags = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTags.pending, (state) => {
@@ -85,6 +88,6 @@ export const tagsSlice = createSlice({
 
 export const selectTags = (state: RootState) => state.tagsSlice;
 
-export const { addNewUserTag, removeUserTag } = tagsSlice.actions;
+export const { addNewUserTag, removeUserTag, setTags } = tagsSlice.actions;
 
 export default tagsSlice.reducer;

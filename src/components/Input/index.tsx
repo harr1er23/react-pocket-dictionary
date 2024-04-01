@@ -34,7 +34,6 @@ const Input: React.FC<InputProps> = ({
   content,
   loading,
 }) => {
-  console.log(loading);
   return (
     <div className={styles.inputBlock}>
       <input

@@ -18,13 +18,14 @@ export const fetchAchivements = createAsyncThunk<
   return data;
 });
 
-type AchivementsProps = {
+export type AchivementsProps = {
   achivement_id: number;
   name: string;
   value: number;
   text: string;
   imgUrl: string;
   cost: number;
+  type: "addWord" | "addTag" | "learnWord"
   rewardType: "coins" | "hints";
 };
 

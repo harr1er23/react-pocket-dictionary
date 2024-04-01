@@ -51,6 +51,8 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         money: 0,
         hintsMoney: 0,
         learnedWords: 0,
+        tagsAdded: 0,
+        wordsAdded: 0,
         hints: [
           {
             hintName: "Removes one wrong answer",

@@ -11,6 +11,7 @@ const WordsLoading: React.FC<WordsLoadingProps> = ({ length }) => {
     <>
       {[...Array(length)].map((_, index) => (
         <ContentLoader
+          key={index}
           speed={2}
           width={310}
           height={170}

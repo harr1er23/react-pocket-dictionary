@@ -78,11 +78,17 @@ const Profile: React.FC = () => {
   const [isUploadingPhoto, setIsUploadingPhoto] = React.useState(false);
 
   const userPhoto = user!.data.imageUrl!;
+
   const experience = userInfo !== null ? userInfo[0].experience : 0;
   const level = userInfo !== null ? userInfo[0].level : 0;
-  const learnedWords = userInfo !== null ? userInfo[0].learnedWords : 0;
+
   const hintsMoney = userInfo !== null ? userInfo[0].hintsMoney : 0;
   const money = userInfo !== null ? userInfo[0].money : 0;
+
+  const learnedWords = userInfo !== null ? userInfo[0].learnedWords : 0;
+  const tagsAdded = userInfo !== null ? userInfo[0].tagsAdded : 0;
+  const wordsAdded = userInfo !== null ? userInfo[0].wordsAdded : 0;
+
   const userAchivements = userInfo !== null ? userInfo[0].achivements : [];
 
   const strokeColor =
@@ -289,6 +295,9 @@ const Profile: React.FC = () => {
       toast.error("Error during the uploading photo!");
     }
   };
+
+  if (achivementsStatus === "success") {
+  }
 
   return userInfoStatus === "loading" ? (
     <Loader />
@@ -570,8 +579,26 @@ const Profile: React.FC = () => {
                     <h5>{obj.name}</h5>
                     <div className={styles.achivementText}>{obj.text}</div>
                     <div className={styles.achivementValue}>
-                      {learnedWords <= obj.value ? learnedWords : obj.value} /{" "}
-                      {obj.value}
+                      {obj.type === "addTag" ? (
+                        <>
+                          {tagsAdded <= obj.value ? tagsAdded : obj.value} /{" "}
+                          {obj.value}
+                        </>
+                      ) : obj.type === "addWord" ? (
+                        <>
+                          {wordsAdded <= obj.value ? wordsAdded : obj.value} /{" "}
+                          {obj.value}
+                        </>
+                      ) : (
+                        obj.type === "learnWord" && (
+                          <>
+                            {learnedWords <= obj.value
+                              ? learnedWords
+                              : obj.value}{" "}
+                            / {obj.value}
+                          </>
+                        )
+                      )}
                     </div>
                     {userAchievement && (
                       <button
