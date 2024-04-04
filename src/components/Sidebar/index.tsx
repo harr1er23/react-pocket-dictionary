@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 //styles
@@ -26,10 +26,12 @@ import {
   selectTheme,
 } from "../../store/theme/themeSlice";
 import { selectUser, setUser } from "../../store/user/userSlice";
+import { fetchOptions } from "../../store/options/optionsSlice";
+import { useAppDispatch } from "../../store/store";
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { user } = useSelector(selectUser);
   const { isDarkMode, isShrinkView } = useSelector(selectTheme);
@@ -41,6 +43,14 @@ const Sidebar: React.FC = () => {
     window.location.pathname.split("/")[2]
   );
 
+  React.useEffect(() => {
+    const value = localStorage.getItem("theme");
+    if (typeof value === "string") {
+      const theme = JSON.parse(value);
+      dispatch(setIsDarkMode(theme));
+    }
+  }, []);
+
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const handleSidebarView = () => {
@@ -48,7 +58,10 @@ const Sidebar: React.FC = () => {
   };
 
   const handleThemeChange = () => {
-    dispatch(setIsDarkMode());
+    localStorage.setItem("theme", JSON.stringify(!isDarkMode));
+
+    dispatch(setIsDarkMode(!isDarkMode));
+
     document.body.classList.toggle("dark");
   };
 

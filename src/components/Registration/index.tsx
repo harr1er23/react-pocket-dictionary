@@ -104,12 +104,26 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
 
       await axios.post("https://9854dac21e0f0eee.mokky.dev/settings", {
         id_user: data.data.id,
-        options: [
+        appOptions: [
           {
-            theme: "light",
-            wordQuantity: 5,
+            showTransciption: true,
+            nativeLanguage: "English",
+            learnedLanguage: "English",
+            voiceActing: "Google US English",
+            automaticallySwitchExercise: false,
           },
         ],
+        exercisesOptions: {
+          maxWords: 0,
+          wordsPercent: {
+            type: "unlearned",
+            name: "Unlearned",
+          },
+          firstShow: {
+            type: "random",
+            name: "Random",
+          },
+        },
       });
 
       toast.success("Вы зарегистрировались!");

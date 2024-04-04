@@ -1,0 +1,63 @@
+.settingsBackground {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 25px 0 90px;
+  margin-left: 30px;
+  color: var(--text-color);
+
+  @media (max-width: 700px) {
+    margin-left: 10px;
+    padding: 20px 10px 0 0px;
+  }
+
+  .settingsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 10px 0 10px 0;
+    h2 {
+      margin-left: 20px;
+      margin-right: auto;
+      color: white;
+    }
+  }
+
+  .settingsTop {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    .settingsRow {
+      display: flex;
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+      }
+
+      p {
+      }
+
+      .filterParameter {
+        
+      }
+    }
+  }
+
+  .settingsBottom {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--word-bg);
+    padding: 20px 50px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    @media (max-width: 600px) {
+      padding: 5px 10px;
+    }
+  }
+}

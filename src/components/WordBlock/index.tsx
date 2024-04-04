@@ -20,6 +20,9 @@ import { TagProps } from "../../store/tags/tagsSlice";
 import { deleteWord } from "../../store/dictionaryWords/dictionaryWordsSlice";
 import { useAppDispatch } from "../../store/store";
 import { setEditInformation } from "../../store/editWord/editWordSlice";
+import { fetchOptions, selectOptions } from "../../store/options/optionsSlice";
+import { selectUser } from "../../store/user/userSlice";
+import { useSelector } from "react-redux";
 
 type WordBlockProps = {
   id: number;
@@ -41,12 +44,28 @@ const WordBlock: React.FC<WordBlockProps> = ({
   tags,
   learnPercent,
   setIsAddWordOpen,
-  setHeaderText
+  setHeaderText,
 }) => {
   const dispatch = useAppDispatch();
 
+  const { user } = useSelector(selectUser);
+  const { appOptions } = useSelector(selectOptions);
+
   const [showAlertDeletingWord, setShowAlertDeletingWord] =
     React.useState(false);
+
+  const transcriptionsChecked =
+    appOptions !== null && appOptions.showTransciption;
+
+  const voiceName = appOptions !== null && appOptions?.voiceActing;
+  const synthesis = window.speechSynthesis;
+  const voices = synthesis.getVoices();
+
+  const selectedVoice = voices.find((voice) => voice.name === voiceName);
+
+  React.useEffect(() => {
+    dispatch(fetchOptions({ userId: user!.data.id! }));
+  }, []);
 
   const onClickDelete = async () => {
     try {
@@ -81,10 +100,15 @@ const WordBlock: React.FC<WordBlockProps> = ({
   };
 
   const speakText = () => {
-    const synthesis = window.speechSynthesis;
     const utterance = new SpeechSynthesisUtterance(word);
     utterance.lang = "en-US";
-    synthesis.speak(utterance);
+
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      synthesis.speak(utterance);
+    } else {
+      synthesis.speak(utterance);
+    }
   };
 
   return (
@@ -111,7 +135,11 @@ const WordBlock: React.FC<WordBlockProps> = ({
                 <SoundIco onClick={() => speakText()} />
               </div>
               <div>{word}</div>
-              <div>{transcription && "[" + transcription + "]"}</div>
+              <div>
+                {transcriptionsChecked &&
+                  transcription &&
+                  "[" + transcription + "]"}
+              </div>
               <div onClick={() => onClickEdit()} className={styles.editImg}>
                 <EditIco />
               </div>

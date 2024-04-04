@@ -1,4 +1,4 @@
-.background{
+.background {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,14 +22,9 @@
       margin-right: auto;
       color: white;
     }
-
-    input {
-      border: 1px solid var(--secondary-bg);
-      background-color: var(--secondary-bg);
-    }
   }
 
-  .contentHeader{
+  .contentHeader {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -39,7 +34,7 @@
       margin: 0px 10px 10px 0px;
     }
 
-    .statisticsBlock{
+    .statisticsBlock {
       width: 24%;
       display: flex;
       flex-direction: column;
@@ -52,39 +47,39 @@
 
       border-radius: 10px;
 
-      @media(max-width: 960px){
+      @media (max-width: 960px) {
         margin: 10px 0 0 0;
         padding: 25px 0px;
       }
 
-      @media(max-width: 700px){
+      @media (max-width: 700px) {
         width: 48%;
         margin: 10px 0px 0 0px;
         padding: 25px 0px;
       }
 
-      .number{
+      .number {
         font-size: 30px;
         font-weight: 700;
 
-        @media(max-width: 1200px){
+        @media (max-width: 1200px) {
           font-size: 25px;
         }
 
-        @media(max-width: 960px){
+        @media (max-width: 960px) {
           font-size: 20px;
         }
       }
 
-      .blockText{
+      .blockText {
         font-size: 26px;
         color: grey;
 
-        @media(max-width: 1200px){
+        @media (max-width: 1200px) {
           font-size: 20px;
         }
 
-        @media(max-width: 960px){
+        @media (max-width: 960px) {
           font-size: 14px;
         }
       }
@@ -98,7 +93,7 @@
     color: var(--text-color);
 
     margin-bottom: 20px;
-  
+
     background-color: var(--main-container-bg);
     border-radius: 10px;
 
@@ -106,44 +101,44 @@
       justify-content: center;
       margin: 0px 10px 0 0px;
     }
-  
+
     @media (max-width: 700px) {
       margin: 0px 10px 10px 0px;
     }
   }
 
-  .contentBottom{
+  .contentBottom {
     display: flex;
     flex-wrap: wrap;
-  
+
     color: var(--text-color);
-  
+
     background-color: var(--main-container-bg);
     border-radius: 10px;
-  
+
     @media (max-width: 700px) {
       margin: 0px 10px 0 0px;
     }
 
-    .tagsBlock{
+    .tagsBlock {
       display: flex;
       flex-direction: column;
       justify-content: center;
 
       padding: 50px 100px;
 
-      @media(max-width: 700px){
+      @media (max-width: 700px) {
         padding: 20px 25px;
       }
 
-      .tag{
+      .tag {
         display: flex;
         align-items: center;
 
-        .colorPalete{
+        .colorPalete {
           width: 10px;
           height: 10px;
-          
+
           margin-right: 10px;
         }
       }
@@ -158,29 +153,29 @@
 
     padding: 0 15%;
 
-    @media(max-width: 1460px){
+    @media (max-width: 1460px) {
       padding: 0 10%;
     }
 
-    @media(max-width: 1275px){
+    @media (max-width: 1275px) {
       padding: 0 5%;
     }
 
-    @media(max-width: 1000px){
+    @media (max-width: 1000px) {
       padding: 0 1%;
     }
 
-    h4{
+    h4 {
       margin: 0 auto 40px auto;
     }
 
-    @media(max-width: 700px){
+    @media (max-width: 700px) {
       font-size: 14px;
       padding: 0;
 
       margin: 0px 10px 10px 0px;
 
-      svg{
+      svg {
         width: 300px !important;
       }
     }
