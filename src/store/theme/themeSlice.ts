@@ -13,8 +13,8 @@ const initialState = {
         setIsShrinkView: (state, action) => {
         state.isShrinkView = action.payload;
       },
-      setIsDarkMode: (state) => {
-        state.isDarkMode = !state.isDarkMode
+      setIsDarkMode: (state, action) => {
+        state.isDarkMode = action.payload;
       }
     },
   })

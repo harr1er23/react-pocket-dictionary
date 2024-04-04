@@ -11,6 +11,7 @@ import editWordSlice from "./editWord/editWordSlice";
 import paginationSlice from "./pagination/paginationSlice";
 import searchSlice from "./search/searchSlice";
 import statisticsDataSlice from "./statisticsData/statisticsDataSlice";
+import optionsSlice from "./options/optionsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ export const store = configureStore({
     editWordSlice,
     paginationSlice,
     searchSlice,
-    statisticsDataSlice
+    statisticsDataSlice,
+    optionsSlice
   },
 });
 
