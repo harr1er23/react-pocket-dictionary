@@ -47,7 +47,10 @@ import {
   fetchUserInfo,
   selectUserInfo,
 } from "../../store/userInfo/userInfoSlice";
-import { selectPagination, setPagination } from "../../store/pagination/paginationSlice";
+import {
+  selectPagination,
+  setPagination,
+} from "../../store/pagination/paginationSlice";
 
 type ModalAddWordProps = {
   dictionaryWords: [] | DictionaryWordProps[];
@@ -63,9 +66,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const { dictionaryWords, total_items } = useSelector(
-    selectDictionaryWords
-  );
+  const { dictionaryWords, total_items } = useSelector(selectDictionaryWords);
 
   const { user } = useSelector(selectUser);
   const {
@@ -258,6 +259,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
     try {
       setSelectedTagValues((prev) => [...prev, { id, user_id, value }]);
       dispatch(removeUserTag(id));
+      setTagInputValue("");
     } catch (err: any) {
       console.log(err);
       toast.error("Error when adding a tag!");
@@ -417,8 +419,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
       }
 
       const findAchivement = achivements.find(
-        (obj) =>
-          obj.type === "addWord" && obj.value === total_items + 1
+        (obj) => obj.type === "addWord" && obj.value === total_items + 1
       );
 
       if (findAchivement) {
@@ -554,10 +555,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
 
             {/* готовые теги */}
             <div className={styles.tagsBlock}>
-              {status === "loading" ? (
-                <div>Loading...</div>
-              ) : (
-                status === "success" &&
+              {status === "success" &&
                 userTags
                   .filter(
                     (obj) => !selectedTagValues.some((tag) => tag.id === obj.id)
@@ -582,8 +580,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
                         x
                       </div>
                     </div>
-                  ))
-              )}
+                  ))}
             </div>
             <Input
               value={tagInputValue}

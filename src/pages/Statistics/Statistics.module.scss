@@ -1,31 +1,188 @@
-.background {
+.background{
   display: flex;
-  flex-wrap: wrap;
-
-  margin: 20px 30px 0 130px;
-
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 25px 0 90px;
+  margin-left: 30px;
   color: var(--text-color);
 
-  background-color: var(--main-container-bg);
-  border-radius: 10px;
-
   @media (max-width: 700px) {
-    margin: 20px 10px 0 0px;
+    margin-left: 10px;
+    padding: 20px 10px 0 0px;
   }
 
-  .linerGistogram {
+  .staticticsHeader {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
 
-    width: 30%;
+    margin: 10px 0 10px 0;
+    h2 {
+      margin-left: 20px;
+      margin-right: auto;
+      color: white;
+    }
+
+    input {
+      border: 1px solid var(--secondary-bg);
+      background-color: var(--secondary-bg);
+    }
+  }
+
+  .contentHeader{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    @media (max-width: 700px) {
+      margin: 0px 10px 10px 0px;
+    }
+
+    .statisticsBlock{
+      width: 24%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      padding: 50px 10px;
+
+      background-color: var(--main-container-bg);
+
+      border-radius: 10px;
+
+      @media(max-width: 960px){
+        margin: 10px 0 0 0;
+        padding: 25px 0px;
+      }
+
+      @media(max-width: 700px){
+        width: 48%;
+        margin: 10px 0px 0 0px;
+        padding: 25px 0px;
+      }
+
+      .number{
+        font-size: 30px;
+        font-weight: 700;
+
+        @media(max-width: 1200px){
+          font-size: 25px;
+        }
+
+        @media(max-width: 960px){
+          font-size: 20px;
+        }
+      }
+
+      .blockText{
+        font-size: 26px;
+        color: grey;
+
+        @media(max-width: 1200px){
+          font-size: 20px;
+        }
+
+        @media(max-width: 960px){
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .contentBody {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: var(--text-color);
+
+    margin-bottom: 20px;
+  
+    background-color: var(--main-container-bg);
+    border-radius: 10px;
+
+    @media (max-width: 835px) {
+      justify-content: center;
+      margin: 0px 10px 0 0px;
+    }
+  
+    @media (max-width: 700px) {
+      margin: 0px 10px 10px 0px;
+    }
+  }
+
+  .contentBottom{
+    display: flex;
+    flex-wrap: wrap;
+  
+    color: var(--text-color);
+  
+    background-color: var(--main-container-bg);
+    border-radius: 10px;
+  
+    @media (max-width: 700px) {
+      margin: 0px 10px 0 0px;
+    }
+
+    .tagsBlock{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      padding: 50px 100px;
+
+      @media(max-width: 700px){
+        padding: 20px 25px;
+      }
+
+      .tag{
+        display: flex;
+        align-items: center;
+
+        .colorPalete{
+          width: 10px;
+          height: 10px;
+          
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 16px;
-    margin: 0 10px;
+
+    padding: 0 15%;
+
+    @media(max-width: 1460px){
+      padding: 0 10%;
+    }
+
+    @media(max-width: 1275px){
+      padding: 0 5%;
+    }
+
+    @media(max-width: 1000px){
+      padding: 0 1%;
+    }
+
+    h4{
+      margin: 0 auto 40px auto;
+    }
 
     @media(max-width: 700px){
-        width: 100%;
-        font-size: 14px;
+      font-size: 14px;
+      padding: 0;
+
+      margin: 0px 10px 10px 0px;
+
+      svg{
+        width: 300px !important;
+      }
     }
   }
 }

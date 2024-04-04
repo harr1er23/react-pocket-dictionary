@@ -70,6 +70,12 @@ a {
     margin-left: 10px;
   }
 
+  .recharts-responsive-container{
+    @media (max-width: 700px) {
+      width: 300px !important;
+    }
+  }
+
   .loader {
     left: 50%;
     top: 50%;

@@ -57,6 +57,7 @@ type UserInfoPorops = {
   wordsAdded: number;
   hints: HintsProps[];
   multipliers: MultipliersProps[];
+  daysStreak: number;
 };
 
 interface DictonaryWordsSliceState {
