@@ -3,17 +3,18 @@ import axios from "axios";
 import { RootState } from "../store";
 
 type ParamsProps = {
-  token: string;
   userId: number;
+  currentDay?: number;
+  forDay?: number;
 };
 
 export const fetchStatisticsData = createAsyncThunk<
   StatisticsDataProps[],
   ParamsProps
 >("statisticsData/fetchStatisticsData", async (params) => {
-  const { token, userId } = params;
+  const { userId, currentDay, forDay } = params;
   const { data } = await axios.get<StatisticsDataProps[]>(
-    `https://9854dac21e0f0eee.mokky.dev/wordsDate?user_id=${userId}`
+    `https://9854dac21e0f0eee.mokky.dev/wordsDate?user_id=${userId}${currentDay && forDay && `&data[from]=${forDay}&data[to]=${currentDay}` }`
   );
   return data;
 });

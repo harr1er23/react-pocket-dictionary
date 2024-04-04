@@ -47,6 +47,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         user_id: data.data.id,
         experience: 0,
         achivements: [],
+        daysStreak: 0,
         level: 1,
         money: 0,
         hintsMoney: 0,

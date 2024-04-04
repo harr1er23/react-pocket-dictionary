@@ -1,9 +1,7 @@
 import React, { PureComponent } from "react";
 import { useSelector } from "react-redux";
 import styles from "./Statistics.module.scss";
-// import { Radar } from "react-chartjs-2";
-// import { Chart, registerables } from "chart.js";
-import { format, parse, getTime } from "date-fns";
+import { format, startOfDay, subDays } from "date-fns";
 import {
   BarChart,
   Bar,
@@ -36,45 +34,11 @@ import {
 import Loader from "../../components/Loader";
 import axios from "axios";
 
-// Chart.register(...registerables);
-
-export const dataRadar = {
-  labels: ["Perception by ear", "Spelling", "Word recognition"],
-  datasets: [
-    {
-      label: "Language Skills Chart",
-      data: [0, 0, 0],
-      backgroundColor: "rgba(255, 99, 132, 0.2)",
-      borderColor: "rgb(255, 99, 132)",
-      pointBackgroundColor: "rgb(255, 99, 132)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgb(255, 99, 132)",
-      fill: true,
-      borderWidth: 2,
-    },
-  ],
-};
-
-const radarData = [
-  {
-    subject: "Perception by ear",
-    A: 3,
-  },
-  {
-    subject: "Spelling",
-    A: 5,
-  },
-  {
-    subject: "Recognition",
-    A: 8,
-  },
-];
-
-type StatisticsProps = {
-  day: string;
+interface DayData {
+  day: number;
   words: number;
-};
+  name: string;
+}
 
 const Statisctics = () => {
   const dispatch = useAppDispatch();
@@ -87,23 +51,48 @@ const Statisctics = () => {
     useSelector(selectStatisticsData);
 
   const [statiscticsDataValues, setStatisticsDataValues] =
-    React.useState<StatisticsProps[]>();
+    React.useState<DayData[]>();
   const [tagUsage, setTagUsage] = React.useState<
-    { id: number; value: number; name: string }[]
+    { value: number; name: string }[]
   >([]);
 
-  const [allWords, setAllWords] = React.useState<[] | DictionaryWordProps[]>(
-    []
-  );
+  console.log(tagUsage)
+
+  const [radarData, setRadarData] = React.useState([
+    {
+      subject: "Perception by ear",
+      value: 1,
+    },
+    {
+      subject: "Spelling",
+      value: 1,
+    },
+    {
+      subject: "Recognition",
+      value: 1,
+    },
+  ]);
+
+  console.log(radarData)
 
   const [isLoading, setIsLoading] = React.useState(false);
 
   const experience = userInfo !== null ? userInfo[0].experience : 0;
   const learnedWords = userInfo !== null ? userInfo[0].learnedWords : 0;
-  const tagsAdded = userInfo !== null ? userInfo[0].tagsAdded : 0;
   const wordsAdded = userInfo !== null ? userInfo[0].wordsAdded : 0;
   const level = userInfo !== null ? userInfo[0].level : 0;
   const daysStreak = userInfo !== null ? userInfo[0].daysStreak : 0;
+
+  const dates: DayData[] = [];
+
+  const currentDate = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const date = subDays(startOfDay(currentDate), i);
+    const timestamp = date.getTime();
+    const name = format(date, "E");
+    dates.push({ day: timestamp, words: 0, name });
+  }
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -113,68 +102,28 @@ const Statisctics = () => {
   React.useEffect(() => {
     if (userInfoStatus === "success") {
       dispatch(
-        fetchStatisticsData({ token: user!.token!, userId: user!.data.id! })
+        fetchStatisticsData({
+          userId: user!.data.id!,
+          currentDay: dates[6].day,
+          forDay: dates[0].day,
+        })
       );
     }
   }, [userInfoStatus, user]);
 
   React.useEffect(() => {
     if (statisticsDataStatus === "success") {
-      //дописать получение слов за последние 7 дней
-
       const getAllWords = async () => {
         const { data } = await axios.get<DictionaryWordProps[]>(
           `https://9854dac21e0f0eee.mokky.dev/dictionary?user_id=${user!.data
             .id!}`
         );
 
-        const tagMap: Map<string, number> = new Map();
-
-        data.forEach((word) => {
-          word.tags.forEach((tag) => {
-            const tagValue = tag.value;
-            if (tagMap.has(tagValue)) {
-              tagMap.set(tagValue, tagMap.get(tagValue)! + 1);
-            } else {
-              tagMap.set(tagValue, 1);
-            }
-          });
-        });
-
-        // Формирование массива для отображения в компоненте
-        const tagUsageArray: { id: number; value: number; name: string }[] = [];
-        tagMap.forEach((value, key) => {
-          tagUsageArray.push({ id: Number(key), value, name: key });
-        });
-
-        // Сортировка массива по убыванию количества использований тегов
-        tagUsageArray.sort((a, b) => b.value - a.value);
-
-        // Выбор топ 6 тегов или меньшего количества, если всего тегов меньше 6
-        const topTags = tagUsageArray.slice(0, 6);
-
-        // Подсчет общего количества использований тегов из топ 6
-        const totalTopTagsUsage = topTags.reduce(
-          (total, tag) => total + tag.value,
-          0
-        );
-
-        // Создание объекта "Other" для остальных тегов
-        const otherTags = {
-          id: 0, // или какой-то уникальный id
-          value: tagUsageArray
-            .slice(6)
-            .reduce((total, tag) => total + tag.value, 0),
-          name: "Other",
-        };
-
-        // Установка состояния tagUsage в новый массив, включая тег "Other"
-        setTagUsage([...topTags, otherTags]);
-
-        setAllWords(data);
+        setCountTags(data);
 
         if (data.length === 0) {
-          dataRadar.datasets[0].data = [1, 1, 1];
+          const newData = radarData.map((item) => ({ ...item, value: 1 }));
+          setRadarData(newData);
           return;
         }
 
@@ -197,13 +146,20 @@ const Statisctics = () => {
           totalCorrectRecognition / totalWords
         );
 
-        const newDataRadar = [
-          averageHearing,
-          averageCorrectSpelling,
-          averageCorrectRecognition,
-        ];
+        const newData = radarData.map((item, index) => {
+          switch (index) {
+            case 0:
+              return { ...item, value: averageHearing };
+            case 1:
+              return { ...item, value: averageCorrectSpelling };
+            case 2:
+              return { ...item, value: averageCorrectRecognition };
+            default:
+              return item;
+          }
+        });
 
-        dataRadar.datasets[0].data = newDataRadar;
+        setRadarData(newData);
       };
 
       getAllWords();
@@ -212,35 +168,79 @@ const Statisctics = () => {
 
   React.useEffect(() => {
     if (statisticsDataStatus === "success") {
-      const data = statisticsData.map((obj) => ({
-        day: convertTimestamp(obj.data),
-        words: obj.words.length,
-      }));
+      for (const data of statisticsData) {
+        const index = dates.findIndex((dayData) => dayData.day === data.data);
+        if (index !== -1) {
+          dates[index].words = data.words.length;
+        }
+      }
 
-      setStatisticsDataValues(data);
+      setStatisticsDataValues(dates);
       setIsLoading(false);
     }
   }, [statisticsDataStatus]);
 
-  const convertTimestamp = (timestamp: number) => {
-    return format(new Date(timestamp), "dd.MM");
+  const setCountTags = (data: DictionaryWordProps[]) => {
+    const tagMap: Map<string, number> = new Map();
+
+    data.forEach((word) => {
+      word.tags.forEach((tag) => {
+        const tagValue = tag.value;
+        if (tagMap.has(tagValue)) {
+          tagMap.set(tagValue, tagMap.get(tagValue)! + 1);
+        } else {
+          tagMap.set(tagValue, 1);
+        }
+      });
+    });
+
+    // Формирование массива для отображения в компоненте
+    const tagUsageArray: { value: number; name: string }[] = [];
+    tagMap.forEach((value, key) => {
+      tagUsageArray.push({ value, name: key });
+    });
+
+    const totalUsage = tagUsageArray.reduce(
+      (total, tag) => total + tag.value,
+      0
+    );
+
+    // Сортировка массива по убыванию количества использований тегов
+    tagUsageArray.sort((a, b) => b.value - a.value);
+
+    // Выбор топ 6 тегов или меньшего количества, если всего тегов меньше 6
+    const topTags = tagUsageArray.slice(0, 5);
+
+    // Подсчет общего количества использований тегов из топ 6
+    const totalTopTagsUsage = topTags.reduce(
+      (total, tag) => total + tag.value,
+      0
+    );
+
+    // Создание объекта "Other" для остальных тегов
+    const otherTags = {
+      value: totalUsage - totalTopTagsUsage,
+      name: "Other",
+    };
+
+    // Установка состояния tagUsage в новый массив, включая тег "Other"
+    setTagUsage([...topTags, otherTags]);
   };
 
+
   const getColorByValue = (value: number) => {
-    if (value > 25 && value <= 30) {
-      return "#4d4a7b";
-    } else if (value > 17 && value <= 25) {
+    if (value === 0) {
+      return "#9590c3";
+    } else if (value === 1) {
+      return "#8580c3";
+    } else if (value === 2) {
+      return "#7570c3";
+    } else if (value === 3) {
+      return "#6560c3";
+    } else if (value === 4) {
       return "#59568f";
-    } else if (value > 12 && value <= 17) {
-      return "#6b68af";
-    } else if (value > 6 && value <= 12) {
-      return "#7773c3";
-    } else if (value > 3 && value <= 6) {
-      return "#8884d8";
-    } else if (value > 0 && value <= 3) {
-      return "#9590ec";
-    } else {
-      return "#3b395e";
+    } else if (value === 5) {
+      return "#4d4a7b";
     }
   };
 
@@ -261,7 +261,7 @@ const Statisctics = () => {
           <div className={styles.blockText}>Added Words</div>
         </div>
         <div className={styles.statisticsBlock}>
-          <div className={styles.number}>{level * 100 + experience}</div>
+          <div className={styles.number}>{level !== 1 ? (level * 100 + experience) : (experience)}</div>
           <div className={styles.blockText}>Gained Experience</div>
         </div>
         <div className={styles.statisticsBlock}>
@@ -279,7 +279,7 @@ const Statisctics = () => {
               <PolarRadiusAxis />
               <Radar
                 name="Mike"
-                dataKey="A"
+                dataKey="value"
                 stroke="#8884d8"
                 fill="#8884d8"
                 fillOpacity={0.6}
@@ -289,9 +289,9 @@ const Statisctics = () => {
         </div>
         <div className={styles.chart}>
           <h4> Learnings of Daily Words </h4>
-          <ResponsiveContainer width={325} minHeight={200} minWidth={300}>
+          <ResponsiveContainer width={350} minHeight={200} minWidth={300}>
             <BarChart data={statiscticsDataValues}>
-              <XAxis dataKey="day" stroke="#8884d8" />
+              <XAxis dataKey="name" stroke="#8884d8" />
               <YAxis />
               <Tooltip />
               <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
@@ -316,7 +316,7 @@ const Statisctics = () => {
                   {tagUsage.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={getColorByValue(entry.value)}
+                      fill={getColorByValue(index)}
                     />
                   ))}
                 </Pie>
@@ -325,11 +325,11 @@ const Statisctics = () => {
             </ResponsiveContainer>
           </div>
           <div className={styles.tagsBlock}>
-            {tagUsage.map((obj) => (
-              <div className={styles.tag}>
+            {tagUsage.map((obj, index) => (
+              <div key={obj.name} className={styles.tag}>
                 <div
                   className={styles.colorPalete}
-                  style={{ backgroundColor: getColorByValue(obj.value) }}
+                  style={{ backgroundColor: getColorByValue(index) }}
                 ></div>
                 {obj.name}
               </div>

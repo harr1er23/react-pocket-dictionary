@@ -1,12 +1,14 @@
 .tagBackground {
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   border: 1px solid var(--item-hover);
   background-color: var(--item-hover);
   color: var(--text-hover-color);
 
   border-radius: 20px;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 5px 5px;
   cursor: pointer;
 
