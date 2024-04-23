@@ -18,6 +18,7 @@ import AppLayout from "./pages/AppLayout/idex";
 import AuthByVk from "./pages/AuthByVk";
 import axios from "axios";
 import Shop from "./pages/Shop";
+import ExerciseOne from "./pages/ExerciseOne";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,14 +33,11 @@ function App() {
         const value = localStorage.getItem("user");
         if (typeof value === "string") {
           const user = JSON.parse(value);
-          await axios.get(
-            "https://9854dac21e0f0eee.mokky.dev/auth_me",
-            {
-              headers: {
-                Authorization: "Bearer " + user.token,
-              },
-            }
-          );
+          await axios.get("https://9854dac21e0f0eee.mokky.dev/auth_me", {
+            headers: {
+              Authorization: "Bearer " + user.token,
+            },
+          });
           dispatch(setUser(user));
         }
         setIsLoading(false);
@@ -77,7 +75,10 @@ function App() {
           </div>
         ) : (
           <Routes>
-            <Route path="*" element={<Navigate replace to="/notFound" />}></Route>
+            <Route
+              path="*"
+              element={<Navigate replace to="/notFound" />}
+            ></Route>
             <Route path="/notFound" element={<NotFound />}></Route>
             <Route
               path="/"
@@ -119,13 +120,24 @@ function App() {
                 user !== null ? <AppLayout /> : <Navigate replace to="/auth" />
               }
             >
-              <Route path="*" element={<Navigate replace to="/notFound" />}></Route>
+              <Route
+                path="*"
+                element={<Navigate replace to="/notFound" />}
+              ></Route>
               <Route path="dictionary" element={<Dictionary />}></Route>
               <Route path="exercises" element={<Exercises />}></Route>
+              <Route path="exercises/selectLernedAnswer" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectNativeAnswer" element={<ExerciseOne />}></Route>
+              <Route path="exercises/3" element={<ExerciseOne />}></Route>
+              <Route path="exercises/4" element={<ExerciseOne />}></Route>
+              <Route path="exercises/5" element={<ExerciseOne />}></Route>
+              <Route path="exercises/6" element={<ExerciseOne />}></Route>
+              <Route path="exercises/7" element={<ExerciseOne />}></Route>
+              <Route path="exercises/8" element={<ExerciseOne />}></Route>
               <Route path="statistics" element={<Statistics />}></Route>
               <Route path="settings" element={<Settings />}></Route>
               <Route path="profile" element={<Profile />}></Route>
-              <Route path="shop" element={<Shop/>}></Route>
+              <Route path="shop" element={<Shop />}></Route>
             </Route>
           </Routes>
         )}

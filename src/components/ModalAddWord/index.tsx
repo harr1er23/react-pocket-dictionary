@@ -35,8 +35,7 @@ import { useAppDispatch } from "../../store/store";
 import {
   DictionaryWordProps,
   fetchDictionaryWords,
-  selectDictionaryWords,
-  updateWord,
+  selectDictionaryWords
 } from "../../store/dictionaryWords/dictionaryWordsSlice";
 import {
   AchivementsProps,
@@ -48,9 +47,9 @@ import {
   selectUserInfo,
 } from "../../store/userInfo/userInfoSlice";
 import {
-  selectPagination,
-  setPagination,
+  selectPagination
 } from "../../store/pagination/paginationSlice";
+import { updateUserAchivements } from "../../utils/updateUserAchivements";
 
 type ModalAddWordProps = {
   dictionaryWords: [] | DictionaryWordProps[];
@@ -86,6 +85,8 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
   const { achivements, status: achivementsStatus } =
     useSelector(selectAchivements);
   const { userInfo, status: userInfoStatus } = useSelector(selectUserInfo);
+
+  console.log(learnPercent)
 
   const { paginationValue } = useSelector(selectPagination);
 
@@ -133,7 +134,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
   }, [word, transcription, tags, translates]);
 
   React.useEffect(() => {
-    dispatch(fetchUserInfo({ id: user!.data.id!, token: user!.token! }));
+    dispatch(fetchUserInfo({ id: user!.data.id!}));
   }, [user]);
 
   React.useEffect(() => {
@@ -322,36 +323,11 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
       );
 
       if (findAchivement) {
-        updateUserAchivements(findAchivement);
+        updateUserAchivements(findAchivement, userAchivemets, userInfoId);
       }
     } catch (err: any) {
       console.log(err);
       toast.error("Error during tag creation!");
-    }
-  };
-
-  const updateUserAchivements = async (
-    findAchivement: AchivementsProps | undefined
-  ) => {
-    try {
-      const newAchivements = [
-        ...userAchivemets,
-        {
-          achivement_id: findAchivement?.achivement_id,
-          cost: findAchivement?.cost,
-          accepted: false,
-          rewardType: findAchivement?.rewardType,
-        },
-      ];
-
-      await axios.patch(
-        `https://9854dac21e0f0eee.mokky.dev/userInfo/${userInfoId}`,
-        {
-          achivements: newAchivements,
-        }
-      );
-    } catch (err: any) {
-      console.log(err);
     }
   };
 
@@ -383,13 +359,13 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             transcription: transcriptionInputValue,
             translates: translatesWord,
             tags: selectedTagValues,
-            currentData,
+            currentData: findWord.currentData,
             examples: [],
-            learnPercent,
-            hearing,
-            correctSpelling,
-            correctRecognition,
-            rememberPercent,
+            learnPercent: findWord.learnPercent,
+            hearing: findWord.hearing,
+            correctSpelling: findWord.correctSpelling,
+            correctRecognition: findWord.correctRecognition,
+            rememberPercent: findWord.rememberPercent,
           }
         );
       } else {
@@ -423,12 +399,11 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
       );
 
       if (findAchivement) {
-        updateUserAchivements(findAchivement);
+        updateUserAchivements(findAchivement, userAchivemets, userInfoId);
       }
 
       dispatch(
         fetchDictionaryWords({
-          token: user!.token!,
           userId: user!.data.id!,
           pagination: paginationValue,
         })

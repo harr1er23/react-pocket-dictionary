@@ -56,8 +56,6 @@ const Statisctics = () => {
     { value: number; name: string }[]
   >([]);
 
-  console.log(tagUsage)
-
   const [radarData, setRadarData] = React.useState([
     {
       subject: "Perception by ear",
@@ -96,7 +94,7 @@ const Statisctics = () => {
 
   React.useEffect(() => {
     setIsLoading(true);
-    dispatch(fetchUserInfo({ id: user!.data.id!, token: user!.token! }));
+    dispatch(fetchUserInfo({ id: user!.data.id!}));
   }, [user]);
 
   React.useEffect(() => {

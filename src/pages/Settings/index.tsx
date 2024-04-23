@@ -160,7 +160,7 @@ const Settings: React.FC = ({}) => {
           <p>Change the language of study</p>{" "}
           <div className={styles.filterParameter}>
             <FormControl sx={{ minWidth: 150 }} size="small">
-              <InputLabel id="studyLanguage-label">Статус</InputLabel>
+              <InputLabel id="studyLanguage-label">Study language</InputLabel>
               <Select
                 labelId="studyLanguage-label"
                 id="studyLanguage"
@@ -179,7 +179,7 @@ const Settings: React.FC = ({}) => {
           <p>Choose your native language</p>{" "}
           <div className={styles.filterParameter}>
             <FormControl sx={{ minWidth: 150 }} size="small">
-              <InputLabel id="nativeLanguage-label">Статус</InputLabel>
+              <InputLabel id="nativeLanguage-label">Native Language</InputLabel>
               <Select
                 labelId="nativeLanguage-label"
                 id="nativeLanguage"
@@ -198,7 +198,7 @@ const Settings: React.FC = ({}) => {
           <p>Select the voice acting heads</p>{" "}
           <div className={styles.filterParameter}>
             <FormControl sx={{ minWidth: 150 }} size="small">
-              <InputLabel id="voice-label">Статус</InputLabel>
+              <InputLabel id="voice-label">Voice</InputLabel>
               <Select
                 labelId="voice-label"
                 id="voice"

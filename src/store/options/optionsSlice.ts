@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { TagProps } from "../tags/tagsSlice";
 
 type ParamsProps = {
   userId: number;
@@ -36,29 +37,10 @@ export type SettingsProps = {
 };
 
 export type ExercisesProps = {
-  maxWords: 0 | 10 | 20 | 30 | 40 | 50 | 100;
-  wordsPercent:
-    | { type: "unlearned"; name: "Unlearned" }
-    | { type: "averageLearned"; name: "Average Learned" }
-    | { type: "almostLearned"; name: "Almost Learned" };
-  firstShow:
-    | { type: "random"; name: "Random" }
-    | {
-        type: "addedLong";
-        name: "Added long ago";
-      }
-    | {
-        type: "addedRecently";
-        name: "Recently Added";
-      }
-    | {
-        type: "averageLearned";
-        name: "Average Learned";
-      }
-    | {
-        type: "almostLearned";
-        name: "Almost Learned";
-      };
+  maxWords: 5 | 10 | 20 | 30 | 40 | 50 | 100;
+  wordsPercent: "unlearned" | "averageLearned" | "almostLearned";
+  firstShow: "random" | "addedLong" | "addedRecently" | "averageLearned" | "almostLearned";
+  tags: TagProps[] | [];
 };
 
 interface OptionsSliceState {
@@ -112,6 +94,16 @@ export const optionsSlice = createSlice({
       }
       state.appOptions.nativeLanguage = action.payload;
     },
+    changeExercisSettings: (state, action) => {
+      if (state.exercisesOptions === null) {
+        return;
+      }
+
+      state.exercisesOptions.firstShow = action.payload.firstShow;
+      state.exercisesOptions.maxWords = action.payload.maxWords;
+      state.exercisesOptions.wordsPercent = action.payload.wordsPercent;
+      state.exercisesOptions.tags = action.payload.tags;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchOptions.pending, (state) => {
@@ -146,6 +138,7 @@ export const {
   changeVoiceName,
   changeLearnedLanguage,
   changeNativeLanguage,
+  changeExercisSettings
 } = optionsSlice.actions;
 
 export default optionsSlice.reducer;

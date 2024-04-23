@@ -74,7 +74,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
             cost: 8,
           },
           {
-            hintName: "Show tyhe correct answer",
+            hintName: "Show the correct answer",
             value: 0,
             type: 4,
             cost: 16,
@@ -106,7 +106,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         id_user: data.data.id,
         appOptions: [
           {
-            showTransciption: true,
+            showTransciption: false,
             nativeLanguage: "English",
             learnedLanguage: "English",
             voiceActing: "Google US English",
@@ -114,15 +114,10 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
           },
         ],
         exercisesOptions: {
-          maxWords: 0,
-          wordsPercent: {
-            type: "unlearned",
-            name: "Unlearned",
-          },
-          firstShow: {
-            type: "random",
-            name: "Random",
-          },
+          maxWords: 10,
+          wordsPercent: "unlearned",
+          firstShow: "random",
+          tags: []
         },
       });
 

@@ -20,9 +20,10 @@ import { TagProps } from "../../store/tags/tagsSlice";
 import { deleteWord } from "../../store/dictionaryWords/dictionaryWordsSlice";
 import { useAppDispatch } from "../../store/store";
 import { setEditInformation } from "../../store/editWord/editWordSlice";
-import { fetchOptions, selectOptions } from "../../store/options/optionsSlice";
+import { selectOptions } from "../../store/options/optionsSlice";
 import { selectUser } from "../../store/user/userSlice";
 import { useSelector } from "react-redux";
+import { speakText } from "../../utils/speechText";
 
 type WordBlockProps = {
   id: number;
@@ -63,10 +64,6 @@ const WordBlock: React.FC<WordBlockProps> = ({
 
   const selectedVoice = voices.find((voice) => voice.name === voiceName);
 
-  React.useEffect(() => {
-    dispatch(fetchOptions({ userId: user!.data.id! }));
-  }, []);
-
   const onClickDelete = async () => {
     try {
       const { data } = await axios.delete(
@@ -99,18 +96,6 @@ const WordBlock: React.FC<WordBlockProps> = ({
     setIsAddWordOpen(true);
   };
 
-  const speakText = () => {
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = "en-US";
-
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-      synthesis.speak(utterance);
-    } else {
-      synthesis.speak(utterance);
-    }
-  };
-
   return (
     <>
       {showAlertDeletingWord && (
@@ -132,11 +117,13 @@ const WordBlock: React.FC<WordBlockProps> = ({
           <div className={styles.wordHeader}>
             <div className={styles.wordHeaderLeft}>
               <div className={styles.soundImg}>
-                <SoundIco onClick={() => speakText()} />
+                <SoundIco
+                  onClick={() => speakText(synthesis, word, selectedVoice)}
+                />
               </div>
               <div>{word}</div>
               <div>
-                {transcriptionsChecked &&
+                {!transcriptionsChecked &&
                   transcription &&
                   "[" + transcription + "]"}
               </div>

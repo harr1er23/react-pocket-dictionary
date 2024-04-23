@@ -1,0 +1,143 @@
+.exercisesBackground {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 0 90px;
+  margin-left: 30px;
+
+  @media (max-width: 700px) {
+    margin-left: 0px;
+    padding: 20px 10px 0 30px;
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0px;
+    padding: 20px 10px 0 0px;
+  }
+
+  .exercisesHeader {
+    display: flex;
+    align-self: flex-start;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 10px 0 10px 0;
+
+    h2 {
+      margin-left: 20px;
+      margin-right: auto;
+      color: white;
+    }
+  }
+
+  .exercisesBlock {
+    display: flex;
+    width: 70%;
+
+    @media (max-width: 1000px) {
+      width: 90%;
+    }
+
+    .settingsButton {
+      cursor: pointer;
+      width: 60px;
+      height: 60px;
+
+      margin-left: 20px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 5px 10px;
+
+      @media (max-width: 700px) {
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+        padding: 5px 10px;
+      }
+
+      background-color: var(--word-bg);
+      border-radius: 5px;
+
+      svg {
+        width: 30px;
+        height: 30px;
+
+        @media (max-width: 700px) {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .exercises {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+
+      background-color: var(--word-bg);
+      border-radius: 10px;
+
+      color: white;
+
+      padding: 25px 50px;
+
+      @media (max-width: 1000px) {
+        padding: 20px 30px;
+      }
+
+      @media (max-width: 700px) {
+        padding: 5px 10px;
+      }
+
+      .exercise {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        margin: 5px 0;
+        border-radius: 10px;
+        background-color: var(--main-bg);
+        color: white;
+        cursor: pointer;
+
+        .exerciseLeft {
+          display: flex;
+          flex-direction: column;
+
+          h4 {
+            @media (max-width: 700px) {
+              font-size: 18px;
+            }
+          }
+
+          p {
+            @media (max-width: 700px) {
+              font-size: 14px;
+            }
+          }
+        }
+
+        .exerciseRigth {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          svg {
+            margin-left: 10px;
+            width: 30px;
+            height: 30px;
+
+            @media (max-width: 700px) {
+              margin-left: 5px;
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

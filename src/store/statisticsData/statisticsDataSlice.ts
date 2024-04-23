@@ -14,16 +14,23 @@ export const fetchStatisticsData = createAsyncThunk<
 >("statisticsData/fetchStatisticsData", async (params) => {
   const { userId, currentDay, forDay } = params;
   const { data } = await axios.get<StatisticsDataProps[]>(
-    `https://9854dac21e0f0eee.mokky.dev/wordsDate?user_id=${userId}${currentDay && forDay && `&data[from]=${forDay}&data[to]=${currentDay}` }`
+    `https://9854dac21e0f0eee.mokky.dev/wordsDate?user_id=${userId}${
+      currentDay && forDay ? `&data[from]=${forDay}&data[to]=${currentDay}` : ""
+    }`
   );
   return data;
 });
+
+export type StatisticsWordsProps = {
+  word_id: number;
+  word: string;
+};
 
 export type StatisticsDataProps = {
   id: number;
   user_id: number;
   data: number;
-  words: [];
+  words: StatisticsWordsProps[];
 };
 
 interface DictonaryWordsSliceState {
@@ -39,7 +46,23 @@ const initialState: DictonaryWordsSliceState = {
 export const statisticsDataSlice = createSlice({
   name: "statisticsData",
   initialState,
-  reducers: {},
+  reducers: {
+    updateStatisticsWords: (state, action) => {
+      const { data, time } = action.payload;
+
+      const newData = state.statisticsData.map((obj) => {
+        if(obj.data === time){
+          return {
+            ...obj,
+            data
+          }
+        }else{
+          return obj;
+        }
+      })
+      state.statisticsData = newData;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchStatisticsData.pending, (state) => {
       state.status = "loading";
@@ -58,5 +81,7 @@ export const statisticsDataSlice = createSlice({
 
 export const selectStatisticsData = (state: RootState) =>
   state.statisticsDataSlice;
+
+export const { updateStatisticsWords } = statisticsDataSlice.actions;
 
 export default statisticsDataSlice.reducer;
