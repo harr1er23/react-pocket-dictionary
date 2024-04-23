@@ -103,7 +103,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
       });
 
       await axios.post("https://9854dac21e0f0eee.mokky.dev/settings", {
-        id_user: data.data.id,
+        user_id: data.data.id,
         appOptions: [
           {
             showTransciption: false,
