@@ -26,6 +26,7 @@ import {
 } from "../../store/pagination/paginationSlice";
 import { selectSearch, setSearch } from "../../store/search/searchSlice";
 import Input from "../../components/Input";
+import { fetchOptions } from "../../store/options/optionsSlice";
 
 const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -48,13 +49,18 @@ const Dictionary: React.FC = () => {
   React.useEffect(() => {
     dispatch(
       fetchDictionaryWords({
-        token: user!.token!,
         userId: user!.data.id!,
         pagination: paginationValue,
         search: searchValue,
       })
     );
   }, [user, paginationValue, searchValue]);
+
+  React.useEffect(() => {
+    if(status === "success"){
+      dispatch(fetchOptions({ userId: user!.data.id! }));
+    }
+  }, []);
 
   // const [wordPresets, setWordPresets] = React.useState([
   //   {

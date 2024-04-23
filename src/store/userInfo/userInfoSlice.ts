@@ -3,27 +3,21 @@ import axios from "axios";
 import { RootState } from "../store";
 
 type ParamsProps = {
-  token: string;
   id: number;
 };
 
 export const fetchUserInfo = createAsyncThunk<UserInfoPorops[], ParamsProps>(
   "userInfo/fetchUserInfo",
   async (params) => {
-    const { token, id } = params;
+    const { id } = params;
     const { data } = await axios.get<UserInfoPorops[]>(
-      `https://9854dac21e0f0eee.mokky.dev/userInfo?user_id=${id}`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
+      `https://9854dac21e0f0eee.mokky.dev/userInfo?user_id=${id}`
     );
     return data;
   }
 );
 
-type UserAchivementsProps = {
+export type UserAchivementsProps = {
   achivement_id: number;
   cost: number;
   accepted: boolean;
@@ -37,7 +31,7 @@ type MultipliersProps = {
   cost: number;
 }
 
-type HintsProps = {
+export type HintsProps = {
   hintName: string;
   value: number;
   type: number;

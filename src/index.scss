@@ -22,6 +22,8 @@ body {
 
   --main-container-bg: #fff;
   --container-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+  --ico-color: #dcddcf;
 }
 
 body.dark {
@@ -42,6 +44,8 @@ body.dark {
 
   --main-container-bg: #131c31;
   --container-shadow: rgba(#131c31, 0.2) 0px 7px 29px 0px;
+
+  --ico-color: #fff;
 }
 
 html,

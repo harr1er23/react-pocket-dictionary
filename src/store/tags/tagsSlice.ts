@@ -4,7 +4,7 @@ import { RootState } from "../store";
 
 type ParamsProps = {
   userId: number;
-  tag: string;
+  tag?: string;
 };
 
 export const fetchTags = createAsyncThunk<TagProps[], ParamsProps>(

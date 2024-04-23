@@ -5,10 +5,14 @@ import { RootState } from "../store";
 import { TagProps } from "../tags/tagsSlice";
 
 type ParamsProps = {
-  token: string;
   userId: number;
   pagination: number;
+  limit?: number;
   search?: string;
+  wordsPercent?: string;
+  firstShow?: string;
+  day?: number;
+  tags?: TagProps[];
 };
 
 export type DictionaryWordProps = {
@@ -46,19 +50,76 @@ export const fetchDictionaryWords = createAsyncThunk<
   DictionaryWordsProps,
   ParamsProps
 >("dictionaryWords/fetchDictionaryWords", async (params) => {
-  const { token, userId, pagination, search } = params;
-  const { data } = await axios.get<DictionaryWordsProps>(
-    `https://9854dac21e0f0eee.mokky.dev/dictionary?${
-      userId ? `user_id=${userId}` : ""
-    }${pagination ? `&page=${pagination}&limit=20` : ""}${
-      search ? `&word=*${search}*` : ""
-    }`,
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+  const {
+    userId,
+    pagination,
+    search,
+    limit,
+    wordsPercent,
+    firstShow,
+    day,
+    tags,
+  } = params;
+
+  let tagsQuery = "";
+
+  if (tags && tags.length > 0) {
+    tagsQuery = tags.map((obj) => `&tags.id[]=${obj.id}`).join("");
+  }
+
+  // Формирование базового URL
+  let url = `https://9854dac21e0f0eee.mokky.dev/dictionary?`;
+
+  // Добавление параметра user_id, если он есть
+  if (userId) {
+    url += `user_id=${userId}`;
+  }
+
+  // Добавление параметров пагинации
+  if (pagination) {
+    url += `&page=${pagination}&limit=${limit ? limit : 20}`;
+  }
+
+  // Добавление параметра поиска
+  if (search) {
+    url += `&word=*${search}*`;
+  }
+
+  // Добавление параметров процента изучения слов
+  if (wordsPercent) {
+    if (wordsPercent === "unlearned") {
+      url += `&learnPercent=1`;
+    } else {
+      let fromPercent, toPercent;
+      if (wordsPercent === "averageLearned") {
+        fromPercent = "3";
+        toPercent = "50";
+      } else if (wordsPercent === "almostLearned") {
+        fromPercent = "51";
+        toPercent = "99";
+      }
+      url += `&learnPercent[from]=${fromPercent}&learnPercent[to]=${toPercent}`;
     }
-  );
+  }
+
+  // Добавление параметров первого показа
+  if (firstShow) {
+    if (firstShow === "addedLong") {
+      url += `&currentData[to]=${day}`;
+    } else if (firstShow === "addedRecently") {
+      url += `&currentData[from]=${day}`;
+    } else if (firstShow === "averageLearned") {
+      url += `&sortBy=learnPercent`;
+    } else if (firstShow === "almostLearned") {
+      url += `&sortBy=-learnPercent`;
+    }
+  }
+
+  // Добавление параметров тегов (если есть)
+  url += tagsQuery;
+
+  // Отправка запроса
+  const { data } = await axios.get<DictionaryWordsProps>(url);
   return data;
 });
 
@@ -90,8 +151,19 @@ export const dictionaryWordsSlice = createSlice({
       state.dictionaryWords = findWord;
     },
     updateWord: (state, action) => {
-      const { id, word, transcription, translates, tags, learnPercent } =
-        action.payload;
+      const {
+        id,
+        word,
+        transcription,
+        translates,
+        tags,
+        learnPercent,
+        hearing,
+        correctSpelling,
+        correctRecognition,
+        rememberPercent,
+        currentData
+      } = action.payload;
 
       state.dictionaryWords = state.dictionaryWords.map((wordObj) => {
         if (wordObj.id !== id) {
@@ -100,11 +172,16 @@ export const dictionaryWordsSlice = createSlice({
 
         return {
           ...wordObj,
+          currentData,
           word,
           transcription,
           translates,
           tags,
           learnPercent,
+          hearing,
+          correctSpelling,
+          correctRecognition,
+          rememberPercent,
         };
       });
     },
@@ -131,7 +208,6 @@ export const dictionaryWordsSlice = createSlice({
 export const selectDictionaryWords = (state: RootState) =>
   state.dictionaryWordsSlice;
 
-export const { deleteWord, updateWord } =
-  dictionaryWordsSlice.actions;
+export const { deleteWord, updateWord } = dictionaryWordsSlice.actions;
 
 export default dictionaryWordsSlice.reducer;

@@ -42,7 +42,7 @@ const Shop: React.FC<ShopProps> = ({}) => {
   const { userInfo, status: userInfoStatus } = useSelector(selectUserInfo);
 
   React.useEffect(() => {
-    dispatch(fetchUserInfo({ id: user!.data.id!, token: user!.token! }));
+    dispatch(fetchUserInfo({ id: user!.data.id!}));
   }, [user]);
 
   const hintsMoney = userInfo !== null ? userInfo[0].hintsMoney : 0;
@@ -103,7 +103,6 @@ const Shop: React.FC<ShopProps> = ({}) => {
 
       dispatch(addUserHintsCoins(10));
       dispatch(reduceUserCoins(1000));
-      toast.success("You got 10 hint-coins!");
     } catch (err: any) {
       console.log(err);
       toast.error("Purchase error! Try again later.");
@@ -161,7 +160,6 @@ const Shop: React.FC<ShopProps> = ({}) => {
 
       dispatch(reduceUserCoins(cost));
       dispatch(updateMultipliers(hewMultipliers));
-      toast.success("You have improved the statistics!");
     } catch (err: any) {
       console.log(err);
       toast.error("Purchase error! Try again later.");
@@ -195,7 +193,6 @@ const Shop: React.FC<ShopProps> = ({}) => {
 
       dispatch(reduceUserHintsCoins(cost));
       dispatch(updateHints(hewHints));
-      toast.success("You got a hint!");
     } catch (err: any) {
       console.log(err);
       toast.error("Purchase error! Try again later.");

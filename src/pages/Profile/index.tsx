@@ -61,7 +61,7 @@ const Profile: React.FC = () => {
     useSelector(selectAchivements);
 
   React.useEffect(() => {
-    dispatch(fetchUserInfo({ id: user!.data.id!, token: user!.token! }));
+    dispatch(fetchUserInfo({ id: user!.data.id!}));
   }, [user]);
 
   React.useEffect(() => {

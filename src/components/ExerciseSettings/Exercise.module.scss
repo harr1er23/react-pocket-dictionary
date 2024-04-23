@@ -1,0 +1,132 @@
+.modalHeader {
+  border-bottom: 0;
+
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+
+  button {
+    background-color: var(--third-bg);
+  }
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+  border-top: 0;
+
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+}
+
+.modalBody {
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+
+  .filterBlock {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    color: var(--text-color);
+
+    .filterRow {
+      margin: 15px 0;
+      padding: 10px 10px;
+
+      border: 1px solid var(--tertiary-bg);
+      border-radius: 5px;
+
+      background-color: var(--tertiary-bg);
+
+      div{
+        color: var(--word-bg) !important;
+      }
+
+      label{
+        top: 10px;
+      }
+    }
+
+    .userTags{
+      display: flex;
+      width: 95%;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+
+      .tags{
+        width: 100%;
+      }
+    }
+
+    .selectedTags{
+      display: flex;
+      width: 95%;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+
+      .tags{
+        width: 100%;
+      }
+    }
+  }
+}
+
+.tagsBlock {
+  display: flex;
+  width: 90%;
+  padding-bottom: 5px;
+
+  &::-webkit-scrollbar {
+    height: 7px;
+    background-color: var(--item-hover);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: var(--tertiary-bg);
+  }
+
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .existingTagBackground {
+    display: flex;
+    border: 1px solid var(--secondary-bg);
+    background-color: var(--secondary-bg);
+    color: var(--text-hover-color);
+    border-radius: 20px;
+    padding: 5px;
+    margin: 5px 5px 0 5px;
+    cursor: pointer;
+
+    .deleteButton {
+      margin-left: 10px;
+      color: var(--);
+
+      &:hover {
+        color: rgba(195, 2, 2, 0.792);
+      }
+    }
+  }
+
+  .tagBackground {
+    border: 1px solid var(--secondary-bg);
+    background-color: var(--secondary-bg);
+    color: var(--text-hover-color);
+
+    border-radius: 20px;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--main-container-bg);
+      border: 1px solid var(--secondary-bg);
+      color: var(--tertiary-bg);
+    }
+  }
+}

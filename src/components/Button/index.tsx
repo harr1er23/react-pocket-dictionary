@@ -9,6 +9,7 @@ type ButtonProps = {
   toggle?: string;
   target?: string;
   disabled?: boolean;
+  ico?: any;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,16 +18,18 @@ const Button: React.FC<ButtonProps> = ({
   toggle,
   target,
   disabled,
+  ico
 }) => {
   return (
     <button
-      onClick={() => (onClickFunction ? onClickFunction() : null)}
+      onClick={onClickFunction && onClickFunction}
       data-bs-toggle={toggle}
       data-bs-target={target}
       className={styles.button}
       disabled={disabled}
     >
       {text}
+      {ico && ico}
     </button>
   );
 };
