@@ -160,6 +160,10 @@
             }
           }
 
+          @media (hover: hover) and (pointer: coarse) {
+            background-color: var(--word-bg);
+          }
+          
           &:hover {
             background-color: var(--item-hover);
           }
