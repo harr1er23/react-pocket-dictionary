@@ -359,12 +359,14 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             transcription: transcriptionInputValue,
             translates: translatesWord,
             tags: selectedTagValues,
+            addedData: findWord.addedData,
             currentData: findWord.currentData,
             examples: [],
             learnPercent: findWord.learnPercent,
             hearing: findWord.hearing,
             correctSpelling: findWord.correctSpelling,
             correctRecognition: findWord.correctRecognition,
+            correctPronunciation: findWord.correctPronunciation,
             rememberPercent: findWord.rememberPercent,
           }
         );
@@ -377,12 +379,14 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
           transcription: transcriptionInputValue,
           translates: translatesWord,
           tags: selectedTagValues,
+          addedData: currentData,
           currentData: currentData,
           examples: [],
-          learnPercent: 1,
-          hearing: 1,
-          correctSpelling: 1,
-          correctRecognition: 1,
+          learnPercent: 0,
+          hearing: 0,
+          correctSpelling: 0,
+          correctPronunciation: 0,
+          correctRecognition: 0,
           rememberPercent: 1,
         });
 

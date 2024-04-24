@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,12 +14,12 @@ import Settings from "./pages/Settings";
 import Exercises from "./pages/Exercises";
 import Dictionary from "./pages/Dictionary";
 import Statistics from "./pages/Statistics";
-import { selectUser, setUser } from "./store/user/userSlice";
 import AppLayout from "./pages/AppLayout/idex";
 import AuthByVk from "./pages/AuthByVk";
-import axios from "axios";
 import Shop from "./pages/Shop";
 import ExerciseOne from "./pages/ExerciseOne";
+
+import { selectUser, setUser } from "./store/user/userSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -126,14 +127,17 @@ function App() {
               ></Route>
               <Route path="dictionary" element={<Dictionary />}></Route>
               <Route path="exercises" element={<Exercises />}></Route>
-              <Route path="exercises/selectLernedAnswer" element={<ExerciseOne />}></Route>
-              <Route path="exercises/selectNativeAnswer" element={<ExerciseOne />}></Route>
-              <Route path="exercises/3" element={<ExerciseOne />}></Route>
-              <Route path="exercises/4" element={<ExerciseOne />}></Route>
-              <Route path="exercises/5" element={<ExerciseOne />}></Route>
-              <Route path="exercises/6" element={<ExerciseOne />}></Route>
-              <Route path="exercises/7" element={<ExerciseOne />}></Route>
-              <Route path="exercises/8" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectTtranslation" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectWord" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectListenedTtranslation" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectListenedWord" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectHeard" element={<ExerciseOne />}></Route>
+              {/* <Route path="exercises/writeTranslation" element={<ExerciseOne />}></Route>
+              <Route path="exercises/writeWord" element={<ExerciseOne />}></Route>
+              <Route path="exercises/letterPuzzle" element={<ExerciseOne />}></Route>
+              <Route path="exercises/link words" element={<ExerciseOne />}></Route>
+              <Route path="exercises/voicingWrittenText" element={<ExerciseOne />}></Route>
+              <Route path="exercises/voicing" element={<ExerciseOne />}></Route> */}
               <Route path="statistics" element={<Statistics />}></Route>
               <Route path="settings" element={<Settings />}></Route>
               <Route path="profile" element={<Profile />}></Route>

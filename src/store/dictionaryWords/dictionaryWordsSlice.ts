@@ -24,10 +24,12 @@ export type DictionaryWordProps = {
   tags: TagProps[];
   learnPercent: number;
   examples: string[];
+  addedData: number;
   currentData: number;
   hearing: number;
   correctSpelling: number;
   correctRecognition: number;
+  correctPronunciation: number;
   rememberPercent: number;
 };
 
@@ -87,8 +89,8 @@ export const fetchDictionaryWords = createAsyncThunk<
 
   // Добавление параметров процента изучения слов
   if (wordsPercent) {
-    if (wordsPercent === "unlearned") {
-      url += `&learnPercent=1`;
+    if (wordsPercent === "all") {
+      url += `&learnPercent[from]=${0}&learnPercent[to]=${100}`;
     } else {
       let fromPercent, toPercent;
       if (wordsPercent === "averageLearned") {
@@ -105,9 +107,9 @@ export const fetchDictionaryWords = createAsyncThunk<
   // Добавление параметров первого показа
   if (firstShow) {
     if (firstShow === "addedLong") {
-      url += `&currentData[to]=${day}`;
+      url += `&addedData[to]=${day}`;
     } else if (firstShow === "addedRecently") {
-      url += `&currentData[from]=${day}`;
+      url += `&addedData[from]=${day}`;
     } else if (firstShow === "averageLearned") {
       url += `&sortBy=learnPercent`;
     } else if (firstShow === "almostLearned") {
@@ -162,7 +164,9 @@ export const dictionaryWordsSlice = createSlice({
         correctSpelling,
         correctRecognition,
         rememberPercent,
-        currentData
+        currentData,
+        addedData,
+        correctPronunciation
       } = action.payload;
 
       state.dictionaryWords = state.dictionaryWords.map((wordObj) => {
@@ -173,6 +177,7 @@ export const dictionaryWordsSlice = createSlice({
         return {
           ...wordObj,
           currentData,
+          addedData,
           word,
           transcription,
           translates,
@@ -182,6 +187,7 @@ export const dictionaryWordsSlice = createSlice({
           correctSpelling,
           correctRecognition,
           rememberPercent,
+          correctPronunciation
         };
       });
     },

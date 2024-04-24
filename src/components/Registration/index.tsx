@@ -115,7 +115,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         ],
         exercisesOptions: {
           maxWords: 10,
-          wordsPercent: "unlearned",
+          wordsPercent: "all",
           firstShow: "random",
           tags: []
         },

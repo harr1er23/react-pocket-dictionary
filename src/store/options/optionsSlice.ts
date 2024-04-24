@@ -37,8 +37,8 @@ export type SettingsProps = {
 };
 
 export type ExercisesProps = {
-  maxWords: 5 | 10 | 20 | 30 | 40 | 50 | 100;
-  wordsPercent: "unlearned" | "averageLearned" | "almostLearned";
+  maxWords:  10 | 20 | 30 | 40 | 50 | 100;
+  wordsPercent: "all" | "averageLearned" | "almostLearned";
   firstShow: "random" | "addedLong" | "addedRecently" | "averageLearned" | "almostLearned";
   tags: TagProps[] | [];
 };
