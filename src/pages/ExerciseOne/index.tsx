@@ -425,10 +425,10 @@ const ExerciseOne: React.FC = ({}) => {
 
       if (path === "selectListenedTtranslation") {
         newCorrectPerception =
-          currentWord.hearing < 100 ? currentWord.hearing - 1 : 100;
+          currentWord.hearing < 100 && currentWord.hearing > 1 ? currentWord.hearing - 1 : 100;
 
         newCorrectRecognition =
-          currentWord.correctRecognition < 100
+          currentWord.correctRecognition < 100 && currentWord.correctRecognition > 0.5
             ? currentWord.correctRecognition - 0.5
             : 100;
 
@@ -440,10 +440,10 @@ const ExerciseOne: React.FC = ({}) => {
           newRememberPercent;
       } else if (path === "selectListenedWord") {
         newCorrectPerception =
-          currentWord.hearing < 100 ? currentWord.hearing - 1 : 100;
+          currentWord.hearing < 100 && currentWord.hearing > 1 ? currentWord.hearing - 1 : 100;
 
         newCorrectRecognition =
-          currentWord.correctRecognition < 100
+          currentWord.correctRecognition < 100 && currentWord.correctRecognition > 0.5
             ? currentWord.correctRecognition - 0.5
             : 100;
 
@@ -455,7 +455,7 @@ const ExerciseOne: React.FC = ({}) => {
           newRememberPercent;
       } else if (path === "selectTtranslation" || path === "selectWord") {
         newCorrectRecognition =
-          currentWord.correctRecognition < 100
+          currentWord.correctRecognition < 100 && currentWord.correctRecognition > 1.5
             ? currentWord.correctRecognition - 1.5
             : 100;
 
@@ -467,7 +467,7 @@ const ExerciseOne: React.FC = ({}) => {
           newRememberPercent;
       } else if (path === "selectHeard") {
         newCorrectPerception =
-          currentWord.hearing < 100 ? currentWord.hearing - 2 : 100;
+          currentWord.hearing < 100 && currentWord.hearing > 2 ? currentWord.hearing - 2 : 100;
 
         newLearnPercent =
           (newCorrectPerception +
