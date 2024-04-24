@@ -105,75 +105,53 @@ const Exercises: React.FC = () => {
       <div className={styles.exercisesBlock}>
         <div className={styles.exercises}>
           <Link
-            to={"/app/exercises/selectLernedAnswer"}
+            to={"/app/exercises/selectTtranslation"}
             className={styles.exercise}
           >
             <div className={styles.exerciseLeft}>
-              <h4>Exercise №1</h4>
+              <h4>Translation search</h4>
+              <div className={styles.exersiceNotice}>You are shown a word, and you need to choose its correct translation</div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
           <Link
-            to={"/app/exercises/selectNativeAnswer"}
+            to={"/app/exercises/selectWord"}
             className={styles.exercise}
           >
             <div className={styles.exerciseLeft}>
-              <h4>Exercise №2</h4>
+              <h4>Word search</h4>
+              <div className={styles.exersiceNotice}>You are shown the translation of a word, and you need to select that word</div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
-          {/* <Link to={"app/exercises/3"} className={styles.exercise}>
+          <Link to={"/app/exercises/selectListenedTtranslation"} className={styles.exercise}>
             <div className={styles.exerciseLeft}>
-              <h4>Exercise №3</h4>
+              <h4>Translation search by listening</h4>
+              <div className={styles.exersiceNotice}>A word will be voiced to you and you will need to choose its translation.</div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
-          <Link to={"app/exercises/4"} className={styles.exercise}>
+          <Link to={"/app/exercises/selectListenedWord"} className={styles.exercise}>
             <div className={styles.exerciseLeft}>
-              <h4>Exercise №4</h4>
+              <h4>Word search by listening</h4>
+              <div className={styles.exersiceNotice}>A word will be voiced to you and you will need to select it from a list of other words</div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
-          <Link to={"app/exercises/5"} className={styles.exercise}>
+          <Link to={"/app/exercises/selectHeard"} className={styles.exercise}>
             <div className={styles.exerciseLeft}>
-              <h4>Exercise №5</h4>
+              <h4>Select heard</h4>
+              <div className={styles.exersiceNotice}>A word will be voiced to you and you will need to select it from a list of other words</div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
-            <div className={styles.exerciseRigth}>
+            {/* <div className={styles.exerciseRigth}>
               Lvl. 5 <LockIco />
-            </div>
+            </div> */}
           </Link>
-          <Link to={"app/exercises/6"} className={styles.exercise}>
-            <div className={styles.exerciseLeft}>
-              <h4>Exercise №6</h4>
-              <p>Selected words: {dictionaryWords.length}</p>
-            </div>
-            <div className={styles.exerciseRigth}>
-              Lvl. 10 <LockIco />
-            </div>
-          </Link>
-          <Link to={"app/exercises/7"} className={styles.exercise}>
-            <div className={styles.exerciseLeft}>
-              <h4>Exercise №7</h4>
-              <p>Selected words: {dictionaryWords.length}</p>
-            </div>
-            <div className={styles.exerciseRigth}>
-              Lvl. 15 <LockIco />
-            </div>
-          </Link>
-          <Link to={"app/exercises/8"} className={styles.exercise}>
-            <div className={styles.exerciseLeft}>
-              <h4>Exercise №8</h4>
-              <p>Selected words: {dictionaryWords.length}</p>
-            </div>
-            <div className={styles.exerciseRigth}>
-              Lvl. 20 <LockIco />
-            </div>
-          </Link> */}
         </div>
         <div
           onClick={() => setIsShowSettings(true)}

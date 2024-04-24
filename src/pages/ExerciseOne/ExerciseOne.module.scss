@@ -30,16 +30,16 @@
         padding: 10px 25px;
       }
 
-      .extraLife{
+      .extraLife {
         position: absolute;
         top: 120px;
         left: 50px;
 
-        svg{
+        svg {
           width: 30px;
           height: 30px;
 
-          path{
+          path {
             fill: var(--word-bg);
           }
         }
@@ -101,10 +101,22 @@
         margin-bottom: 50px;
 
         .word {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           font-size: 24px;
           font-weight: bold;
 
           cursor: pointer;
+
+          svg {
+            width: 40px;
+            height: 40px;
+
+            g {
+              stroke: var(--tertiary-bg);
+            }
+          }
         }
       }
 
@@ -139,18 +151,40 @@
             font-size: 14px;
           }
 
+          svg {
+            width: 40px;
+            height: 40px;
+
+            g {
+              stroke: var(--tertiary-bg);
+            }
+          }
+
           &:hover {
             background-color: var(--item-hover);
           }
         }
       }
 
-      .nextButton{
-        button{
+      .nextButton {
+        button {
           background-color: var(--word-bg);
 
           color: var(--text-color);
         }
+      }
+
+      .applyButton {
+        padding: 10px 12px;
+        border-radius: 10px;
+        background-color: var(--word-bg);
+        color: var(--text-color);
+        cursor: pointer;
+
+        &:hover{
+          color: var(--tertiary-bg);
+      }
+  
       }
     }
   }
@@ -168,6 +202,12 @@
 
 .incorrect {
   background-color: #bc372b !important;
+
+  color: white !important;
+}
+
+.checked {
+  background-color: var(--item-hover) !important;
 
   color: white !important;
 }

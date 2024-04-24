@@ -19,6 +19,7 @@ import { wrongSoundPlay } from "../../utils/wrongSoundPlay";
 import { updateUserAchivements } from "../../utils/updateUserAchivements";
 
 import { ReactComponent as ExtraLifeIco } from "../../assets/ico/extraLife.svg";
+import { ReactComponent as VoiceIco } from "../../assets/ico/voice.svg";
 
 import {
   DictionaryWordProps,
@@ -51,8 +52,10 @@ const ExerciseOne: React.FC = ({}) => {
   const { user } = useSelector(selectUser);
   const { userInfo, status: userInfoStatus } = useSelector(selectUserInfo);
   const { dictionaryWords, status } = useSelector(selectDictionaryWords);
-  const { statisticsData } =
+  const { statisticsData, status: statisticsDataStatus } =
     useSelector(selectStatisticsData);
+  const { achivements, status: achivementsStatus } =
+    useSelector(selectAchivements);
 
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [selectedAnswer, setSelectedAnswer] = React.useState<number | null>(
@@ -79,9 +82,11 @@ const ExerciseOne: React.FC = ({}) => {
   const [rewardMoney, setRewardMoney] = React.useState(0);
   const [rewardHintMoney, setRewardHintMoney] = React.useState(0);
 
+  const [correctButton, showCorrectButton] = React.useState<null | number>(
+    null
+  );
+
   const [extraLife, setExtraLife] = React.useState(false);
-
-
 
   const voiceName = appOptions !== null && appOptions?.voiceActing;
   const synthesis = window.speechSynthesis;
@@ -118,6 +123,12 @@ const ExerciseOne: React.FC = ({}) => {
   }, [status, currentWordIndex]);
 
   React.useEffect(() => {
+    if (statisticsDataStatus === "success") {
+      dispatch(fetchAchivements({ token: user!.token! }));
+    }
+  }, [statisticsDataStatus, user]);
+
+  React.useEffect(() => {
     if (status === "success" && dictionaryWords.length > 0) {
       if (currentWordIndex < dictionaryWords.length) {
         setCurrentWord(dictionaryWords[currentWordIndex]);
@@ -129,7 +140,12 @@ const ExerciseOne: React.FC = ({}) => {
 
   React.useEffect(() => {
     if (currentWord !== null) {
-      if (path === "selectLernedAnswer") {
+      if (
+        path === "selectTtranslation" ||
+        path === "selectListenedTtranslation" ||
+        path === "selectListenedWord" ||
+        path === "selectHeard"
+      ) {
         speakText(
           synthesis,
           currentWord !== null ? currentWord?.word : "",
@@ -157,18 +173,27 @@ const ExerciseOne: React.FC = ({}) => {
 
     let correctTranslations: string = "";
 
-    if (path === "selectLernedAnswer") {
+    if (
+      path === "selectTtranslation" ||
+      path === "selectListenedTtranslation"
+    ) {
       correctTranslations = currentWord.translates[0];
-    } else if (path === "selectNativeAnswer") {
+    } else if (
+      path === "selectWord" ||
+      path === "selectListenedWord" ||
+      path === "selectHeard"
+    ) {
       correctTranslations = currentWord.word;
     }
 
     const randomTranslations = randomWords.map((word) => ({
       id: word.id,
       translation:
-        path === "selectLernedAnswer"
+        path === "selectTtranslation" || path === "selectListenedTtranslation"
           ? word.translates[0]
-          : path === "selectNativeAnswer"
+          : path === "selectWord" ||
+            path === "selectListenedWord" ||
+            path === "selectHeard"
           ? word.word
           : "",
       isCorrect: false,
@@ -234,11 +259,11 @@ const ExerciseOne: React.FC = ({}) => {
     );
 
     if (comparison >= 5 && comparison <= 15) {
-      return answerType ? 1.03 : 1.06;
+      return answerType ? 1.01 : 1.05;
     } else if (comparison > 15 && comparison <= 30) {
-      return answerType ? 1.06 : 1.03;
+      return answerType ? 1.03 : 1.03;
     } else if (comparison > 30) {
-      return answerType ? 1.09 : 1.01;
+      return answerType ? 1.05 : 1.01;
     } else {
       return 1;
     }
@@ -255,18 +280,18 @@ const ExerciseOne: React.FC = ({}) => {
         }
       );
 
-      // const findAchivement = achivements.find(
-      //   (obj) =>
-      //     obj.type === "learnWord" && obj.value === userInfo[0].learnedWords + 1
-      // );
+      const findAchivement = achivements.find(
+        (obj) =>
+          obj.type === "learnWord" && obj.value === userInfo[0].learnedWords + 1
+      );
 
-      // if (findAchivement) {
-      //   updateUserAchivements(
-      //     findAchivement,
-      //     userInfo !== null ? userInfo[0].achivements : [],
-      //     userInfo !== null ? userInfo[0].id : 0
-      //   );
-      // }
+      if (findAchivement) {
+        updateUserAchivements(
+          findAchivement,
+          userInfo !== null ? userInfo[0].achivements : [],
+          userInfo !== null ? userInfo[0].id : 0
+        );
+      }
     }
   };
 
@@ -276,6 +301,16 @@ const ExerciseOne: React.FC = ({}) => {
     if (userInfo === null) return;
 
     let newRememberPercent = 1;
+
+    let newCorrectRecognition = 0;
+
+    let newCorrectSpelling = 0;
+
+    let newCorrectPerception = 0;
+
+    let newLearnPercent = 0;
+
+    let newCorrectPronunciation = 0;
 
     setSelectedAnswer(id);
 
@@ -288,15 +323,81 @@ const ExerciseOne: React.FC = ({}) => {
       correctSoundPlay();
       setCorrectAnswers((prev) => prev + 1);
 
-      setRewardExp((prev) => prev + 4);
+      setRewardExp((prev) => prev + (currentWord.word.length * 0.5 + 1));
 
-      setRewardMoney((prev) => prev + 6);
+      setRewardMoney((prev) => prev + (currentWord.word.length * 0.7 + 2));
 
       if (currentWord.learnPercent > 50) {
         setRewardHintMoney((prev) => prev + 1);
       }
 
+      newCorrectSpelling =
+        currentWord.correctSpelling < 100
+          ? currentWord.correctSpelling + 2
+          : 100;
+      // newCorrectPronunciation =
+      //   currentWord.correctPronunciation < 100 &&
+      //   currentWord.correctPronunciation > 2
+      //     ? currentWord.correctPronunciation + 2
+      //     : currentWord.correctPronunciation >= 100
+      //     ? 100
+      //     : currentWord.correctPronunciation;
+
       newRememberPercent = datesComparison(timestamp, true);
+
+      if (path === "selectListenedTtranslation") {
+        newCorrectPerception =
+          currentWord.hearing < 100 ? currentWord.hearing + 2 : 100;
+
+        newCorrectRecognition =
+          currentWord.correctRecognition < 100
+            ? currentWord.correctRecognition + 1
+            : 100;
+
+        newLearnPercent =
+          ((newCorrectPerception +
+            currentWord.correctSpelling +
+            newCorrectRecognition) /
+            3) *
+          newRememberPercent;
+      } else if (path === "selectListenedWord") {
+        newCorrectPerception =
+          currentWord.hearing < 100 ? currentWord.hearing + 2 : 100;
+
+        newCorrectRecognition =
+          currentWord.correctRecognition < 100
+            ? currentWord.correctRecognition + 1
+            : 100;
+
+        newLearnPercent =
+          ((newCorrectPerception +
+            currentWord.correctSpelling +
+            newCorrectRecognition) /
+            3) *
+          newRememberPercent;
+      } else if (path === "selectTtranslation" || path === "selectWord") {
+        newCorrectRecognition =
+          currentWord.correctRecognition < 100
+            ? currentWord.correctRecognition + 3
+            : 100;
+
+        newLearnPercent =
+          ((currentWord.hearing +
+            currentWord.correctSpelling +
+            newCorrectRecognition) /
+            3) *
+          newRememberPercent;
+      } else if (path === "selectHeard") {
+        newCorrectPerception =
+          currentWord.hearing < 100 ? currentWord.hearing + 4 : 100;
+
+        newLearnPercent =
+          ((newCorrectPerception +
+            currentWord.correctSpelling +
+            currentWord.hearing) /
+            3) *
+          newRememberPercent;
+      }
     } else {
       if (extraLife) {
         wrongSoundPlay();
@@ -311,31 +412,93 @@ const ExerciseOne: React.FC = ({}) => {
 
       wrongSoundPlay();
 
-      setRewardExp((prev) => prev + 2);
+      setRewardExp((prev) => prev + 1);
 
-      setRewardMoney((prev) => prev + 3);
+      setRewardMoney((prev) => prev + 2);
+
+      newCorrectSpelling =
+        currentWord.correctSpelling < 100 && currentWord.correctSpelling > 1
+          ? currentWord.correctSpelling - 1
+          : currentWord.correctSpelling >= 100
+          ? 100
+          : currentWord.correctSpelling;
+
+      if (path === "selectListenedTtranslation") {
+        newCorrectPerception =
+          currentWord.hearing < 100 ? currentWord.hearing - 1 : 100;
+
+        newCorrectRecognition =
+          currentWord.correctRecognition < 100
+            ? currentWord.correctRecognition - 0.5
+            : 100;
+
+        newLearnPercent =
+          (newCorrectPerception +
+            currentWord.correctSpelling +
+            newCorrectRecognition) /
+          3 /
+          newRememberPercent;
+      } else if (path === "selectListenedWord") {
+        newCorrectPerception =
+          currentWord.hearing < 100 ? currentWord.hearing - 1 : 100;
+
+        newCorrectRecognition =
+          currentWord.correctRecognition < 100
+            ? currentWord.correctRecognition - 0.5
+            : 100;
+
+        newLearnPercent =
+          (newCorrectPerception +
+            currentWord.correctSpelling +
+            newCorrectRecognition) /
+          3 /
+          newRememberPercent;
+      } else if (path === "selectTtranslation" || path === "selectWord") {
+        newCorrectRecognition =
+          currentWord.correctRecognition < 100
+            ? currentWord.correctRecognition - 1.5
+            : 100;
+
+        newLearnPercent =
+          (currentWord.hearing +
+            currentWord.correctSpelling +
+            newCorrectRecognition) /
+          3 /
+          newRememberPercent;
+      } else if (path === "selectHeard") {
+        newCorrectPerception =
+          currentWord.hearing < 100 ? currentWord.hearing - 2 : 100;
+
+        newLearnPercent =
+          (newCorrectPerception +
+            currentWord.correctSpelling +
+            currentWord.hearing) /
+          3 /
+          newRememberPercent;
+      }
+
+      // newCorrectPronunciation =
+      //   currentWord.correctPronunciation < 100 &&
+      //   currentWord.correctPronunciation > 2
+      //     ? currentWord.correctPronunciation - 1
+      //     : currentWord.correctPronunciation >= 100
+      //     ? 100
+      //     : currentWord.correctPronunciation;
 
       newRememberPercent = datesComparison(timestamp, false);
     }
 
-    const newCorrectRecognition = currentWord.correctRecognition < 100 ? currentWord.correctRecognition + 5 : 100;
+    path === "selectHeard" && showCorrectButton(null);
 
-    const newLearngPercent =
-      ((currentWord.hearing +
-        currentWord.correctSpelling +
-        newCorrectRecognition) /
-        3) *
-      newRememberPercent;
-
-    await updateWordStreak(newLearngPercent);
+    await updateWordStreak(newLearnPercent);
 
     await axios.patch(
       `https://9854dac21e0f0eee.mokky.dev/dictionary/${currentWord.id}`,
       {
         currentData: timestamp,
         learnPercent:
-          newLearngPercent > 100 ? 100 : Number(newLearngPercent.toFixed(1)),
-        hearing: currentWord.hearing,
+          newLearnPercent > 100 ? 100 : Number(newLearnPercent.toFixed(0)),
+        hearing: newCorrectPerception,
         correctSpelling: currentWord.correctSpelling,
         correctRecognition: newCorrectRecognition,
         rememberPercent: newRememberPercent,
@@ -347,6 +510,11 @@ const ExerciseOne: React.FC = ({}) => {
         nextWord();
       }, 1500);
     }
+  };
+
+  const onClickHeared = (id: number, value: string) => {
+    speakText(synthesis, value, selectedVoice);
+    showCorrectButton(id);
   };
 
   const nextWord = (
@@ -367,8 +535,7 @@ const ExerciseOne: React.FC = ({}) => {
     }
   };
 
-  return status === "loading" &&
-    userInfoStatus === "loading" ? (
+  return status === "loading" && userInfoStatus === "loading" ? (
     <Loader />
   ) : (
     <div className={styles.exerciseContainer}>
@@ -427,21 +594,37 @@ const ExerciseOne: React.FC = ({}) => {
           <div className={styles.wordBackground}>
             <div
               onClick={() =>
-                path === "selectLernedAnswer"
-                  ? speakText(
-                      synthesis,
-                      currentWord !== null ? currentWord?.word : "",
-                      selectedVoice
-                    )
-                  : ""
+                (path === "selectTtranslation" ||
+                  path === "selectListenedTtranslation" ||
+                  path === "selectListenedWord" ||
+                  path === "selectHeard") &&
+                speakText(
+                  synthesis,
+                  currentWord !== null ? currentWord?.word : "",
+                  selectedVoice
+                )
               }
               className={styles.word}
             >
-              {currentWord !== null && path === "selectLernedAnswer"
+              {currentWord !== null &&
+                path === "selectTtranslation" &&
+                currentWord.word}
+              {currentWord !== null &&
+                path === "selectWord" &&
+                currentWord?.translates[0]}
+              {path === "selectListenedTtranslation" &&
+              currentWord !== null &&
+              selectedAnswer !== null
                 ? currentWord.word
-                : currentWord !== null &&
-                  path === "selectNativeAnswer" &&
-                  currentWord?.translates[0]}
+                : path === "selectListenedTtranslation" &&
+                  currentWord !== null && <VoiceIco />}
+              {path === "selectListenedWord" &&
+              currentWord !== null &&
+              selectedAnswer !== null
+                ? currentWord?.translates[0]
+                : path === "selectListenedWord" &&
+                  currentWord !== null && <VoiceIco />}
+              {path === "selectHeard" && <VoiceIco />}
             </div>
           </div>
           <div className={styles.translatesContainer}>
@@ -455,14 +638,29 @@ const ExerciseOne: React.FC = ({}) => {
                     styles.correct) ||
                   (selectedAnswer === obj.id &&
                     !obj.isCorrect &&
-                    styles.incorrect)
+                    styles.incorrect) ||
+                  (correctButton !== null &&
+                    correctButton === obj.id &&
+                    styles.checked)
                 }`}
-                onClick={() => handleAnswerSelection(obj.id)}
+                onClick={() =>
+                  path === "selectHeard"
+                    ? onClickHeared(obj.id, obj.translation)
+                    : handleAnswerSelection(obj.id)
+                }
               >
-                {obj.translation}
+                {path === "selectHeard" ? <VoiceIco /> : obj.translation}
               </div>
             ))}
           </div>
+          {correctButton !== null && selectedAnswer === null && (
+            <div
+              className={styles.applyButton}
+              onClick={() => handleAnswerSelection(correctButton)}
+            >
+              Apply
+            </div>
+          )}
           {!appOptions?.automaticallySwitchExercise &&
             selectedAnswer !== null && (
               <div className={styles.nextButton}>

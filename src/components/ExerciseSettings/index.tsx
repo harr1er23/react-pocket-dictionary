@@ -69,7 +69,7 @@ const ExerciseSettings: React.FC<ExerciseSettingsProps> = ({
   const maxWordsValue =
     exercisesOptions !== null ? exercisesOptions.maxWords : 5;
   const wordsPercentValue =
-    exercisesOptions !== null ? exercisesOptions.wordsPercent : "unlearned";
+    exercisesOptions !== null ? exercisesOptions.wordsPercent : "all";
   const firstShowValue =
     exercisesOptions !== null ? exercisesOptions.firstShow : "random";
   const tagsValue = exercisesOptions !== null ? exercisesOptions.tags : [];
@@ -90,7 +90,7 @@ const ExerciseSettings: React.FC<ExerciseSettingsProps> = ({
           maxWords: maxWords,
           wordsPercent: wordsPercent,
           firstShow: firstShow,
-          tags
+          tags,
         },
       });
 
@@ -111,12 +111,12 @@ const ExerciseSettings: React.FC<ExerciseSettingsProps> = ({
   };
 
   const handleChangeMaxWords = (event: SelectChangeEvent) => {
-    setMaxWords(Number(event.target.value) as 5 | 10 | 20 | 30 | 40 | 50 | 100);
+    setMaxWords(Number(event.target.value) as 10 | 20 | 30 | 40 | 50 | 100);
   };
 
   const handleChangeWordsPercent = (event: SelectChangeEvent) => {
     setWordsPercent(
-      event.target.value as "unlearned" | "averageLearned" | "almostLearned"
+      event.target.value as "all" | "averageLearned" | "almostLearned"
     );
   };
 
@@ -174,7 +174,6 @@ const ExerciseSettings: React.FC<ExerciseSettingsProps> = ({
               onChange={handleChangeMaxWords}
               label="Number of words"
             >
-              <MenuItem value={5}>5 words</MenuItem>
               <MenuItem value={10}>10 words</MenuItem>
               <MenuItem value={20}>20 words</MenuItem>
               <MenuItem value={30}>30 words</MenuItem>
@@ -197,7 +196,7 @@ const ExerciseSettings: React.FC<ExerciseSettingsProps> = ({
               fullWidth
               label="Learning stage"
             >
-              <MenuItem value={"unlearned"}>Unlearned</MenuItem>
+              <MenuItem value={"all"}>All</MenuItem>
               <MenuItem value={"averageLearned"}>Average Learned</MenuItem>
               <MenuItem value={"almostLearned"}>Almost Learned</MenuItem>
             </Select>
