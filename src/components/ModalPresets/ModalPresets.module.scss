@@ -1,0 +1,67 @@
+.modalHeader {
+  border-bottom: 0;
+
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+
+  button {
+    background-color: var(--third-bg);
+  }
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  border-top: 0;
+
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+}
+
+.modalBody {
+  background-color: var(--main-container-bg);
+  color: var(--tertiary-bg);
+
+  .presetsBlockBackground {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      // height: 0;
+    }
+
+    .presetBackground {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 10px 15px;
+      margin: 5px 30px;
+
+      border-radius: 10px;
+      border: 1px solid var(--third-bg);
+      background-color: var(--third-bg);
+      color: var(--text-hover-color);
+
+      cursor: pointer;
+
+      .leftBlock {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .rightBlock {
+        span {
+          width: 20px !important;
+          height: 20px !important;
+        }
+      }
+
+      p {
+        color: var(--text-hover-color);
+      }
+    }
+  }
+}

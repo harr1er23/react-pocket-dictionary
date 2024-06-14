@@ -20,6 +20,7 @@ import Shop from "./pages/Shop";
 import ExerciseOne from "./pages/ExerciseOne";
 
 import { selectUser, setUser } from "./store/user/userSlice";
+import Home from "./pages/Home/Home";
 
 function App() {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ function App() {
             <Route path="/notFound" element={<NotFound />}></Route>
             <Route
               path="/"
-              element={<Navigate replace to="/app/dictionary" />}
+              element={<Home />}
             ></Route>
             <Route
               path="/auth"
@@ -127,14 +128,14 @@ function App() {
               ></Route>
               <Route path="dictionary" element={<Dictionary />}></Route>
               <Route path="exercises" element={<Exercises />}></Route>
-              <Route path="exercises/selectTtranslation" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectTranslation" element={<ExerciseOne />}></Route>
               <Route path="exercises/selectWord" element={<ExerciseOne />}></Route>
-              <Route path="exercises/selectListenedTtranslation" element={<ExerciseOne />}></Route>
+              <Route path="exercises/selectListenedTranslation" element={<ExerciseOne />}></Route>
               <Route path="exercises/selectListenedWord" element={<ExerciseOne />}></Route>
               <Route path="exercises/selectHeard" element={<ExerciseOne />}></Route>
-              {/* <Route path="exercises/writeTranslation" element={<ExerciseOne />}></Route>
+              <Route path="exercises/writeTranslation" element={<ExerciseOne />}></Route>
               <Route path="exercises/writeWord" element={<ExerciseOne />}></Route>
-              <Route path="exercises/letterPuzzle" element={<ExerciseOne />}></Route>
+              {/* <Route path="exercises/letterPuzzle" element={<ExerciseOne />}></Route>
               <Route path="exercises/link words" element={<ExerciseOne />}></Route>
               <Route path="exercises/voicingWrittenText" element={<ExerciseOne />}></Route>
               <Route path="exercises/voicing" element={<ExerciseOne />}></Route> */}

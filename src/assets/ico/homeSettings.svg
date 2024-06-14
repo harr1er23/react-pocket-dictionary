@@ -1,0 +1,14 @@
+<svg viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg">
+    <g id="SVGRepo_iconCarrier">
+        <defs>
+            <style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px}</style>
+        </defs>
+        <g id="ic-media-mixer">
+            <circle cx="14" cy="5" r="2"/>
+            <circle cx="15" cy="19" r="2"/>
+            <circle cx="8" cy="12" r="2"/>
+            <path d="M3 5h9M16 5h5M3 12h3M10 12h11M3 19h10M17 19h4"/>
+        </g>
+    </g>
+</svg>

@@ -38,6 +38,8 @@ import {
   fetchAchivements,
   selectAchivements,
 } from "../../store/achivements/achivementsSlice";
+import { getCurrentData } from "../../utils/getCurrentData";
+import StyledInput from "../../components/StyledInput";
 
 export type AnswerOptionProps = {
   id: number;
@@ -92,9 +94,7 @@ const ExerciseOne: React.FC = ({}) => {
   const synthesis = window.speechSynthesis;
   const voices = synthesis.getVoices();
 
-  const newData = new Date();
-  newData.setHours(0, 0, 0, 0);
-  const timestamp = newData.getTime();
+  const timestamp = getCurrentData();
 
   const selectedVoice = voices.find((voice) => voice.name === voiceName);
 
@@ -111,22 +111,12 @@ const ExerciseOne: React.FC = ({}) => {
     };
   }, []);
 
-  const handleBeforeUnloadConfirmation = () => {
-    const confirmationMessage = "Вы уверены, что хотите покинуть страницу?";
-    return window.confirm(confirmationMessage);
-  };
-
   React.useEffect(() => {
     if (status === "success") {
       dispatch(fetchStatisticsData({ userId: user!.data.id! }));
-    }
-  }, [status, currentWordIndex]);
-
-  React.useEffect(() => {
-    if (statisticsDataStatus === "success") {
       dispatch(fetchAchivements({ token: user!.token! }));
     }
-  }, [statisticsDataStatus, user]);
+  }, [status, currentWordIndex]);
 
   React.useEffect(() => {
     if (status === "success" && dictionaryWords.length > 0) {
@@ -141,10 +131,11 @@ const ExerciseOne: React.FC = ({}) => {
   React.useEffect(() => {
     if (currentWord !== null) {
       if (
-        path === "selectTtranslation" ||
-        path === "selectListenedTtranslation" ||
+        path === "selectTranslation" ||
+        path === "selectListenedTranslation" ||
         path === "selectListenedWord" ||
-        path === "selectHeard"
+        path === "selectHeard" ||
+        path === "writeTranslation"
       ) {
         speakText(
           synthesis,
@@ -174,14 +165,16 @@ const ExerciseOne: React.FC = ({}) => {
     let correctTranslations: string = "";
 
     if (
-      path === "selectTtranslation" ||
-      path === "selectListenedTtranslation"
+      path === "selectTranslation" ||
+      path === "selectListenedTranslation" ||
+      path === "writeTranslation"
     ) {
       correctTranslations = currentWord.translates[0];
     } else if (
       path === "selectWord" ||
       path === "selectListenedWord" ||
-      path === "selectHeard"
+      path === "selectHeard" ||
+      path === "writeWord"
     ) {
       correctTranslations = currentWord.word;
     }
@@ -189,11 +182,14 @@ const ExerciseOne: React.FC = ({}) => {
     const randomTranslations = randomWords.map((word) => ({
       id: word.id,
       translation:
-        path === "selectTtranslation" || path === "selectListenedTtranslation"
+        path === "selectTranslation" ||
+        path === "selectListenedTranslation" ||
+        path === "writeTranslation"
           ? word.translates[0]
           : path === "selectWord" ||
             path === "selectListenedWord" ||
-            path === "selectHeard"
+            path === "selectHeard" ||
+            path === "writeWord"
           ? word.word
           : "",
       isCorrect: false,
@@ -295,7 +291,7 @@ const ExerciseOne: React.FC = ({}) => {
     }
   };
 
-  const handleAnswerSelection = async (id: number) => {
+  const handleAnswerSelection = async (id: number, correct?: boolean) => {
     if (selectedAnswer !== null) return;
     if (currentWord === null) return;
     if (userInfo === null) return;
@@ -319,173 +315,261 @@ const ExerciseOne: React.FC = ({}) => {
     //добавление слова в wordsDate
     await addWordToStatistics(timestamp);
 
-    if (id === currentWord?.id) {
-      correctSoundPlay();
-      setCorrectAnswers((prev) => prev + 1);
+    if (path === "writeWord" || path === "writeTranslation") {
+      if (correct) {
+        correctSoundPlay();
+        setCorrectAnswers((prev) => prev + 1);
 
-      setRewardExp((prev) => prev + (currentWord.word.length * 0.5 + 1));
+        setRewardExp((prev) => prev + (currentWord.word.length * 0.5 + 1));
 
-      setRewardMoney((prev) => prev + (currentWord.word.length * 0.7 + 2));
+        setRewardMoney((prev) => prev + (currentWord.word.length * 0.7 + 2));
 
-      if (currentWord.learnPercent > 50) {
-        setRewardHintMoney((prev) => prev + 1);
-      }
+        if (currentWord.learnPercent > 50) {
+          setRewardHintMoney((prev) => prev + 1);
+        }
 
-      newCorrectSpelling =
-        currentWord.correctSpelling < 100
-          ? currentWord.correctSpelling + 2
-          : 100;
-      // newCorrectPronunciation =
-      //   currentWord.correctPronunciation < 100 &&
-      //   currentWord.correctPronunciation > 2
-      //     ? currentWord.correctPronunciation + 2
-      //     : currentWord.correctPronunciation >= 100
-      //     ? 100
-      //     : currentWord.correctPronunciation;
+        newRememberPercent = datesComparison(timestamp, true);
 
-      newRememberPercent = datesComparison(timestamp, true);
+        if (path === "writeWord") {
+          newCorrectSpelling =
+            currentWord.correctSpelling < 100
+              ? currentWord.correctSpelling + 3
+              : 100;
 
-      if (path === "selectListenedTtranslation") {
-        newCorrectPerception =
-          currentWord.hearing < 100 ? currentWord.hearing + 2 : 100;
+          newLearnPercent =
+            ((currentWord.hearing +
+              newCorrectSpelling +
+              currentWord.correctRecognition) /
+              3) *
+            newRememberPercent;
+        } else if (path === "writeTranslation") {
+          newCorrectPerception =
+            currentWord.hearing < 100 ? currentWord.hearing + 4 : 100;
 
-        newCorrectRecognition =
-          currentWord.correctRecognition < 100
-            ? currentWord.correctRecognition + 1
-            : 100;
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100
+              ? currentWord.correctRecognition + 2
+              : 100;
 
-        newLearnPercent =
-          ((newCorrectPerception +
-            currentWord.correctSpelling +
-            newCorrectRecognition) /
-            3) *
-          newRememberPercent;
-      } else if (path === "selectListenedWord") {
-        newCorrectPerception =
-          currentWord.hearing < 100 ? currentWord.hearing + 2 : 100;
+          newLearnPercent =
+            ((newCorrectPerception +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+              3) *
+            newRememberPercent;
+        }
+      } else {
+        if (extraLife) {
+          wrongSoundPlay();
+          setSelectedAnswer(id);
 
-        newCorrectRecognition =
-          currentWord.correctRecognition < 100
-            ? currentWord.correctRecognition + 1
-            : 100;
+          setTimeout(() => {
+            setSelectedAnswer(null);
+            setExtraLife(false);
+          }, 1500);
+          return;
+        }
 
-        newLearnPercent =
-          ((newCorrectPerception +
-            currentWord.correctSpelling +
-            newCorrectRecognition) /
-            3) *
-          newRememberPercent;
-      } else if (path === "selectTtranslation" || path === "selectWord") {
-        newCorrectRecognition =
-          currentWord.correctRecognition < 100
-            ? currentWord.correctRecognition + 3
-            : 100;
+        wrongSoundPlay();
 
-        newLearnPercent =
-          ((currentWord.hearing +
-            currentWord.correctSpelling +
-            newCorrectRecognition) /
-            3) *
-          newRememberPercent;
-      } else if (path === "selectHeard") {
-        newCorrectPerception =
-          currentWord.hearing < 100 ? currentWord.hearing + 4 : 100;
+        setRewardExp((prev) => prev + 1);
 
-        newLearnPercent =
-          ((newCorrectPerception +
-            currentWord.correctSpelling +
-            currentWord.hearing) /
-            3) *
-          newRememberPercent;
+        setRewardMoney((prev) => prev + 2);
+
+        if (path === "writeWord") {
+          newCorrectSpelling =
+            currentWord.correctSpelling < 100 &&
+            currentWord.correctSpelling > 1.5
+              ? currentWord.correctSpelling - 1.5
+              : currentWord.correctSpelling;
+
+          newLearnPercent =
+            ((currentWord.hearing +
+              newCorrectSpelling +
+              currentWord.correctRecognition) /
+              3) *
+            newRememberPercent;
+        } else if (path === "writeTranslation") {
+          newCorrectPerception =
+            currentWord.hearing < 100 && currentWord.hearing > 2
+              ? currentWord.hearing - 2
+              : currentWord.hearing;
+
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100 &&
+            currentWord.correctRecognition > 1
+              ? currentWord.correctRecognition - 1
+              : currentWord.correctRecognition;
+
+          newLearnPercent =
+            ((newCorrectPerception +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+              3) *
+            newRememberPercent;
+        }
+
+        newRememberPercent = datesComparison(timestamp, false);
       }
     } else {
-      if (extraLife) {
+      if (id === currentWord?.id) {
+        correctSoundPlay();
+        setCorrectAnswers((prev) => prev + 1);
+
+        setRewardExp((prev) => prev + (currentWord.word.length * 0.5 + 1));
+
+        setRewardMoney((prev) => prev + (currentWord.word.length * 0.7 + 2));
+
+        if (currentWord.learnPercent > 50) {
+          setRewardHintMoney((prev) => prev + 1);
+        }
+
+        newRememberPercent = datesComparison(timestamp, true);
+
+        if (path === "selectListenedTranslation") {
+          newCorrectPerception =
+            currentWord.hearing < 100 ? currentWord.hearing + 4 : 100;
+
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100
+              ? currentWord.correctRecognition + 2
+              : 100;
+
+          newLearnPercent =
+            ((newCorrectPerception +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+              3) *
+            newRememberPercent;
+        } else if (path === "selectListenedWord") {
+          newCorrectPerception =
+            currentWord.hearing < 100 ? currentWord.hearing + 4 : 100;
+
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100
+              ? currentWord.correctRecognition + 2
+              : 100;
+
+          newLearnPercent =
+            ((newCorrectPerception +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+              3) *
+            newRememberPercent;
+        } else if (path === "selectTranslation" || path === "selectWord") {
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100
+              ? currentWord.correctRecognition + 3
+              : 100;
+
+          newLearnPercent =
+            ((currentWord.hearing +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+              3) *
+            newRememberPercent;
+        } else if (path === "selectHeard") {
+          newCorrectPerception =
+            currentWord.hearing < 100 ? currentWord.hearing + 6 : 100;
+
+          newLearnPercent =
+            ((newCorrectPerception +
+              currentWord.correctSpelling +
+              currentWord.hearing) /
+              3) *
+            newRememberPercent;
+        }
+      } else {
+        if (extraLife) {
+          wrongSoundPlay();
+          setSelectedAnswer(id);
+
+          setTimeout(() => {
+            setSelectedAnswer(null);
+            setExtraLife(false);
+          }, 1500);
+          return;
+        }
+
         wrongSoundPlay();
-        setSelectedAnswer(id);
 
-        setTimeout(() => {
-          setSelectedAnswer(null);
-          setExtraLife(false);
-        }, 1500);
-        return;
+        setRewardExp((prev) => prev + 1);
+
+        setRewardMoney((prev) => prev + 2);
+
+        if (path === "selectListenedTranslation") {
+          newCorrectPerception =
+            currentWord.hearing < 100 && currentWord.hearing > 2
+              ? currentWord.hearing - 2
+              : currentWord.hearing;
+
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100 &&
+            currentWord.correctRecognition > 1
+              ? currentWord.correctRecognition - 1
+              : currentWord.correctRecognition;
+
+          newLearnPercent =
+            (newCorrectPerception +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+            3 /
+            newRememberPercent;
+        } else if (path === "selectListenedWord") {
+          newCorrectPerception =
+            currentWord.hearing < 100 && currentWord.hearing > 2
+              ? currentWord.hearing - 2
+              : currentWord.hearing;
+
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100 &&
+            currentWord.correctRecognition > 1
+              ? currentWord.correctRecognition - 1
+              : currentWord.correctRecognition;
+
+          newLearnPercent =
+            (newCorrectPerception +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+            3 /
+            newRememberPercent;
+        } else if (path === "selectTranslation" || path === "selectWord") {
+          newCorrectRecognition =
+            currentWord.correctRecognition < 100 &&
+            currentWord.correctRecognition > 3
+              ? currentWord.correctRecognition - 3
+              : currentWord.correctRecognition;
+
+          newLearnPercent =
+            (currentWord.hearing +
+              currentWord.correctSpelling +
+              newCorrectRecognition) /
+            3 /
+            newRememberPercent;
+        } else if (path === "selectHeard") {
+          newCorrectPerception =
+            currentWord.hearing < 100 && currentWord.hearing > 3
+              ? currentWord.hearing - 3
+              : currentWord.hearing;
+
+          newLearnPercent =
+            (newCorrectPerception +
+              currentWord.correctSpelling +
+              currentWord.hearing) /
+            3 /
+            newRememberPercent;
+        }
+
+        // newCorrectPronunciation =
+        //   currentWord.correctPronunciation < 100 &&
+        //   currentWord.correctPronunciation > 2
+        //     ? currentWord.correctPronunciation - 1
+        //     : currentWord.correctPronunciation >= 100
+        //     ? 100
+        //     : currentWord.correctPronunciation;
+
+        newRememberPercent = datesComparison(timestamp, false);
       }
-
-      wrongSoundPlay();
-
-      setRewardExp((prev) => prev + 1);
-
-      setRewardMoney((prev) => prev + 2);
-
-      newCorrectSpelling =
-        currentWord.correctSpelling < 100 && currentWord.correctSpelling > 1
-          ? currentWord.correctSpelling - 1
-          : currentWord.correctSpelling >= 100
-          ? 100
-          : currentWord.correctSpelling;
-
-      if (path === "selectListenedTtranslation") {
-        newCorrectPerception =
-          currentWord.hearing < 100 && currentWord.hearing > 1 ? currentWord.hearing - 1 : currentWord.hearing;
-
-        newCorrectRecognition =
-          currentWord.correctRecognition < 100 && currentWord.correctRecognition > 0.5
-            ? currentWord.correctRecognition - 0.5
-            : currentWord.correctRecognition;
-
-        newLearnPercent =
-          (newCorrectPerception +
-            currentWord.correctSpelling +
-            newCorrectRecognition) /
-          3 /
-          newRememberPercent;
-      } else if (path === "selectListenedWord") {
-        newCorrectPerception =
-          currentWord.hearing < 100 && currentWord.hearing > 1 ? currentWord.hearing - 1 : currentWord.hearing;
-
-        newCorrectRecognition =
-          currentWord.correctRecognition < 100 && currentWord.correctRecognition > 0.5
-            ? currentWord.correctRecognition - 0.5
-            : currentWord.correctRecognition;
-
-        newLearnPercent =
-          (newCorrectPerception +
-            currentWord.correctSpelling +
-            newCorrectRecognition) /
-          3 /
-          newRememberPercent;
-      } else if (path === "selectTtranslation" || path === "selectWord") {
-        newCorrectRecognition =
-          currentWord.correctRecognition < 100 && currentWord.correctRecognition > 1.5
-            ? currentWord.correctRecognition - 1.5
-            : currentWord.correctRecognition;
-
-        newLearnPercent =
-          (currentWord.hearing +
-            currentWord.correctSpelling +
-            newCorrectRecognition) /
-          3 /
-          newRememberPercent;
-      } else if (path === "selectHeard") {
-        newCorrectPerception =
-          currentWord.hearing < 100 && currentWord.hearing > 2 ? currentWord.hearing - 2 : currentWord.hearing;
-
-        newLearnPercent =
-          (newCorrectPerception +
-            currentWord.correctSpelling +
-            currentWord.hearing) /
-          3 /
-          newRememberPercent;
-      }
-
-      // newCorrectPronunciation =
-      //   currentWord.correctPronunciation < 100 &&
-      //   currentWord.correctPronunciation > 2
-      //     ? currentWord.correctPronunciation - 1
-      //     : currentWord.correctPronunciation >= 100
-      //     ? 100
-      //     : currentWord.correctPronunciation;
-
-      newRememberPercent = datesComparison(timestamp, false);
     }
 
     path === "selectHeard" && showCorrectButton(null);
@@ -499,7 +583,7 @@ const ExerciseOne: React.FC = ({}) => {
         learnPercent:
           newLearnPercent > 100 ? 100 : Number(newLearnPercent.toFixed(0)),
         hearing: newCorrectPerception,
-        correctSpelling: currentWord.correctSpelling,
+        correctSpelling: newCorrectSpelling,
         correctRecognition: newCorrectRecognition,
         rememberPercent: newRememberPercent,
       }
@@ -535,7 +619,10 @@ const ExerciseOne: React.FC = ({}) => {
     }
   };
 
-  return status === "loading" && userInfoStatus === "loading" ? (
+  return status === "loading" &&
+    achivementsStatus === "loading" &&
+    statisticsDataStatus === "loading" &&
+    userInfoStatus === "loading" ? (
     <Loader />
   ) : (
     <div className={styles.exerciseContainer}>
@@ -566,7 +653,7 @@ const ExerciseOne: React.FC = ({}) => {
               </div>
               <div className={styles.statusValue}>
                 {currentWordIndex + 1}/{dictionaryWords.length}(
-                {exercisePercent}
+                {exercisePercent.toFixed(0)}
                 %)
               </div>
             </div>
@@ -594,10 +681,11 @@ const ExerciseOne: React.FC = ({}) => {
           <div className={styles.wordBackground}>
             <div
               onClick={() =>
-                (path === "selectTtranslation" ||
-                  path === "selectListenedTtranslation" ||
+                (path === "selectTranslation" ||
+                  path === "selectListenedTranslation" ||
                   path === "selectListenedWord" ||
-                  path === "selectHeard") &&
+                  path === "selectHeard" ||
+                  path === "writeTranslation") &&
                 speakText(
                   synthesis,
                   currentWord !== null ? currentWord?.word : "",
@@ -607,16 +695,16 @@ const ExerciseOne: React.FC = ({}) => {
               className={styles.word}
             >
               {currentWord !== null &&
-                path === "selectTtranslation" &&
+                (path === "selectTranslation" || path === "writeTranslation") &&
                 currentWord.word}
               {currentWord !== null &&
-                path === "selectWord" &&
+                (path === "selectWord" || path === "writeWord") &&
                 currentWord?.translates[0]}
-              {path === "selectListenedTtranslation" &&
+              {path === "selectListenedTranslation" &&
               currentWord !== null &&
               selectedAnswer !== null
                 ? currentWord.word
-                : path === "selectListenedTtranslation" &&
+                : path === "selectListenedTranslation" &&
                   currentWord !== null && <VoiceIco />}
               {path === "selectListenedWord" &&
               currentWord !== null &&
@@ -628,37 +716,55 @@ const ExerciseOne: React.FC = ({}) => {
             </div>
           </div>
           <div className={styles.translatesContainer}>
-            {answers.map((obj, index) => (
-              <div
-                key={obj.id}
-                className={`${styles.translateWord} ${
-                  (selectedAnswer !== null &&
-                    obj.isCorrect &&
-                    !extraLife &&
-                    styles.correct) ||
-                  (selectedAnswer === obj.id &&
-                    !obj.isCorrect &&
-                    styles.incorrect) ||
-                  (correctButton !== null &&
-                    correctButton === obj.id &&
-                    styles.checked)
-                }`}
-                onClick={() =>
-                  path === "selectHeard"
-                    ? onClickHeared(obj.id, obj.translation)
-                    : handleAnswerSelection(obj.id)
+            {path !== "writeWord" &&
+              path !== "writeTranslation" &&
+              answers.map((obj, index) => (
+                <div
+                  key={obj.id}
+                  className={`${styles.translateWord} ${
+                    (selectedAnswer !== null &&
+                      obj.isCorrect &&
+                      !extraLife &&
+                      styles.correct) ||
+                    (selectedAnswer === obj.id &&
+                      !obj.isCorrect &&
+                      styles.incorrect) ||
+                    (correctButton !== null &&
+                      correctButton === obj.id &&
+                      styles.checked)
+                  }`}
+                  onClick={() =>
+                    path === "selectHeard"
+                      ? onClickHeared(obj.id, obj.translation)
+                      : handleAnswerSelection(obj.id)
+                  }
+                >
+                  {path === "selectHeard" ? <VoiceIco /> : obj.translation}
+                </div>
+              ))}
+
+            {(path === "writeWord" || path === "writeTranslation") && (
+              <StyledInput
+                handleAnswerSelection={handleAnswerSelection}
+                nextWord={nextWord}
+                currentWordIndex={currentWordIndex}
+                setSelectedAnswer={setSelectedAnswer}
+                word={
+                  currentWord !== null && path === "writeWord"
+                    ? currentWord.word
+                    : currentWord !== null && path === "writeTranslation"
+                    ? currentWord?.translates[0]
+                    : ""
                 }
-              >
-                {path === "selectHeard" ? <VoiceIco /> : obj.translation}
-              </div>
-            ))}
+              />
+            )}
           </div>
           {correctButton !== null && selectedAnswer === null && (
             <div
               className={styles.applyButton}
               onClick={() => handleAnswerSelection(correctButton)}
             >
-              Apply
+              Check
             </div>
           )}
           {!appOptions?.automaticallySwitchExercise &&

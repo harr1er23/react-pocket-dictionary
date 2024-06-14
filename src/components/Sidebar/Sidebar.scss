@@ -252,10 +252,10 @@
       }
     }
     &:hover .sidebar-listItemText {
-      display: inline-block;
-      opacity: 1;
-      left: calc(100% + 8px);
-      visibility: visible;
+      // display: inline-block;
+      // opacity: 1;
+      // left: calc(100% + 8px);
+      // visibility: visible;
     }
     + li {
       border-top: 1px solid var(--item-hover);

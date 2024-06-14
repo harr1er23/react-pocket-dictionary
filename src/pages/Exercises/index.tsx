@@ -44,57 +44,49 @@ const Exercises: React.FC = () => {
 
   const [isShowSettings, setIsShowSettings] = React.useState(false);
 
+  const currentDate = new Date();
+  const sixDaysAgoDate = subDays(currentDate, 6);
+
+  const sixDaysAgoTimestamp = startOfDay(sixDaysAgoDate).getTime();
+
   React.useEffect(() => {
     dispatch(fetchOptions({ userId: user!.data.id! }));
+    dispatch(fetchUserInfo({ id: user!.data.id! }));
   }, []);
 
   React.useEffect(() => {
-    if (status === "success") {
-      const fetchWords = async () => {
-        try {
-          const currentDate = new Date();
-          const sixDaysAgoDate = subDays(currentDate, 6);
-
-          const currentTimestamp = startOfDay(currentDate).getTime();
-          const sixDaysAgoTimestamp = startOfDay(sixDaysAgoDate).getTime();
-          dispatch(
-            fetchDictionaryWords({
-              userId: user!.data.id!,
-              pagination: 1,
-              limit: maxWords,
-              wordsPercent,
-              firstShow,
-              day: sixDaysAgoTimestamp,
-              tags,
-            })
-          );
-        } catch (err: any) {
-          console.log(err);
-        }
-      };
-
-      fetchWords();
+    if(status === "success"){
+      dispatch(
+        fetchDictionaryWords({
+          userId: user!.data.id!,
+          pagination: 1,
+          limit: maxWords,
+          wordsPercent,
+          firstShow,
+          day: sixDaysAgoTimestamp,
+          tags,
+        })
+      ); 
     }
-  }, [status, maxWords, wordsPercent, firstShow, tags]);
-
-  React.useEffect(() => {
-    if (wordsStatus === "success") {
-      dispatch(fetchUserInfo({ id: user!.data.id! }));
-
-      // if (dictionaryWords.length < 5) {
-      //   toast.error("Few words for training! The minimum number is 5!");
-      // }
-    }
-  }, [wordsStatus]);
+  }, [status])
 
   return status === "loading" &&
     wordsStatus === "loading" &&
     userInfoStatus === "loading" ? (
     <Loader />
-  ) : (
+  ) : status === "success" &&
+    wordsStatus === "success" &&
+    userInfoStatus === "success" ? (
     <div className={styles.exercisesBackground}>
       <div className={styles.exercisesHeader}>
         <h2>Exercises</h2>
+
+        <div
+          onClick={() => setIsShowSettings(true)}
+          className={styles.settingsButton}
+        >
+          <SetingsIco />
+        </div>
       </div>
 
       <ExerciseSettings
@@ -105,39 +97,54 @@ const Exercises: React.FC = () => {
       <div className={styles.exercisesBlock}>
         <div className={styles.exercises}>
           <Link
-            to={"/app/exercises/selectTtranslation"}
+            to={"/app/exercises/selectTranslation"}
             className={styles.exercise}
           >
             <div className={styles.exerciseLeft}>
               <h4>Translation search</h4>
-              <div className={styles.exersiceNotice}>You are shown a word, and you need to choose its correct translation</div>
+              <div className={styles.exersiceNotice}>
+                You are shown a word, and you need to choose its correct
+                translation
+              </div>
+              <p>Selected words: {dictionaryWords.length}</p>
+            </div>
+            <div className={styles.exerciseRigth}></div>
+          </Link>
+          <Link to={"/app/exercises/selectWord"} className={styles.exercise}>
+            <div className={styles.exerciseLeft}>
+              <h4>Word search</h4>
+              <div className={styles.exersiceNotice}>
+                You are shown the translation of a word, and you need to select
+                that word
+              </div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
           <Link
-            to={"/app/exercises/selectWord"}
+            to={"/app/exercises/selectListenedTranslation"}
             className={styles.exercise}
           >
             <div className={styles.exerciseLeft}>
-              <h4>Word search</h4>
-              <div className={styles.exersiceNotice}>You are shown the translation of a word, and you need to select that word</div>
-              <p>Selected words: {dictionaryWords.length}</p>
-            </div>
-            <div className={styles.exerciseRigth}></div>
-          </Link>
-          <Link to={"/app/exercises/selectListenedTtranslation"} className={styles.exercise}>
-            <div className={styles.exerciseLeft}>
               <h4>Translation search by listening</h4>
-              <div className={styles.exersiceNotice}>A word will be voiced to you and you will need to choose its translation.</div>
+              <div className={styles.exersiceNotice}>
+                A word will be voiced to you and you will need to choose its
+                translation.
+              </div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
-          <Link to={"/app/exercises/selectListenedWord"} className={styles.exercise}>
+          <Link
+            to={"/app/exercises/selectListenedWord"}
+            className={styles.exercise}
+          >
             <div className={styles.exerciseLeft}>
               <h4>Word search by listening</h4>
-              <div className={styles.exersiceNotice}>A word will be voiced to you and you will need to select it from a list of other words</div>
+              <div className={styles.exersiceNotice}>
+                A word will be voiced to you and you will need to select it from
+                a list of other words
+              </div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             <div className={styles.exerciseRigth}></div>
@@ -145,22 +152,46 @@ const Exercises: React.FC = () => {
           <Link to={"/app/exercises/selectHeard"} className={styles.exercise}>
             <div className={styles.exerciseLeft}>
               <h4>Select heard</h4>
-              <div className={styles.exersiceNotice}>A word will be voiced to you and you will need to select it from a list of other words</div>
+              <div className={styles.exersiceNotice}>
+                A word will be voiced to you and you will need to select it from
+                a list of other words
+              </div>
               <p>Selected words: {dictionaryWords.length}</p>
             </div>
             {/* <div className={styles.exerciseRigth}>
               Lvl. 5 <LockIco />
             </div> */}
           </Link>
-        </div>
-        <div
-          onClick={() => setIsShowSettings(true)}
-          className={styles.settingsButton}
-        >
-          <SetingsIco />
+          <Link to={"/app/exercises/writeWord"} className={styles.exercise}>
+            <div className={styles.exerciseLeft}>
+              <h4>Write word</h4>
+              <div className={styles.exersiceNotice}>
+                You are shown the translation of a word, and you need to write
+                this word without errors
+              </div>
+              <p>Selected words: {dictionaryWords.length}</p>
+            </div>
+            <div className={styles.exerciseRigth}></div>
+          </Link>
+          <Link
+            to={"/app/exercises/writeTranslation"}
+            className={styles.exercise}
+          >
+            <div className={styles.exerciseLeft}>
+              <h4>Write translation</h4>
+              <div className={styles.exersiceNotice}>
+                You are shown a word and you need to write its translation
+                correctly
+              </div>
+              <p>Selected words: {dictionaryWords.length}</p>
+            </div>
+            <div className={styles.exerciseRigth}></div>
+          </Link>
         </div>
       </div>
     </div>
+  ) : (
+    <div>Error</div>
   );
 };
 

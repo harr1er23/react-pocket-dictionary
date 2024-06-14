@@ -29,22 +29,13 @@
       margin-right: auto;
       color: white;
     }
-  }
-
-  .exercisesBlock {
-    display: flex;
-    width: 70%;
-
-    @media (max-width: 1000px) {
-      width: 90%;
-    }
 
     .settingsButton {
       cursor: pointer;
       width: 60px;
       height: 60px;
 
-      margin-left: 20px;
+      margin-left: auto;
 
       display: flex;
       justify-content: center;
@@ -55,7 +46,6 @@
       @media (max-width: 700px) {
         width: 40px;
         height: 40px;
-        margin-left: 10px;
         padding: 5px 10px;
       }
 
@@ -71,6 +61,15 @@
           height: 20px;
         }
       }
+    }
+  }
+
+  .exercisesBlock {
+    display: flex;
+    width: 70%;
+
+    @media (max-width: 1000px) {
+      width: 90%;
     }
 
     .exercises {

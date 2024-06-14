@@ -51,31 +51,25 @@ const Shop: React.FC<ShopProps> = ({}) => {
   const hints = userInfo !== null ? userInfo[0].hints : [];
   const multipliers = userInfo !== null ? userInfo[0].multipliers : [];
 
-  const byHintsCoins = 1000;
+  const byHintsCoins = 5000;
 
   let levelUpCost: number;
 
   switch (true) {
-    case level >= 0 && level <= 5:
-      levelUpCost = 500;
-      break;
-    case level > 5 && level <= 10:
-      levelUpCost = 1000;
+    case level >= 0 && level <= 10:
+      levelUpCost = 5000;
       break;
     case level > 10 && level <= 20:
-      levelUpCost = 1500;
+      levelUpCost = 7000;
       break;
     case level > 20 && level <= 30:
-      levelUpCost = 2000;
+      levelUpCost = 10000;
       break;
-    case level > 30 && level <= 40:
-      levelUpCost = 2500;
-      break;
-    case level > 40 && level <= 50:
-      levelUpCost = 3000;
+    case level > 30 && level <= 50:
+      levelUpCost = 15000;
       break;
     default:
-      levelUpCost = 5000;
+      levelUpCost = 20000;
   }
 
   const checkMoneyAmount = (allMoney: number, moneyCost: number) => {
