@@ -8,6 +8,8 @@ import { format, parse, getTime } from "date-fns";
 //styles
 import styles from "./ModalAddWord.module.scss";
 
+import Modal from "react-bootstrap/Modal";
+
 //assets
 import { ReactComponent as SoundIco } from "../../assets/ico/sound.svg";
 import { ReactComponent as EditIco } from "../../assets/ico/edit.svg";
@@ -18,7 +20,6 @@ import { ReactComponent as AddIco } from "../../assets/ico/add.svg";
 import Input from "../Input";
 import Button from "../Button";
 import AlertModal from "../AlertModal";
-import Modal from "react-bootstrap/Modal";
 
 //slices
 import { selectEditWord } from "../../store/editWord/editWordSlice";
@@ -56,12 +57,14 @@ type ModalAddWordProps = {
   isAddWordOpen: boolean;
   setIsAddWordOpen: React.Dispatch<React.SetStateAction<boolean>>;
   headerText?: string;
+  openPresets: () => void;
 };
 
 const ModalAddWord: React.FC<ModalAddWordProps> = ({
   isAddWordOpen,
   setIsAddWordOpen,
   headerText,
+  openPresets
 }) => {
   const dispatch = useAppDispatch();
 
@@ -86,14 +89,14 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
     useSelector(selectAchivements);
   const { userInfo, status: userInfoStatus } = useSelector(selectUserInfo);
 
-  console.log(learnPercent)
-
   const { paginationValue } = useSelector(selectPagination);
 
   const userInfoId = userInfo !== null ? userInfo[0].id : 0;
   const userAchivemets = userInfo !== null ? userInfo[0].achivements : [];
   const tagsAdded = userInfo !== null ? userInfo[0].tagsAdded : 0;
   const wordsAdded = userInfo !== null ? userInfo[0].wordsAdded : 0;
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [isWordLoading, setIsWordLoading] = React.useState(false);
   const [isTagLoading, setTagLoading] = React.useState(false);
@@ -345,6 +348,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
     }
 
     try {
+      setIsLoading(true);
       //проверка на наличие слова в словаре
       const findWord = dictionaryWords.find(
         (obj) => obj.word.toLowerCase() === wordInputValue.toLowerCase()
@@ -416,6 +420,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
       clearAllData();
       setIsAddWordOpen(false);
 
+      setIsLoading(false);
       //уведомление об успешном добавлении
       toast.success("The word has been added to the dictionary!");
     } catch (err: any) {
@@ -565,9 +570,9 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
               value={tagInputValue}
               onChangeFunction={onChangeTagValue}
               textPlaceholder={"Теги"}
-              onKeyDownFunction={(event) => onEnterNewTag(event)}
+              onKeyDownFunction={(event) => tagInputValue.length !== 0 && onEnterNewTag(event)}
               type={"text"}
-              ico={<AddIco onClick={() => addNewTag()} />}
+              ico={<AddIco onClick={() => tagInputValue.length !== 0 && addNewTag()} />}
               loading={isTagLoading}
             />
 
@@ -622,10 +627,10 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
           </div>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
-          <Button text={"Загрузить пресеты"} />
+          <Button onClickFunction={openPresets} text={"Загрузить пресеты"} />
           <Button
             disabled={
-              wordInputValue.length === 0 || translatesWord.length === 0
+              wordInputValue.length === 0 || translatesWord.length === 0 || isLoading
             }
             text={"Сохранить"}
             onClickFunction={addWordToDictionary}

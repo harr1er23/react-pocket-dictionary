@@ -86,4 +86,615 @@ a {
     position: absolute;
     transform: translate(-50%, -50%);
   }
+
+  html,
+body {
+    width: 100%;
+    margin: 0;
+    font-family: 'Roboto Slab', serif;
+    /* font-family: "Poppins", sans-serif; */
+}
+
+a {
+    all: unset;
+}
+
+/*----Banner----*/
+
+.full-container {
+    display: flex;
+    flex-direction: column;
+
+    background-color: white;
+}
+
+.container {
+    // max-width: 1200px;
+    margin: 0px auto;
+}
+
+.banner-background {
+    padding: 150px 0 100px 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url(./assets/background/img-1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.banner {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 100px;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+}
+
+.logo img {
+    width: 20%;
+}
+
+.banner-content {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.banner-content h2 {
+    font-size: 50px;
+}
+
+.banner-content p {
+    font-size: 20px;
+    color: grey;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: white;
+    align-items: center;
+    padding: 20px 70px 20px 70px;
+    width: 300px;
+    margin-left: auto;
+    z-index: 1;
+    color: black;
+}
+
+.feedback-form h3 {
+    text-align: center;
+}
+
+.megaphone-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+    font-size: 32px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 0 transparent;
+    background-color: rgba(5, 213, 97, 0.15);
+}
+
+.megaphone-ico svg {
+    width: 30px;
+    height: 30px;
+}
+
+.feedback-form p {
+    color: grey;
+    text-align: center;
+}
+
+.feedback-inputs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.feedback-input {
+    display: flex;
+    background-color: #eeeeee;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 8px 10px;
+}
+
+.feedback-input img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.feedback-input input {
+    all: unset;
+}
+
+.feedback-button {
+    padding: 10px 50px;
+    border: 1px solid #05d561;
+    background-color: #05d561;
+    border-radius: 10px;
+    color: white;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.feedback-button:hover {
+    color: #05d561;
+    background-color: white;
+}
+
+section {
+    padding: 0 100px;
+}
+
+/*----AboutProjectSection----*/
+
+.about-project {
+    margin: 100px auto;
+    text-align: center;
+}
+
+.about-project p {
+    font-size: 26px;
+    font-weight: 400px;
+}
+
+.about-project strong {
+    font-size: 22px;
+}
+
+/*----TasksSection----*/
+
+.goals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.goal-block {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0px 20px 20px 20px;
+    transition: 0.2s linear;
+}
+
+.goal-block:hover {
+    transform: translateY(-15px);
+}
+
+.goal-block:hover .goals-ico {
+    background-color: #05d561;
+}
+
+.goal-block:hover .goals-ico svg path {
+    stroke: white;
+}
+
+.goals-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 22px;
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+    font-size: 32px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 0 transparent;
+    background-color: rgba(5, 213, 97, 0.15);
+    color: #222;
+    transition: all 0.25s;
+}
+
+.goals-ico svg {
+    width: 30px;
+    height: 30px;
+}
+
+.goal-block h5 {
+    font-size: 18px;
+    text-align: center;
+}
+
+.goal-block:hover h5 {
+    color: #05d561;
+}
+
+.goals-description {
+    font-size: 16px;
+    width: 100%;
+    color: grey;
+}
+
+/*----GoalsSection----*/
+.tasks {
+    background-color: #f7f7f7;
+}
+
+.presentation-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.tasks-block {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.task-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 500px;
+    margin: 0 20px;
+}
+
+.task-block-title {
+    display: flex;
+    margin-left: 20px;
+}
+
+.task-block-title svg {
+    width: 30px;
+}
+
+.task-block-text {
+    color: grey;
+    margin-left: auto;
+}
+
+/*----FooterSection----*/
+
+.footer {
+    display: flex;
+    align-items: center;
+    padding: 50px 100px;
+    justify-content: space-between;
+}
+
+.social {
+    display: flex;
+}
+
+.social-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 0 transparent;
+    transition: all 0.25s;
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+.social-ico:hover {
+    background-color: #05d561;
+}
+
+.social-ico:hover svg {
+    fill: white;
+}
+
+.social-ico svg {
+    width: 20px;
+    height: 20px;
+}
+
+/*TeamSection*/
+
+.team {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.team h2 {
+    text-align: center;
+}
+
+.team-blocks {
+    margin: 30px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.team-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 50px;
+}
+
+.team-block p {
+    text-align: center;
+    width: 150px;
+    color: grey;
+}
+
+.team-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/*----CalculatorSection----*/
+
+.subscription-calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.subscription-plans {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.plan-background {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    border: 4px solid #dddddd;
+    border-radius: 10px;
+    margin: 20px 10px 20px 10px;
+    padding: 50px 20px;
+    transition: 0.2s linear;
+}
+
+.plan-background:hover {
+    border: 4px solid #05d561;
+    box-shadow: 5px 5px 10px rgba(61, 105, 16, 0.5);
+    transform: translateY(-15px);
+}
+
+.plan-background:hover h2 {
+    color: #05d561;
+}
+
+.plan-title {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.plan-title svg {
+    width: 60px;
+    height: 60px;
+}
+
+.plan-title p {
+    font-size: 16px;
+    color: #aeb8c5;
+}
+
+.plan-options {
+    list-style: none;
+}
+
+.plan-options li {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.plan-options li strong {
+    font-size: 14px;
+}
+
+.plan-options li svg {
+    width: 15px;
+    height: 15px;
+}
+
+.calculator {
+    padding: 50px 480px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+}
+
+.calculator b {
+    display: flex;
+}
+
+.personal-option {
+    display: flex;
+    flex-direction: column;
+}
+
+.personal-option div {
+    display: flex;
+    margin: 15px 0;
+}
+
+.main {
+    width: 60%;
+    position: relative;
+}
+
+#slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 7px;
+    border-radius: 3px;
+}
+
+#slider::-webkit-slider-thumb {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
+}
+
+/*----Adaptive----*/
+
+@media (max-width: 1100px) {
+    .logo img {
+        width: 30%;
+    }
+
+    .feedback-form {
+        padding: 20px 30px 20px 30px;
+        margin-left: 0;
+    }
+
+    .banner-content h2 {
+        font-size: 30px;
+    }
+
+    .banner-content p {
+        font-size: 16px;
+        color: grey;
+    }
+
+    .about-project p {
+        font-size: 18px;
+    }
+
+    section {
+        padding: 0 20px;
+    }
+
+    .plan-title svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .calculator {
+        padding: 50px 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        margin: 0 25px;
+    }
+
+    .logo img {
+        width: 40%;
+    }
+
+    .banner-content {
+        width: 90%;
+        margin-right: 0px;
+    }
+
+    .goal-block h5 {
+        font-size: 16px;
+    }
+
+    .goals-description {
+        font-size: 12px;
+    }
+
+    .task-block-title h3 {
+        font-size: 16px;
+    }
+
+    .task-block-text {
+        font-size: 12px;
+    }
+
+    .presentation-text h2 {
+        font-size: 20px;
+    }
+
+    .presentation-text p {
+        font-size: 14px;
+    }
+
+    .footer {
+        display: flex;
+        flex-direction: column;
+        font-size: 16px;
+        padding: 30px 20px;
+    }
+
+    .footer .social {
+        margin-top: 20px;
+    }
+
+    .plan-background {
+        width: 250px;
+        margin: 10px 5px 10px 5px;
+        padding: 30px 15px;
+    }
+
+    .plan-title svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .plan-options {
+        padding: 0 0 10px 0;
+    }
+
+    .plan-options li div {
+        font-size: 10px;
+    }
+
+    .calculator {
+        padding: 50px 150px;
+    }
+
+    .team-blocks {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 520px) {
+    .logo img {
+        width: 60%;
+    }
+
+    .calculator {
+        padding: 30px 50px;
+    }
+}
+
+@media (max-width: 320px) {
+    .banner {
+        margin: 0 10px;
+    }
+
+    .logo img {
+        width: 70%;
+    }
+
+    .feedback-form {
+        padding: 20px 20px 20px 20px;
+    }
+
+    .plan-title svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .calculator {
+        padding: 30px 10px;
+    }
+}
 }

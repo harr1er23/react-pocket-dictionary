@@ -27,11 +27,14 @@ import {
 import { selectSearch, setSearch } from "../../store/search/searchSlice";
 import Input from "../../components/Input";
 import { fetchOptions } from "../../store/options/optionsSlice";
+import ModalPresets from "../../components/ModalPresets/inedx";
+import { fetchTags } from "../../store/tags/tagsSlice";
 
 const Dictionary: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [isAddWordOpen, setIsAddWordOpen] = React.useState(false);
+  const [isModalPresetsOpen, setIsModalPresetsOpen] = React.useState(false);
 
   const { user } = useSelector(selectUser);
 
@@ -54,13 +57,9 @@ const Dictionary: React.FC = () => {
         search: searchValue,
       })
     );
+    dispatch(fetchOptions({ userId: user!.data.id! }));
+    dispatch(fetchTags({ userId: user!.data.id! }));
   }, [user, paginationValue, searchValue]);
-
-  React.useEffect(() => {
-    if(status === "success"){
-      dispatch(fetchOptions({ userId: user!.data.id! }));
-    }
-  }, []);
 
   // const [wordPresets, setWordPresets] = React.useState([
   //   {
@@ -168,6 +167,16 @@ const Dictionary: React.FC = () => {
     dispatch(setPagination(1));
   };
 
+  const openPresets = () => {
+    setIsAddWordOpen(false);
+    setIsModalPresetsOpen(true);
+  }
+
+  const closePresetsModal = () => {
+    setIsAddWordOpen(true);
+    setIsModalPresetsOpen(false);
+  }
+
   return (
     <div className={styles.background}>
       <div className={styles.dictionaryHeader}>
@@ -226,13 +235,11 @@ const Dictionary: React.FC = () => {
         setIsAddWordOpen={setIsAddWordOpen}
         dictionaryWords={dictionaryWords}
         headerText={headerText}
+        openPresets={openPresets}
       />
 
       {/* модальное окно выбора пресетов */}
-      {/* <ModalWithScroll
-        wordPresets={wordPresets}
-        headerText={"Загрузить пресет"}
-      /> */}
+      <ModalPresets isModalPresetsOpen={isModalPresetsOpen} setIsModalPresetsOpen={setIsModalPresetsOpen} closePresetsModal={closePresetsModal}/>
 
       <div className={styles.addWordButton} onClick={() => onClickAdd()}>
         <div>+</div>

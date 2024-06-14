@@ -42,9 +42,11 @@ type UserInfoPorops = {
   id: number,
   user_id: number;
   experience: number;
+  presets: number[],
   achivements: [] | UserAchivementsProps[];
   level: number;
   money: number;
+  registrationDate: number;
   hintsMoney: number;
   learnedWords: number;
   tagsAdded: number;
@@ -68,6 +70,11 @@ export const userInfoSlice = createSlice({
   name: "userInfo",
   initialState,
   reducers: {
+    addPreset: (state, action) => {
+      if (state.userInfo === null) return;
+
+      state.userInfo[0].presets = [...state.userInfo[0].presets, action.payload]
+    },
     addUserCoins: (state, action) => {
       if (state.userInfo === null) {
         return;
@@ -76,37 +83,27 @@ export const userInfoSlice = createSlice({
       state.userInfo[0].money = state.userInfo[0].money + action.payload;
     },
     reduceUserCoins: (state, action) => {
-      if (state.userInfo === null) {
-        return;
-      }
+      if (state.userInfo === null) return;
 
       state.userInfo[0].money = state.userInfo[0].money - action.payload;
     },
     addUserLevel: (state, action) => {
-      if (state.userInfo === null) {
-        return;
-      }
+      if (state.userInfo === null) return;
 
       state.userInfo[0].level = state.userInfo[0].level + action.payload;
     },
     addUserHintsCoins: (state, action) => {
-      if (state.userInfo === null) {
-        return;
-      }
+      if (state.userInfo === null) return;
 
       state.userInfo[0].hintsMoney = state.userInfo[0].hintsMoney + action.payload;
     },
     reduceUserHintsCoins: (state, action) => {
-      if (state.userInfo === null) {
-        return;
-      }
+      if (state.userInfo === null) return;
 
       state.userInfo[0].hintsMoney = state.userInfo[0].hintsMoney - action.payload;
     },
     addUserAchivements: (state, action) => {
-      if(state.userInfo === null){
-        return;
-      }
+      if (state.userInfo === null) return;
 
       const newAchivements = state.userInfo[0].achivements.map((obj) => {
         if (obj.achivement_id === action.payload) {
@@ -122,16 +119,12 @@ export const userInfoSlice = createSlice({
       state.userInfo[0].achivements = newAchivements;
     },
     updateMultipliers: (state, action) => {
-      if (state.userInfo === null) {
-        return;
-      }
+      if (state.userInfo === null) return;
 
       state.userInfo[0].multipliers = action.payload;
     },
     updateHints: (state, action) => {
-      if (state.userInfo === null) {
-        return;
-      }
+      if (state.userInfo === null) return;
 
       state.userInfo[0].hints = action.payload;
     }
@@ -154,6 +147,6 @@ export const userInfoSlice = createSlice({
 
 export const selectUserInfo = (state: RootState) => state.userInfoSlice;
 
-export const { addUserCoins, reduceUserCoins, addUserLevel, addUserHintsCoins, reduceUserHintsCoins, addUserAchivements, updateMultipliers, updateHints } = userInfoSlice.actions;
+export const { addPreset, addUserCoins, reduceUserCoins, addUserLevel, addUserHintsCoins, reduceUserHintsCoins, addUserAchivements, updateMultipliers, updateHints } = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;

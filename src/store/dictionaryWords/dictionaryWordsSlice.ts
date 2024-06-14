@@ -79,7 +79,7 @@ export const fetchDictionaryWords = createAsyncThunk<
 
   // Добавление параметров пагинации
   if (pagination) {
-    url += `&page=${pagination}&limit=${limit ? limit : 20}`;
+    url += `&page=${pagination}&limit=${limit ? limit : 25}`;
   }
 
   // Добавление параметра поиска

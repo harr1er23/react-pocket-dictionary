@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 import { ReactComponent as VkontacteIco } from "../../assets/ico/vkontakte.svg";
+import { getCurrentData } from "../../utils/getCurrentData";
 
 type RegisterProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +28,8 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
     mode: "onBlur",
   });
 
+  const currentData = getCurrentData();
+
   const submit: SubmitHandler<RegisterForm> = async (values) => {
     try {
       const email = values.email;
@@ -46,6 +49,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
       await axios.post("https://9854dac21e0f0eee.mokky.dev/userInfo", {
         user_id: data.data.id,
         experience: 0,
+        presets: [],
         achivements: [],
         daysStreak: 0,
         level: 1,
@@ -54,6 +58,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         learnedWords: 0,
         tagsAdded: 0,
         wordsAdded: 0,
+        registrationDate: currentData,
         hints: [
           {
             hintName: "Removes one wrong answer",
@@ -85,19 +90,19 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
             name: "Money multiplier",
             percent: 0,
             type: 1,
-            cost: 100,
+            cost: 350,
           },
           {
             name: "Experience multiplier",
             percent: 0,
             type: 2,
-            cost: 100,
+            cost: 400,
           },
           {
             name: "Hints multiplier",
             percent: 0,
             type: 3,
-            cost: 100,
+            cost: 450,
           },
         ],
       });
@@ -195,7 +200,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         )}
         <div className="form-row"></div>
         <div className="form-row">
-          <button disabled={!isValid} className={"registration"} type="submit">
+          <button disabled={!isValid || isLoading} className={"registration"} type="submit">
             {isLoading ? <ClipLoader color="white" /> : "Registration!"}
           </button>
         </div>
@@ -213,7 +218,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
         </div>
       </form>
 
-      <div className="socials-wrapper">
+      {/* <div className="socials-wrapper">
         <header>
           <h2>Register with your Social Account</h2>{" "}
         </header>
@@ -229,7 +234,7 @@ const Registration: React.FC<RegisterProps> = ({ setIsLogin }) => {
             </a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

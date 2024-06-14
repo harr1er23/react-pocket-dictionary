@@ -27,23 +27,40 @@
   .settingsTop {
     display: flex;
     flex-direction: column;
-    background-color: var(--word-bg);
-    padding: 20px 50px;
-    border-radius: 10px;
-    margin-bottom: 30px;
 
     .settingsRow {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-      @media (max-width: 600px) {
+      border-radius: 10px;
+
+      background-color: var(--word-bg);
+
+      margin: 20px 0;
+      padding: 30px 50px;
+
+      @media(max-width: 700px){
+        margin: 10px 0;
+        padding: 10px 20px;
+
+        font-size: 13px;
+      }
+
+      .rowTop{
+        display: flex;
         flex-direction: column;
-      }
 
-      p {
-      }
+        p {
+          all: unset;
+          color: var(--container-shadow);
+        }
 
-      .filterParameter {
-        
+        @media(max-width: 700px){
+            h5{
+              font-size: 15px;
+            }
+        }
       }
     }
   }

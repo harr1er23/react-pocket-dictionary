@@ -121,7 +121,7 @@ const Login: React.FC<LoginProps> = ({ setIsLogin }) => {
         )}
         <div className="form-row"></div>
         <div className="form-row">
-          <button disabled={!isValid} className={"registration"} type="submit">
+          <button disabled={!isValid || isLoading} className={"registration"} type="submit">
             {isLoading ? <ClipLoader color="white" /> : "Login!"}
           </button>
         </div>

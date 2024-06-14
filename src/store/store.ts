@@ -12,6 +12,7 @@ import paginationSlice from "./pagination/paginationSlice";
 import searchSlice from "./search/searchSlice";
 import statisticsDataSlice from "./statisticsData/statisticsDataSlice";
 import optionsSlice from "./options/optionsSlice";
+import presetsSlice from "./presets/presetsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -25,7 +26,8 @@ export const store = configureStore({
     paginationSlice,
     searchSlice,
     statisticsDataSlice,
-    optionsSlice
+    optionsSlice,
+    presetsSlice
   },
 });
 

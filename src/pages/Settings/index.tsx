@@ -149,7 +149,10 @@ const Settings: React.FC = ({}) => {
       </div>
       <div className={styles.settingsTop}>
         <div className={styles.settingsRow}>
-          <p>Disable transcription</p>{" "}
+          <div className={styles.rowTop}>
+            <h5>Disable transcription</h5>
+            <p>Disable the display of transcription in words</p>
+          </div>
           <GreenSwitch
             {...label}
             checked={transcriptionsChecked}
@@ -157,9 +160,12 @@ const Settings: React.FC = ({}) => {
           />
         </div>
         <div className={styles.settingsRow}>
-          <p>Change the language of study</p>{" "}
+          <div className={styles.rowTop}>
+            <h5>Study language</h5>
+            <p>Change the language of study</p>
+          </div>
           <div className={styles.filterParameter}>
-            <FormControl sx={{ minWidth: 150 }} size="small">
+            <FormControl sx={{ minWidth: 150 }}  size="small">
               <InputLabel id="studyLanguage-label">Study language</InputLabel>
               <Select
                 labelId="studyLanguage-label"
@@ -176,7 +182,10 @@ const Settings: React.FC = ({}) => {
           </div>
         </div>
         <div className={styles.settingsRow}>
-          <p>Choose your native language</p>{" "}
+          <div className={styles.rowTop}>
+            <h5>Native language</h5>
+            <p>Choose your native language</p>
+          </div>
           <div className={styles.filterParameter}>
             <FormControl sx={{ minWidth: 150 }} size="small">
               <InputLabel id="nativeLanguage-label">Native Language</InputLabel>
@@ -195,7 +204,10 @@ const Settings: React.FC = ({}) => {
           </div>
         </div>
         <div className={styles.settingsRow}>
-          <p>Select the voice acting heads</p>{" "}
+          <div className={styles.rowTop}>
+            <h5>Voice acting</h5>
+            <p>Select the voice acting heads</p>
+          </div>
           <div className={styles.filterParameter}>
             <FormControl sx={{ minWidth: 150 }} size="small">
               <InputLabel id="voice-label">Voice</InputLabel>
@@ -221,7 +233,10 @@ const Settings: React.FC = ({}) => {
           </div>
         </div>
         <div className={styles.settingsRow}>
-          <p>Automatically scroll through tasks</p>{" "}
+          <div className={styles.rowTop}>
+            <h5>Automatically scroll</h5>
+            <p>Automatically scroll through tasks</p>
+          </div>
           <GreenSwitch
             {...label}
             checked={levelSwitchChecked}
