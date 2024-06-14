@@ -6,6 +6,7 @@ import { ReactComponent as ProgressIco } from "../../assets/ico/progress.svg";
 import { ReactComponent as SettingsIco } from "../../assets/ico/homeSettings.svg";
 import { ReactComponent as TelegramIco } from "../../assets/ico/telegram.svg";
 import { ReactComponent as VkIco } from "../../assets/ico/vk.svg";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -35,7 +36,7 @@ const Home = () => {
                             прямо сейчас!
                         </p>
                         <div className="feedback-inputs">
-                            <div className="feedback-input">
+                            {/* <div className="feedback-input">
                                 <img src="../../assets/ico/user.png" alt="Ico" />
                                 <input placeholder="Ваше имя" id="name" type="text" />
                             </div>
@@ -46,8 +47,8 @@ const Home = () => {
                             <div className="feedback-input">
                                 <img src="../../assets/ico/email.png" alt="Ico" />
                                 <input placeholder="Ваш номер телефона" id="phone" type="text" />
-                            </div>
-                            <button type="button" className="feedback-button">Отправить</button>
+                            </div> */}
+                            <Link to="/auth" className="feedback-button">Попробовать</Link>
                         </div>
                     </form>
                 </div>
