@@ -55,7 +55,7 @@ const Exercises: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if(status === "success"){
+    if (status === "success") {
       dispatch(
         fetchDictionaryWords({
           userId: user!.data.id!,
@@ -66,9 +66,11 @@ const Exercises: React.FC = () => {
           day: sixDaysAgoTimestamp,
           tags,
         })
-      ); 
+      );
     }
-  }, [status])
+  }, [status]);
+
+  const isDisabled = dictionaryWords.length < 10;
 
   return status === "loading" &&
     wordsStatus === "loading" &&
@@ -97,8 +99,11 @@ const Exercises: React.FC = () => {
       <div className={styles.exercisesBlock}>
         <div className={styles.exercises}>
           <Link
-            to={"/app/exercises/selectTranslation"}
-            className={styles.exercise}
+            to={isDisabled ? "#" : "/app/exercises/selectTranslation"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
           >
             <div className={styles.exerciseLeft}>
               <h4>Translation search</h4>
@@ -110,7 +115,13 @@ const Exercises: React.FC = () => {
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
-          <Link to={"/app/exercises/selectWord"} className={styles.exercise}>
+          <Link
+            to={isDisabled ? "#" : "/app/exercises/selectWord"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
+          >
             <div className={styles.exerciseLeft}>
               <h4>Word search</h4>
               <div className={styles.exersiceNotice}>
@@ -122,8 +133,11 @@ const Exercises: React.FC = () => {
             <div className={styles.exerciseRigth}></div>
           </Link>
           <Link
-            to={"/app/exercises/selectListenedTranslation"}
-            className={styles.exercise}
+            to={isDisabled ? "#" : "/app/exercises/selectListenedTranslation"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
           >
             <div className={styles.exerciseLeft}>
               <h4>Translation search by listening</h4>
@@ -136,8 +150,11 @@ const Exercises: React.FC = () => {
             <div className={styles.exerciseRigth}></div>
           </Link>
           <Link
-            to={"/app/exercises/selectListenedWord"}
-            className={styles.exercise}
+            to={isDisabled ? "#" : "/app/exercises/selectListenedWord"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
           >
             <div className={styles.exerciseLeft}>
               <h4>Word search by listening</h4>
@@ -149,7 +166,13 @@ const Exercises: React.FC = () => {
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
-          <Link to={"/app/exercises/selectHeard"} className={styles.exercise}>
+          <Link
+            to={isDisabled ? "#" : "/app/exercises/selectHeard"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
+          >
             <div className={styles.exerciseLeft}>
               <h4>Select heard</h4>
               <div className={styles.exersiceNotice}>
@@ -162,7 +185,13 @@ const Exercises: React.FC = () => {
               Lvl. 5 <LockIco />
             </div> */}
           </Link>
-          <Link to={"/app/exercises/writeWord"} className={styles.exercise}>
+          <Link
+            to={isDisabled ? "#" : "/app/exercises/writeWord"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
+          >
             <div className={styles.exerciseLeft}>
               <h4>Write word</h4>
               <div className={styles.exersiceNotice}>
@@ -174,8 +203,11 @@ const Exercises: React.FC = () => {
             <div className={styles.exerciseRigth}></div>
           </Link>
           <Link
-            to={"/app/exercises/writeTranslation"}
-            className={styles.exercise}
+            to={isDisabled ? "#" : "/app/exercises/writeTranslation"}
+            className={`${styles.exercise} ${
+              isDisabled ? styles.disabled : ""
+            }`}
+            onClick={(e) => isDisabled && e.preventDefault()}
           >
             <div className={styles.exerciseLeft}>
               <h4>Write translation</h4>

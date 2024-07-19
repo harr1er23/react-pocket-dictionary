@@ -22,7 +22,6 @@
     align-self: flex-start;
     justify-content: space-between;
     align-items: center;
-
     margin: 10px 0 10px 0;
 
     h2 {
@@ -35,13 +34,10 @@
       cursor: pointer;
       width: 60px;
       height: 60px;
-
       margin-left: auto;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
       padding: 5px 10px;
 
       @media (max-width: 700px) {
@@ -77,12 +73,9 @@
       display: flex;
       width: 100%;
       flex-direction: column;
-
       background-color: var(--word-bg);
       border-radius: 10px;
-
       color: white;
-
       padding: 25px 50px;
 
       @media (max-width: 1000px) {
@@ -102,6 +95,20 @@
         background-color: var(--main-bg);
         color: white;
         cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &.disabled {
+          pointer-events: none;
+          background-color: #e0e0e0;
+          color: #a0a0a0;
+          border-color: #a0a0a0;
+          cursor: not-allowed;
+
+          .exerciseLeft,
+          .exerciseRigth {
+            color: #a0a0a0;
+          }
+        }
 
         .exerciseLeft {
           display: flex;
@@ -113,11 +120,11 @@
             }
           }
 
-          .exersiceNotice{
+          .exersiceNotice {
             margin-bottom: 10px;
             color: rgba(255, 255, 255, 0.784);
 
-            @media(max-width: 700px){
+            @media (max-width: 700px) {
               font-size: 13px;
             }
           }
