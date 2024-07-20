@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -474,6 +474,16 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
     return currentDate.getTime();
   };
 
+  const validateTranscriptionInput = (value: string): void => {
+    const regex: RegExp = /[^[\]]*/;
+    
+    const filterValue: string = value.split('').filter((char: string) => {
+      return regex.test(char) && !['[', ']', '{', '}', '(', ')', '|'].includes(char);
+    }).join('');
+
+    setTranscriptionInputValue(filterValue)
+  }
+
   return (
     <>
       {showAlertDeletingTag && (
@@ -511,7 +521,7 @@ const ModalAddWord: React.FC<ModalAddWordProps> = ({
             />
             <Input
               value={transcriptionInputValue}
-              onChangeFunction={setTranscriptionInputValue}
+              onChangeFunction={validateTranscriptionInput}
               textPlaceholder={"Транскрипция"}
               type={"text"}
             />
