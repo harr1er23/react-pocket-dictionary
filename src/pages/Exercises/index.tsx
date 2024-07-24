@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { subDays, startOfDay } from "date-fns";
 
@@ -9,7 +8,6 @@ import Loader from "../../components/Loader";
 import ExerciseSettings from "../../components/ExerciseSettings";
 
 import { ReactComponent as SetingsIco } from "../../assets/ico/settings.svg";
-import { ReactComponent as LockIco } from "../../assets/ico/lock.svg";
 
 import { useAppDispatch } from "../../store/store";
 import { fetchOptions, selectOptions } from "../../store/options/optionsSlice";
@@ -18,7 +16,6 @@ import {
   fetchDictionaryWords,
   selectDictionaryWords,
 } from "../../store/dictionaryWords/dictionaryWordsSlice";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import {
   fetchUserInfo,
@@ -111,7 +108,11 @@ const Exercises: React.FC = () => {
                 You are shown a word, and you need to choose its correct
                 translation
               </div>
-              <p>Selected words: {dictionaryWords.length}</p>
+              <p>
+                {isDisabled
+                  ? "Choose 10 words or more"
+                  : `Selected words: ${dictionaryWords.length}`}
+              </p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
@@ -128,7 +129,11 @@ const Exercises: React.FC = () => {
                 You are shown the translation of a word, and you need to select
                 that word
               </div>
-              <p>Selected words: {dictionaryWords.length}</p>
+              <p>
+                {isDisabled
+                  ? "Choose 10 words or more"
+                  : `Selected words: ${dictionaryWords.length}`}
+              </p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
@@ -145,7 +150,11 @@ const Exercises: React.FC = () => {
                 A word will be voiced to you and you will need to choose its
                 translation.
               </div>
-              <p>Selected words: {dictionaryWords.length}</p>
+              <p>
+                {isDisabled
+                  ? "Choose 10 words or more"
+                  : `Selected words: ${dictionaryWords.length}`}
+              </p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
@@ -162,24 +171,11 @@ const Exercises: React.FC = () => {
                 A word will be voiced to you and you will need to select it from
                 a list of other words
               </div>
-              <p>Selected words: {dictionaryWords.length}</p>
-            </div>
-            <div className={styles.exerciseRigth}></div>
-          </Link>
-          <Link
-            to={isDisabled ? "#" : "/app/exercises/selectHeard"}
-            className={`${styles.exercise} ${
-              isDisabled ? styles.disabled : ""
-            }`}
-            onClick={(e) => isDisabled && e.preventDefault()}
-          >
-            <div className={styles.exerciseLeft}>
-              <h4>Select heard</h4>
-              <div className={styles.exersiceNotice}>
-                A word will be voiced to you and you will need to select it from
-                a list of other words
-              </div>
-              <p>Selected words: {dictionaryWords.length}</p>
+              <p>
+                {isDisabled
+                  ? "Choose 10 words or more"
+                  : `Selected words: ${dictionaryWords.length}`}
+              </p>
             </div>
             {/* <div className={styles.exerciseRigth}>
               Lvl. 5 <LockIco />
@@ -198,7 +194,11 @@ const Exercises: React.FC = () => {
                 You are shown the translation of a word, and you need to write
                 this word without errors
               </div>
-              <p>Selected words: {dictionaryWords.length}</p>
+              <p>
+                {isDisabled
+                  ? "Choose 10 words or more"
+                  : `Selected words: ${dictionaryWords.length}`}
+              </p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
@@ -215,7 +215,11 @@ const Exercises: React.FC = () => {
                 You are shown a word and you need to write its translation
                 correctly
               </div>
-              <p>Selected words: {dictionaryWords.length}</p>
+              <p>
+                {isDisabled
+                  ? "Choose 10 words or more"
+                  : `Selected words: ${dictionaryWords.length}`}
+              </p>
             </div>
             <div className={styles.exerciseRigth}></div>
           </Link>
