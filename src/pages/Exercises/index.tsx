@@ -40,6 +40,7 @@ const Exercises: React.FC = () => {
   const tags = exercisesOptions !== null ? exercisesOptions.tags : [];
 
   const [isShowSettings, setIsShowSettings] = React.useState(false);
+  const [isDisabled, setIsDisabled] = React.useState(true);
 
   const currentDate = new Date();
   const sixDaysAgoDate = subDays(currentDate, 6);
@@ -65,9 +66,11 @@ const Exercises: React.FC = () => {
         })
       );
     }
-  }, [status]);
+  }, []);
 
-  const isDisabled = dictionaryWords.length < 10;
+  React.useEffect(() => {
+    setIsDisabled(dictionaryWords.length < 10);
+  }, [dictionaryWords]);
 
   return status === "loading" &&
     wordsStatus === "loading" &&
